@@ -14,10 +14,6 @@ class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
 
-
-
-
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
