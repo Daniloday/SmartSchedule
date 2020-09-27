@@ -11,4 +11,6 @@
     <string name="menu_import">Import schedule</string>
     <string name="menu_export">Share schedule</string>
     <string name="menu_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_create">
+    app:startDestination="@+id/nav_main_screen">
 
     <fragment
         android:id="@+id/nav_create"
@@ -28,4 +28,14 @@
         android:name="com.missclick.smartschedule.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_schedule"
+        android:name="com.missclick.smartschedule.ui.schedule.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" />
+    <fragment
+        android:id="@+id/nav_main_screen"
+        android:name="com.missclick.smartschedule.mainScreen.MainScreenFragment"
+        android:label="main_screen_fragment"
+        tools:layout="@layout/main_screen_fragment" />
 </navigation>
