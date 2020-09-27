@@ -1,4 +1,4 @@
-package com.missclick.smartschedule.mainScreen
+package com.missclick.smartschedule.ui.mainScreen
 
 import androidx.lifecycle.ViewModel
 
