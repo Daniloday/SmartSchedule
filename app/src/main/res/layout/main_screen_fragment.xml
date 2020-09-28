@@ -15,4 +15,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" >
     </androidx.viewpager.widget.ViewPager>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_dots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        />
+
 </FrameLayout>

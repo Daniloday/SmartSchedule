@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.SectionsPagerAdapter
@@ -43,6 +44,8 @@ class MainScreenFragment : Fragment() {
                     //LOADED
                     val viewPager: ViewPager = (activity as MainActivity).findViewById(R.id.view_pager)
                     viewPager.adapter = sectionsPagerAdapter
+                    val tabs: TabLayout = (activity as MainActivity).findViewById(R.id.tab_dots)
+                    tabs.setupWithViewPager(viewPager)
                 }
                 is MainViewStates.ErrorState -> {
                     //SRY
@@ -55,10 +58,8 @@ class MainScreenFragment : Fragment() {
                 }
             }
         })
-//        val viewPager: ViewPager = (activity as MainActivity).findViewById(R.id.view_pager)
-//        viewPager.adapter = sectionsPagerAdapter
-//        val tabs: TabLayout = (activity as MainActivity).findViewById(R.id.tabs)
-//        tabs.setupWithViewPager(viewPager)
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
