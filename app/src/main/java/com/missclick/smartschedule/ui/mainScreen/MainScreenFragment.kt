@@ -13,6 +13,7 @@ import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.SectionsPagerAdapter
 import com.missclick.smartschedule.viewstates.MainViewStates
+import kotlinx.android.synthetic.main.main_screen_fragment.*
 
 class MainScreenFragment : Fragment() {
 
@@ -41,7 +42,7 @@ class MainScreenFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when(state){
                 is MainViewStates.LoadedState -> {
-                    //LOADED
+                    progress_bar.visibility = View.GONE
                     val viewPager: ViewPager = (activity as MainActivity).findViewById(R.id.view_pager)
                     viewPager.adapter = sectionsPagerAdapter
                     val tabs: TabLayout = (activity as MainActivity).findViewById(R.id.tab_dots)
@@ -51,7 +52,7 @@ class MainScreenFragment : Fragment() {
                     //SRY
                 }
                 is MainViewStates.LoadingState -> {
-                    //DOBAVIT PROGRESS BAR
+                    progress_bar.visibility = View.VISIBLE
                 }
                 is MainViewStates.NoDataState -> {
                     //PIZDUY sozdavat schedule

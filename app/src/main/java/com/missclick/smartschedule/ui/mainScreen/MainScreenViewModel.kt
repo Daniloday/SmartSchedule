@@ -8,7 +8,5 @@ import com.missclick.smartschedule.viewstates.MainViewStates
 
 class MainScreenViewModel : ViewModel() {
     // TODO: Implement the ViewModel
-    val state = MutableLiveData<MainViewStates>().default(initialValue = MainViewStates.LoadedState(
-        Schedule()
-    ))
+    val state = MutableLiveData<MainViewStates>().default(initialValue = MainViewStates.LoadedState(Schedule()))
 }
