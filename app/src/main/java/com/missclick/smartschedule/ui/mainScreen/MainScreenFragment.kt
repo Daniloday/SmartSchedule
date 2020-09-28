@@ -9,13 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.missclick.smartschedule.App
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.SectionsPagerAdapter
+import com.missclick.smartschedule.data.repository.LessonRepository
 import com.missclick.smartschedule.di.AppComponent
 import com.missclick.smartschedule.di.module.AppModule
 import com.missclick.smartschedule.viewstates.MainViewStates
 import kotlinx.android.synthetic.main.main_screen_fragment.*
+import javax.inject.Inject
 
 
 class MainScreenFragment : Fragment() {
@@ -25,12 +28,17 @@ class MainScreenFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainScreenViewModel
+    @Inject lateinit var repository: LessonRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
         val root = inflater.inflate(R.layout.main_screen_fragment, container, false)
         return root
@@ -43,6 +51,7 @@ class MainScreenFragment : Fragment() {
                 activity as MainActivity,
                 childFragmentManager
             )
+        viewModel.kek()
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when(state){
                 is MainViewStates.LoadedState -> {
@@ -73,10 +82,6 @@ class MainScreenFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    protected fun buildComponent(): AppComponent? {
-        return DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .build()
-    }
+
 
 }

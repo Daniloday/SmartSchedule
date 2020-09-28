@@ -10,7 +10,7 @@ import dagger.Provides
 @Module
 class RepositoryModule {
     @Provides
-    fun provideLessonRepository(local : LocalDataSource, remote : RemoteDataSource) : ILessonRepository{
+    fun provideILessonRepository(local : LocalDataSource, remote : RemoteDataSource) : ILessonRepository{
         return LessonRepository(local, remote)
     }
 

@@ -1,16 +1,19 @@
 package com.missclick.smartschedule.data.repository
 
+import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.Schedule
+import javax.inject.Inject
 
 class LessonRepository(
-    val local : LocalDataSource,
-    val remote : RemoteDataSource
+    local : LocalDataSource,
+    remote : RemoteDataSource
 ) : ILessonRepository{
 
     override fun getSchedule(): Schedule {
+        Log.e("Repository", "Keklol")
         return Schedule()
     }
 
