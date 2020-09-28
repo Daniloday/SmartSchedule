@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_create, R.id.nav_import, R.id.nav_export, R.id.nav_settings, R.id.nav_main_screen), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
