@@ -55,14 +55,14 @@
             android:hint="Enter zoom:"
             android:layout_gravity="center"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_add_lesson"
+            android:id="@+id/button_add_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
             android:layout_gravity="center"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/edit_choose"
+            android:id="@+id/text_choose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>

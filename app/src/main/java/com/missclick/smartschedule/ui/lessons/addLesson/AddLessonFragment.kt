@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.missclick.smartschedule.R
 import kotlinx.android.synthetic.main.fragment_add_lesson.*
@@ -33,14 +34,15 @@ class AddLessonFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AddLessonViewModel::class.java)
+
         // TODO: Use the ViewModel
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var spinnerChoose = spinner_link.selectedItem
+        viewModel = ViewModelProviders.of(this).get(AddLessonViewModel::class.java)
+        var spinnerChoose = spinner_link.selectedItem.toString()
         spinner_link.onItemSelectedListener = (object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
@@ -55,12 +57,14 @@ class AddLessonFragment : Fragment() {
             }
         })
 
-        button_add_lesson.setOnClickListener {
-            if (edit_choose.text != " ")
-                edit_choose.text = "${edit_choose.text}, $spinnerChoose: ${edit_link.text}"
-            else
-                edit_choose.text = "$spinnerChoose: ${edit_link.text}"
+        button_add_link.setOnClickListener {
+            viewModel.addLesson(old = edit_link.text.toString(), add = text_choose.text.toString(),
+            spinChoose = spinnerChoose)
         }
+
+        viewModel.links.observe(viewLifecycleOwner, Observer {
+            text_choose.text = it
+        })
 
         button_save_lesson.setOnClickListener {
 
