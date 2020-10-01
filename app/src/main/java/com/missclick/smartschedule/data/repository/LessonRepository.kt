@@ -2,6 +2,7 @@ package com.missclick.smartschedule.data.repository
 
 import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
+import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
 import com.missclick.smartschedule.data.map.mapLessonModelToEntity
@@ -27,8 +28,10 @@ class LessonRepository(
         return lessonsModels
     }
 
-    override fun insertLesson(lessonModel: LessonModel) {
-        local.insertLessonAsync(lessonEntity = mapLessonModelToEntity(lessonModel))
+    override fun insertLesson(lessonEntity: LessonEntity) {
+        //local.insertLessonAsync(lessonEntity = mapLessonModelToEntity(lessonModel))
+        local.insertLessonAsync(lessonEntity = lessonEntity)
+
     }
 
 }
