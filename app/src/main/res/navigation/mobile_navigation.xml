@@ -38,4 +38,19 @@
         android:name="com.missclick.smartschedule.ui.mainScreen.MainScreenFragment"
         android:label="main_screen_fragment"
         tools:layout="@layout/main_screen_fragment" />
+    <fragment
+        android:id="@+id/nav_lessons"
+        android:name="com.missclick.smartschedule.ui.lessons.LessonsFragment"
+        android:label="lessons_fragment"
+        tools:layout="@layout/lessons_fragment" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.missclick.smartschedule.ui.edit.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" />
+    <fragment
+        android:id="@+id/addLessonFragment"
+        android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLessonFragment"
+        android:label="fragment_add_lesson"
+        tools:layout="@layout/fragment_add_lesson" />
 </navigation>
