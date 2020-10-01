@@ -1,6 +1,9 @@
 package com.missclick.smartschedule.di.module
 
+import android.content.Context
+import androidx.room.Room
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
+import com.missclick.smartschedule.data.datasource.local.ScheduleDatabase
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import com.missclick.smartschedule.data.repository.LessonRepository
@@ -15,8 +18,11 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideLocalDataSource() : LocalDataSource{
-        return LocalDataSource()
+    fun provideLocalDataSource(appContext: Context) : LocalDataSource{
+        val database = Room.databaseBuilder(appContext, ScheduleDatabase::class.java, "database")
+            .fallbackToDestructiveMigration()
+            .build()
+        return LocalDataSource(database = database)
     }
 
     @Provides
