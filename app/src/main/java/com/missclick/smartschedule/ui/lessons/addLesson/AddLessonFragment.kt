@@ -58,8 +58,9 @@ class AddLessonFragment : Fragment() {
         })
 
         button_add_link.setOnClickListener {
-            viewModel.addLesson(old = edit_link.text.toString(), add = text_choose.text.toString(),
+            viewModel.addLesson(old = text_choose.text.toString(), add = edit_link.text.toString(),
             spinChoose = spinnerChoose)
+
         }
 
         viewModel.links.observe(viewLifecycleOwner, Observer {

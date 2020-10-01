@@ -1,5 +1,6 @@
 package com.missclick.smartschedule.ui.lessons.addLesson
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,7 @@ class AddLessonViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
         value = ""
     }
-    var links : LiveData<String> = _text
+    var links : MutableLiveData<String> = _text
 
     fun addLesson(old: String, add : String, spinChoose : String){
 
@@ -23,16 +24,12 @@ class AddLessonViewModel : ViewModel() {
         var new = ""
 
         if (add != "" && !validator(a = spinChoose, b = old)){
+
             new = if (old != "")
-                "$old, \n $new: $add"
+                "$old, \n $spinChoose: $add"
             else
                 "$spinChoose: $add"
         }
-
-        links = MutableLiveData<String>().apply {
-            value = new
-        }
-
-
+        links.value = new
     }
 }

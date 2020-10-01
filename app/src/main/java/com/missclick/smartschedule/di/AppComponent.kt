@@ -16,4 +16,5 @@ import javax.inject.Singleton
 interface AppComponent{
     fun inject(mainScreenViewModel: MainScreenViewModel)
     fun inject(lessonViewModel: LessonsViewModel)
+    fun inject(addLessonViewModel: AddLessonViewModel)
 }
