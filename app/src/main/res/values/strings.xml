@@ -20,4 +20,12 @@
         <item>@drawable/tab_indicator_selected</item>
         <item>@drawable/tab_indicator_selected</item>
     </integer-array>
+
+    <string-array name="links">
+        <item>Zoom</item>
+        <item>Telegram</item>
+        <item>E-mail</item>
+        <item>Viber</item>
+    </string-array>
+
 </resources>
