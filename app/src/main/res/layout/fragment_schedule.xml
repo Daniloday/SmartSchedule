@@ -6,8 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.mainScreen.schedule.ScheduleFragment">
 
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="anime"/>-->
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_schedule" />
 
 </FrameLayout>
 
