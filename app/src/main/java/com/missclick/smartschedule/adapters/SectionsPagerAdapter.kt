@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.missclick.smartschedule.ui.schedule.ScheduleFragment
+import com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
     : FragmentPagerAdapter(fm) {

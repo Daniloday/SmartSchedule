@@ -1,4 +1,4 @@
-package com.missclick.smartschedule.ui.schedule
+package com.missclick.smartschedule.ui.mainScreen.schedule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
-import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
-import com.missclick.smartschedule.adapters.SectionsPagerAdapter
-import com.missclick.smartschedule.ui.gallery.GalleryFragment
-import com.missclick.smartschedule.ui.gallery.GalleryViewModel
 
 
 class ScheduleFragment : Fragment() {

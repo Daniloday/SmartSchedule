@@ -1,11 +1,8 @@
-package com.missclick.smartschedule.ui.schedule
+package com.missclick.smartschedule.ui.mainScreen.schedule
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.missclick.smartschedule.App
-import com.missclick.smartschedule.data.repository.ILessonRepository
-import javax.inject.Inject
 
 class ScheduleViewModel : ViewModel() {
 

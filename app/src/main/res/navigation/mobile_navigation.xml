@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/nav_schedule"
-        android:name="com.missclick.smartschedule.ui.schedule.ScheduleFragment"
+        android:name="com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
     <fragment

@@ -27,13 +27,13 @@ class LessonsViewModel : ViewModel() {
      fun getLessons(){
         GlobalScope.launch(Dispatchers.IO) {
             Thread.sleep(1000)
-            var lessons = listOf(LessonModel(0,
-                "kek",
-                "anime",
-                mapOf("zoom" to "link"),
-                "mem"
-            ))
-            //lessons = repository.getLessons()
+//            var lessons = listOf(LessonModel(0,
+//                "kek",
+//                "anime",
+//                mapOf("zoom" to "link"),
+//                "mem"
+//            ))
+            var lessons = repository.getLessons()
             withContext(Dispatchers.Main){
                 lessonsLiveData.value = lessons
             }

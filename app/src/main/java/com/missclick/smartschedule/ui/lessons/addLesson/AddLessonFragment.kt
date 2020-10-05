@@ -68,7 +68,12 @@ class AddLessonFragment : Fragment() {
         })
 
         button_save_lesson.setOnClickListener {
-
+            viewModel.saveLesson(
+                lessonName = edit_lesson_name.text.toString(),
+                teacherName = edit_lesson_teacher.text.toString(),
+                links = text_choose.text.toString(),
+                description = edit_lesson_description.text.toString()
+            )
         }
 
     }
