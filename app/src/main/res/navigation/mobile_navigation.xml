@@ -53,4 +53,12 @@
         android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLessonFragment"
         android:label="fragment_add_lesson"
         tools:layout="@layout/fragment_add_lesson" />
+
+    <fragment
+        android:id="@+id/lessonInfoFragment"
+        android:name="com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment"
+        android:label="fragment_lesson_info"
+        tools:layout="@layout/lesson_info_fragment" />
+
+
 </navigation>

@@ -33,7 +33,7 @@ class LessonsViewModel : ViewModel() {
 //                mapOf("zoom" to "link"),
 //                "mem"
 //            ))
-            var lessons = repository.getLessons()
+            val lessons = repository.getLessons()
             withContext(Dispatchers.Main){
                 lessonsLiveData.value = lessons
             }
