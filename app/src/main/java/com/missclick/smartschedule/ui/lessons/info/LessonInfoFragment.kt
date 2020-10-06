@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
+import com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment
 import com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.lesson_info_fragment.*
@@ -22,11 +23,6 @@ class LessonInfoFragment : Fragment() {
 
     companion object {
         fun newInstance(param : LessonModel):Bundle{
-//            LessonInfoFragment().apply {
-//                arguments = Bundle().apply {
-//                    putSerializable("from", param)
-//                }
-//            }
             return Bundle().apply {
                 putSerializable("from", param)
             }
@@ -65,7 +61,9 @@ class LessonInfoFragment : Fragment() {
         text_description.text = paramStart!!.description
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
-            view.findNavController().navigate(R.id.editFragment)
+            view.findNavController().navigate(R.id.editFragment,EditLessonFragment.newInstance(
+                paramStart!!
+            ))
         }
     }
 

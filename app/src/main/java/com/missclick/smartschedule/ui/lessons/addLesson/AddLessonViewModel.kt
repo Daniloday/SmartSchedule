@@ -36,7 +36,6 @@ class AddLessonViewModel : ViewModel() {
         var new = ""
 
         if (add != "" && !validator(a = spinChoose, b = old)){
-
             new = if (old != "")
                 "$old,$spinChoose:$add"
             else
