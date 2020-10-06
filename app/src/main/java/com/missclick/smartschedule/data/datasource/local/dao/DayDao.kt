@@ -4,16 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 
 @Dao
-interface LessonDao{
+interface DayDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLesson(lessonEntity: LessonEntity)
+    fun insertDay(dayEntity: DayEntity)
 
-    @Query("SELECT * FROM lessons")
-    fun getAllLessons() : List<LessonEntity>
+    @Query("SELECT * FROM days")
+    fun getAll() : List<DayEntity>
 
-    @Query("SELECT * FROM lessons WHERE lessonId = :id")
-    fun getLessonById(id : Int)
+    @Query("SELECT * FROM days WHERE dayId = :id")
+    fun getDayById(id : Int)
 }

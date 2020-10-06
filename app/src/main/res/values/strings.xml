@@ -15,6 +15,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_lessons">Add lessons</string>
+    <string name="schedule">Schedule</string>
+    <string name="add_lesson_to_schedule">Add Lesson</string>
 
     <integer-array name="img_id_arr">
         <item>@drawable/tab_indicator_selected</item>

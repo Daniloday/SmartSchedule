@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
+import com.missclick.smartschedule.adapters.LessonToScheduleNodeBinder
 import com.missclick.smartschedule.adapters.LessonsNodeBinder
+import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
 import com.missclick.smartschedule.data.models.ScheduleModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import tellh.com.recyclertreeview_lib.LayoutItemType
@@ -59,7 +61,13 @@ class ScheduleFragment : Fragment() {
 
         recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
         val adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
-            Arrays.asList(LessonsNodeBinder()))
+            Arrays.asList(LessonsNodeBinder(), LessonToScheduleNodeBinder(
+                object : LessonToScheduleNodeBinder.Callback {
+                    override fun onItemClicked(item: AddLessonToScheduleModel) {
+                        Log.e("AddLessonToSchedule", item.day)
+                    }
+                }
+            )))
         //Log.e("data", (data as List<TreeNode<LayoutItemType>>?).toString())
         adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
             override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
@@ -68,6 +76,9 @@ class ScheduleFragment : Fragment() {
                     onToggle(!node.isExpand(), holder);
 //                    if (!node.isExpand())
 //                        adapter.collapseBrotherNode(node);
+                }
+                if (node.content is AddLessonToScheduleModel){
+
                 }
                 return false
             }
@@ -82,7 +93,6 @@ class ScheduleFragment : Fragment() {
             }
 
         })
-        //Log.e("kek", "adapter")
         recycler_schedule.adapter = adapter
     }
 

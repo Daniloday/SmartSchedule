@@ -9,3 +9,10 @@ class ScheduleModel(var name : String) : LayoutItemType{
     }
 
 }
+
+class AddLessonToScheduleModel(var day : String) : LayoutItemType{
+    override fun getLayoutId(): Int {
+        return R.layout.schedule_add_lesson_to_schedule_list_item
+    }
+
+}
