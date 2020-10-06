@@ -45,9 +45,9 @@
         tools:layout="@layout/lessons_fragment" />
     <fragment
         android:id="@+id/editFragment"
-        android:name="com.missclick.smartschedule.ui.edit.EditFragment"
+        android:name="com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment"
         android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/edit_lesson_fragment" />
     <fragment
         android:id="@+id/addLessonFragment"
         android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLessonFragment"

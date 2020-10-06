@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.missclick.smartschedule.R
-import com.missclick.smartschedule.ui.edit.EditFragment
+
 class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
