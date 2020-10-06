@@ -11,4 +11,4 @@ import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 abstract class ScheduleDatabase : RoomDatabase(){
     abstract fun lessonsDao() : LessonDao
     abstract fun dayDao() : DayDao
-}
+}   

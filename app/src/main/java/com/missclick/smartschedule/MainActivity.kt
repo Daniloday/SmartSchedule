@@ -17,6 +17,12 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.app_bar_main.*
 
+/*
+TODO
+DayEntity -> DayModel (ScheduleFragment ...)
+LessonEntity -> LessonModel (AddLessonFragment)
+ */
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

@@ -2,6 +2,7 @@ package com.missclick.smartschedule.data.repository
 
 import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
+import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
@@ -32,6 +33,22 @@ class LessonRepository(
         //local.insertLessonAsync(lessonEntity = mapLessonModelToEntity(lessonModel))
         local.insertLessonAsync(lessonEntity = lessonEntity)
 
+    }
+
+    override fun insertDay(dayEntity: DayEntity) {
+        local.insertLessonToScheduleAsync(dayEntity = dayEntity)
+    }
+
+    override suspend fun getAllDays(): List<DayEntity> {
+        val list = local.getAllDaysAsync().await()
+        Log.e("RepositoryGetAllDays", list.toString())
+        return list
+    }
+
+    override suspend fun getLessonById(lessonId : Int): LessonModel {
+        val entity = local.getLessonByIdAsync(lessonId = lessonId).await()
+        Log.e("RepositoryLesson", entity.toString())
+        return mapLessonEntityToModel(lessonEntity = entity)
     }
 
 }

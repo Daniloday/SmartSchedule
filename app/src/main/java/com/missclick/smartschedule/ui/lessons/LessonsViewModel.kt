@@ -3,6 +3,8 @@ package com.missclick.smartschedule.ui.lessons
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
+import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
+import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +26,19 @@ class LessonsViewModel : ViewModel() {
         //lessonsLiveData.value = lessons
     }
 
+    fun addLessonToSchedule(day : String, lessonModel: LessonModel){
+        GlobalScope.launch(Dispatchers.IO){
+            lessonModel.id?.let {
+                DayEntity(dayName = day, lessonId = it)
+            }?.let {
+                repository.insertDay(dayEntity = it)
+            }
+        }
+    }
+
      fun getLessons(){
         GlobalScope.launch(Dispatchers.IO) {
-            Thread.sleep(1000)
+            //Thread.sleep(1000)
 //            var lessons = listOf(LessonModel(0,
 //                "kek",
 //                "anime",

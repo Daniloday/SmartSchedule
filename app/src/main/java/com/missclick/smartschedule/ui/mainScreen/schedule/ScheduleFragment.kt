@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
+import com.missclick.smartschedule.adapters.DayNodeBinder
 import com.missclick.smartschedule.adapters.LessonToScheduleNodeBinder
 import com.missclick.smartschedule.adapters.LessonsNodeBinder
 import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
@@ -56,51 +57,53 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val data = scheduleViewModel.initData()
-        configRecyclerView(data)
+        scheduleViewModel.initData()
+        configRecyclerView()
     }
 
-    fun configRecyclerView(data : ArrayList<TreeNode<ScheduleModel>>){
-
-        recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
-        val adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
-            Arrays.asList(LessonsNodeBinder(), LessonToScheduleNodeBinder(
-                object : LessonToScheduleNodeBinder.Callback {
-                    override fun onItemClicked(item: AddLessonToScheduleModel) {
-                        Log.e("AddLessonToSchedule", item.day)
-                        view?.findNavController()?.navigate(
-                            R.id.lessonInfoFragment,
-                            LessonsFragment.newInstance(item.day
-                            ))
-                    }
-                }
-            )))
-        //Log.e("data", (data as List<TreeNode<LayoutItemType>>?).toString())
-        adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
-            override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
-                if (!node?.isLeaf()!!) {
-                    //Update and toggle the node.
-                    onToggle(!node.isExpand(), holder);
+    fun configRecyclerView(){
+        scheduleViewModel.nodesLiveData.observe(viewLifecycleOwner, Observer {
+            recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
+            val adapter = TreeViewAdapter(it as List<TreeNode<LayoutItemType>>?,
+                Arrays.asList(DayNodeBinder(),
+                    LessonsNodeBinder(),
+                    LessonToScheduleNodeBinder(
+                    object : LessonToScheduleNodeBinder.Callback {
+                        override fun onItemClicked(item: AddLessonToScheduleModel) {
+                            Log.e("AddLessonToSchedule", item.day)
+                            view?.findNavController()?.navigate(
+                                R.id.nav_lessons,
+                                LessonsFragment.newInstance(item.day
+                                )
+                            )
+                        }
+                    })
+                )
+            )
+            //Log.e("data", (data as List<TreeNode<LayoutItemType>>?).toString())
+            adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
+                override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
+                    if (!node?.isLeaf()!!) {
+                        //Update and toggle the node.
+                        onToggle(!node.isExpand(), holder);
 //                    if (!node.isExpand())
 //                        adapter.collapseBrotherNode(node);
+                    }
+                    return false
                 }
-                if (node.content is AddLessonToScheduleModel){
 
-                }
-                return false
-            }
-
-            override fun onToggle(p0: Boolean, p1: RecyclerView.ViewHolder?) {
+                override fun onToggle(p0: Boolean, p1: RecyclerView.ViewHolder?) {
 //                val dirViewHolder: DirectoryNodeBinder.ViewHolder =
 //                    holder as DirectoryNodeBinder.ViewHolder
 //                val ivArrow: ImageView = dirViewHolder.getIvArrow()
 //                val rotateDegree = if (isExpand) 90 else -90
 //                ivArrow.animate().rotationBy(rotateDegree)
 //                    .start()
-            }
+                }
 
+            })
+            recycler_schedule.adapter = adapter
         })
-        recycler_schedule.adapter = adapter
     }
 
     companion object {

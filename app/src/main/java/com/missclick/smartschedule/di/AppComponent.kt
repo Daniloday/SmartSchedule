@@ -6,6 +6,7 @@ import com.missclick.smartschedule.ui.lessons.LessonsViewModel
 import com.missclick.smartschedule.ui.lessons.addLesson.AddLessonViewModel
 import com.missclick.smartschedule.ui.lessons.edit.EditLessonViewModel
 import com.missclick.smartschedule.ui.mainScreen.MainScreenViewModel
+import com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,4 +17,5 @@ interface AppComponent{
     fun inject(lessonViewModel: LessonsViewModel)
     fun inject(addLessonViewModel: AddLessonViewModel)
     fun inject(editLessonViewModel: EditLessonViewModel)
+    fun inject(scheduleViewModel: ScheduleViewModel)
 }

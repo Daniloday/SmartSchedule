@@ -51,18 +51,24 @@ class LessonsFragment : Fragment() {
                     override fun onItemClicked(item: LessonModel) {
                         Log.e("Callback","works!")
                         if(day == null){
-                            LessonInfoFragment.newInstance(item)
+                            LessonInfoFragment.newInstance(param = item)
                             view.findNavController().navigate(R.id.lessonInfoFragment, LessonInfoFragment.newInstance(item))
                         }
                         else{
                             //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
+                            viewModel.addLessonToSchedule(day = day!!, lessonModel = item)
                             (activity as MainActivity).onBackPressed()
                         }
                     }
                 }
-                )
+            )
             recycle_lessons.layoutManager = LinearLayoutManager(activity as MainActivity)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getLessons()
     }
 
     companion object {

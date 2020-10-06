@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import kotlinx.android.synthetic.main.fragment_add_lesson.*
 
@@ -79,7 +80,8 @@ class AddLessonFragment : Fragment() {
                 description = edit_lesson_description.text.toString()
             )
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view.windowToken, 0)
-            it.findNavController().navigate(R.id.nav_lessons)
+            //it.findNavController().navigate(R.id.nav_lessons)
+            (activity as MainActivity).onBackPressed()
         }
 
     }
