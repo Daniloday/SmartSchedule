@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.missclick.smartschedule.App
@@ -17,6 +18,7 @@ import com.missclick.smartschedule.data.repository.LessonRepository
 import com.missclick.smartschedule.di.AppComponent
 import com.missclick.smartschedule.di.module.AppModule
 import com.missclick.smartschedule.viewstates.MainViewStates
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.main_screen_fragment.*
 import javax.inject.Inject
 
@@ -51,6 +53,10 @@ class MainScreenFragment : Fragment() {
                 activity as MainActivity,
                 childFragmentManager
             )
+        (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
+        (activity as MainActivity).toolbar_edit.setOnClickListener {
+            view.findNavController().navigate(R.id.edit_schedule)
+        }
         viewModel.kek()
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when(state){
@@ -76,10 +82,9 @@ class MainScreenFragment : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    override fun onStop() {
+        super.onStop()
+        (activity as MainActivity).toolbar_edit.visibility = View.GONE
     }
 
 

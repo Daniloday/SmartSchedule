@@ -60,5 +60,11 @@
         android:label="fragment_lesson_info"
         tools:layout="@layout/lesson_info_fragment" />
 
+    <fragment
+        android:id="@+id/edit_schedule"
+        android:name="com.missclick.smartschedule.ui.mainScreen.edit.EditScheduleFragment"
+        android:label="edit_schedule_fragment"
+        tools:layout="@layout/edit_schedule_fragment" />
+
 
 </navigation>
