@@ -21,15 +21,15 @@ import java.io.Serializable
 
 class LessonsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = LessonsFragment()
-    }
-
     private lateinit var viewModel: LessonsViewModel
+    var day : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LessonsViewModel::class.java)
+        arguments?.let {
+            day = it.getString("day")
+        }
     }
 
     override fun onCreateView(
@@ -50,13 +50,27 @@ class LessonsFragment : Fragment() {
                 object : LessonAdapter.Callback {
                     override fun onItemClicked(item: LessonModel) {
                         Log.e("Callback","works!")
-                        LessonInfoFragment.newInstance(item)
-                        view.findNavController().navigate(R.id.lessonInfoFragment, LessonInfoFragment.newInstance(item))
+                        if(day == null){
+                            LessonInfoFragment.newInstance(item)
+                            view.findNavController().navigate(R.id.lessonInfoFragment, LessonInfoFragment.newInstance(item))
+                        }
+                        else{
+                            //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
+                            (activity as MainActivity).onBackPressed()
+                        }
                     }
                 }
                 )
             recycle_lessons.layoutManager = LinearLayoutManager(activity as MainActivity)
         })
+    }
+
+    companion object {
+        fun newInstance(param : String) : Bundle {
+            return Bundle().apply {
+                putString("day", param)
+            }
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
@@ -17,6 +18,8 @@ import com.missclick.smartschedule.adapters.LessonToScheduleNodeBinder
 import com.missclick.smartschedule.adapters.LessonsNodeBinder
 import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
 import com.missclick.smartschedule.data.models.ScheduleModel
+import com.missclick.smartschedule.ui.lessons.LessonsFragment
+import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import tellh.com.recyclertreeview_lib.LayoutItemType
 import tellh.com.recyclertreeview_lib.TreeNode
@@ -65,6 +68,10 @@ class ScheduleFragment : Fragment() {
                 object : LessonToScheduleNodeBinder.Callback {
                     override fun onItemClicked(item: AddLessonToScheduleModel) {
                         Log.e("AddLessonToSchedule", item.day)
+                        view?.findNavController()?.navigate(
+                            R.id.lessonInfoFragment,
+                            LessonsFragment.newInstance(item.day
+                            ))
                     }
                 }
             )))

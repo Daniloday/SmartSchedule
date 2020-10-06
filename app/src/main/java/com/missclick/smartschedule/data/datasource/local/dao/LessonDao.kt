@@ -15,5 +15,5 @@ interface LessonDao{
     fun getAllLessons() : List<LessonEntity>
 
     @Query("SELECT * FROM lessons WHERE lessonId = :id")
-    fun getLessonById(id : Int)
+    fun getLessonById(id : Int) : LessonEntity
 }

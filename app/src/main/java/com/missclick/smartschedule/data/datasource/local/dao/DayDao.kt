@@ -16,5 +16,5 @@ interface DayDao{
     fun getAll() : List<DayEntity>
 
     @Query("SELECT * FROM days WHERE dayId = :id")
-    fun getDayById(id : Int)
+    fun getDayById(id : Int) : DayEntity
 }
