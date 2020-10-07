@@ -68,7 +68,6 @@ class ScheduleFragment : Fragment() {
             scheduleViewModel.saveSchedule()
         }
 
-
         scheduleViewModel.stateData.observe(viewLifecycleOwner, Observer { state ->
             when(state){
                 //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
@@ -98,18 +97,11 @@ class ScheduleFragment : Fragment() {
         })
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//        Log.e("OnPause","works")
-//        (activity as MainActivity).toolbar_save.visibility = View.GONE
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-//        (activity as MainActivity).toolbar_edit.visibility = View.GONE
-////        scheduleViewModel.initData(edit = true)
-//    }
+
+    override fun onResume() {
+        super.onResume()
+        scheduleViewModel.onResume()
+    }
 
     private fun configRecyclerData(data : ArrayList<TreeNode<ScheduleModel>>){
         recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
@@ -120,6 +112,7 @@ class ScheduleFragment : Fragment() {
                 LessonToScheduleNodeBinder(
                     object : LessonToScheduleNodeBinder.Callback {
                         override fun onItemClicked(item: AddLessonToScheduleModel) {
+                            scheduleViewModel.onPause = true
                             view?.findNavController()?.navigate(
                                 R.id.nav_lessons,
                                 LessonsFragment.newInstance(day = item.day, couple = item.couple

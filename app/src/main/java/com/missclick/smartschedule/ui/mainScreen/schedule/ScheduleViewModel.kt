@@ -24,6 +24,7 @@ class ScheduleViewModel : ViewModel() {
     @Inject
     lateinit var repository: ILessonRepository
     var edit: Boolean = false
+    var onPause: Boolean = false
 
     var nodesLiveData = MutableLiveData<ArrayList<TreeNode<ScheduleModel>>>()
     var editStateLiveData = MutableLiveData<Boolean>()
@@ -38,6 +39,10 @@ class ScheduleViewModel : ViewModel() {
     fun editSchedule(){
         edit = true
         stateData.value = ScheduleViewStates.LoadingState
+    }
+
+    fun onResume(){
+        if(onPause) editSchedule()
     }
 
     fun saveSchedule(){
