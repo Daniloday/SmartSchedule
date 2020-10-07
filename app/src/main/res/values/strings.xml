@@ -17,6 +17,7 @@
     <string name="add_lessons">Add lessons</string>
     <string name="schedule">Schedule</string>
     <string name="add_lesson_to_schedule">Add Lesson</string>
+    <string name="add_lesson">Add Lesson</string>
 
     <integer-array name="img_id_arr">
         <item>@drawable/tab_indicator_selected</item>
