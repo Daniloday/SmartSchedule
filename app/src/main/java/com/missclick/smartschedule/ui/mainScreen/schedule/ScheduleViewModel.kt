@@ -65,10 +65,4 @@ class ScheduleViewModel : ViewModel() {
         }
         return null
     }
-
-//    fun editSchedule(){
-//        initAllDays(edit = true)
-//    }
-
-
 }

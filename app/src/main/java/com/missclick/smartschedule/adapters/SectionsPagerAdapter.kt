@@ -17,7 +17,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
             ScheduleFragment.newInstance("from 2")
     }
 
-
     override fun getCount(): Int {
         // Show 2 total pages.
         return 2

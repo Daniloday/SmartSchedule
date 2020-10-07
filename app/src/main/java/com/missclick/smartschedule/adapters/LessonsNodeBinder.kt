@@ -16,6 +16,7 @@ class LessonsNodeBinder : TreeViewBinder<LessonsNodeBinder.ViewHolder>() {
     override fun bindView(holder: LessonsNodeBinder.ViewHolder?, p1: Int, node: TreeNode<*>?) {
         val lessonNode = node?.content as LessonInSchedule
         holder?.tvName?.text = lessonNode.lessonModel.lessonName
+        holder?.tvType?.text = lessonNode.lessonModel.type
     }
 
     override fun getLayoutId(): Int {
@@ -24,6 +25,7 @@ class LessonsNodeBinder : TreeViewBinder<LessonsNodeBinder.ViewHolder>() {
 
     class ViewHolder(rootView: View) : TreeViewBinder.ViewHolder(rootView) {
         var tvName : TextView = rootView.findViewById(R.id.text_name_list_lesson_in_schedule_item)
+        var tvType = rootView.findViewById<TextView>(R.id.text_type_lesson_in_schedule_item)
     }
 
 }
