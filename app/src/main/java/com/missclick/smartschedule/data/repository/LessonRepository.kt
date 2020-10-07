@@ -17,7 +17,6 @@ class LessonRepository(
 ) : ILessonRepository{
 
     override fun getSchedule(): Schedule {
-        Log.e("Repository", "Keklol")
         return Schedule()
     }
 
@@ -41,13 +40,11 @@ class LessonRepository(
 
     override suspend fun getAllDays(): List<DayEntity> {
         val list = local.getAllDaysAsync().await()
-        Log.e("RepositoryGetAllDays", list.toString())
         return list
     }
 
     override suspend fun getLessonById(lessonId : Int): LessonModel {
         val entity = local.getLessonByIdAsync(lessonId = lessonId).await()
-        Log.e("RepositoryLesson", entity.toString())
         return mapLessonEntityToModel(lessonEntity = entity)
     }
 

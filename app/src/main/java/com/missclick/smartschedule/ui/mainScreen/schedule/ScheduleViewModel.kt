@@ -8,6 +8,9 @@ import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.models.*
 import com.missclick.smartschedule.data.repository.ILessonRepository
+import com.missclick.smartschedule.extensions.default
+import com.missclick.smartschedule.viewstates.MainViewStates
+import com.missclick.smartschedule.viewstates.ScheduleViewStates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,13 +19,15 @@ import tellh.com.recyclertreeview_lib.TreeNode
 import java.util.prefs.NodeChangeEvent
 import javax.inject.Inject
 
-class ScheduleViewModel() : ViewModel() {
+class ScheduleViewModel : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
 
     var nodesLiveData = MutableLiveData<ArrayList<TreeNode<ScheduleModel>>>()
     var editStateLiveData = MutableLiveData<Boolean>()
+    val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState)
+    //val stateRedactor = MutableLiveData<RedactorState>().default(initialValue = RedactorState.Saving)
 
     init {
         App.appComponent.inject(this)
@@ -34,8 +39,7 @@ class ScheduleViewModel() : ViewModel() {
             val nodes = ArrayList<TreeNode<ScheduleModel>>()
             initAllDays(nodes = nodes, edit = edit)
             withContext(Dispatchers.Main){
-                Log.e("SchViewModel","value")
-                nodesLiveData.value = nodes
+                stateData.value = ScheduleViewStates.LoadedState(nodes)
             }
         }
     }

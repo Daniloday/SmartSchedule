@@ -25,6 +25,7 @@ import com.missclick.smartschedule.data.models.EmptyLesson
 import com.missclick.smartschedule.data.models.ScheduleModel
 import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
+import com.missclick.smartschedule.viewstates.ScheduleViewStates
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.app_bar_main.view.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -58,41 +59,60 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        scheduleViewModel.initData(edit = false)
-        configRecyclerView()
-        (activity as MainActivity).toolbar_edit.setOnClickListener {
-            it.visibility = View.GONE
-            (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-            scheduleViewModel.initData(edit = true)
-        }
-        (activity as MainActivity).toolbar_save.setOnClickListener {
-            it.visibility = View.GONE
-            (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-            scheduleViewModel.initData(edit = false)
-        }
+        //scheduleViewModel.initData(edit = false)
+        //configRecyclerView()
+//        (activity as MainActivity).toolbar_edit.setOnClickListener {
+//            it.visibility = View.GONE
+//            (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
+//            scheduleViewModel.initData(edit = true)
+//        }
+//        (activity as MainActivity).toolbar_save.setOnClickListener {
+//            it.visibility = View.GONE
+//            (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
+//            scheduleViewModel.initData(edit = false)
+//        }
+
+        scheduleViewModel.stateData.observe(viewLifecycleOwner, Observer { state ->
+            when(state){
+                //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
+                is ScheduleViewStates.LoadingState -> {
+                    //TODO progress bar visible, no buttons
+                    scheduleViewModel.initData()
+                }
+                is ScheduleViewStates.Editing -> {
+                    //TODO save button, edit button gone
+                }
+                is ScheduleViewStates.LoadedState -> {
+                    //TODO progressbar.hide, editBtn.show
+                    configRecyclerData(state.data)
+                }
+                is ScheduleViewStates.ErrorState -> {
+                    //TODO exception (nado sdelat try catch dlya raboti s bd)
+                }
+            }
+        })
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.e("OnPause","works")
-        (activity as MainActivity).toolbar_save.visibility = View.GONE
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        Log.e("OnPause","works")
+//        (activity as MainActivity).toolbar_save.visibility = View.GONE
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
+//        (activity as MainActivity).toolbar_edit.visibility = View.GONE
+////        scheduleViewModel.initData(edit = true)
+//    }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-        (activity as MainActivity).toolbar_edit.visibility = View.GONE
-//        scheduleViewModel.initData(edit = true)
-    }
-
-    private fun configRecyclerView(){
-        scheduleViewModel.nodesLiveData.observe(viewLifecycleOwner, Observer {
-            recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
-            val adapter = TreeViewAdapter(it as List<TreeNode<LayoutItemType>>?,
-                listOf(DayNodeBinder(),
-                    EmptyLessonsNodeBinder(),
-                    LessonsNodeBinder(),
-                    LessonToScheduleNodeBinder(
+    private fun configRecyclerData(data : ArrayList<TreeNode<ScheduleModel>>){
+        recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
+        val adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
+            listOf(DayNodeBinder(),
+                EmptyLessonsNodeBinder(),
+                LessonsNodeBinder(),
+                LessonToScheduleNodeBinder(
                     object : LessonToScheduleNodeBinder.Callback {
                         override fun onItemClicked(item: AddLessonToScheduleModel) {
                             view?.findNavController()?.navigate(
@@ -102,33 +122,31 @@ class ScheduleFragment : Fragment() {
                             )
                         }
                     })
-                )
             )
-
-            adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
-                override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
-                    if (!node?.isLeaf()!!) {
-                        //Update and toggle the node.
-                        onToggle(!node.isExpand(), holder);
+        )
+        adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
+            override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
+                if (!node?.isLeaf()!!) {
+                    //Update and toggle the node.
+                    onToggle(!node.isExpand(), holder);
 //                    if (!node.isExpand())
 //                        adapter.collapseBrotherNode(node);
-                    }
-                    return false
                 }
+                return false
+            }
 
-                override fun onToggle(p0: Boolean, p1: RecyclerView.ViewHolder?) {
+            override fun onToggle(p0: Boolean, p1: RecyclerView.ViewHolder?) {
 //                val dirViewHolder: DirectoryNodeBinder.ViewHolder =
 //                    holder as DirectoryNodeBinder.ViewHolder
 //                val ivArrow: ImageView = dirViewHolder.getIvArrow()
 //                val rotateDegree = if (isExpand) 90 else -90
 //                ivArrow.animate().rotationBy(rotateDegree)
 //                    .start()
-                }
+            }
 
-            })
-            Log.e("SchFragment",it[0].childList[0].content.toString())
-            recycler_schedule.adapter = adapter
         })
+        Log.e("SchFragment", data[0].childList[0].content.toString())
+        recycler_schedule.adapter = adapter
     }
 
     companion object {
