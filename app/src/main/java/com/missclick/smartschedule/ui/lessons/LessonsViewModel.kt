@@ -26,10 +26,10 @@ class LessonsViewModel : ViewModel() {
         //lessonsLiveData.value = lessons
     }
 
-    fun addLessonToSchedule(day : String, lessonModel: LessonModel){
+    fun addLessonToSchedule(day : String, couple : Int, lessonModel: LessonModel){
         GlobalScope.launch(Dispatchers.IO){
             lessonModel.id?.let {
-                DayEntity(dayName = day, lessonId = it)
+                DayEntity(dayName = day, lessonId = it, couple = couple)
             }?.let {
                 repository.insertDay(dayEntity = it)
             }
