@@ -59,31 +59,36 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //scheduleViewModel.initData(edit = false)
-        //configRecyclerView()
-//        (activity as MainActivity).toolbar_edit.setOnClickListener {
-//            it.visibility = View.GONE
-//            (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-//            scheduleViewModel.initData(edit = true)
-//        }
-//        (activity as MainActivity).toolbar_save.setOnClickListener {
-//            it.visibility = View.GONE
-//            (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-//            scheduleViewModel.initData(edit = false)
-//        }
+
+        (activity as MainActivity).toolbar_edit.setOnClickListener {
+            scheduleViewModel.editSchedule()
+        }
+
+        (activity as MainActivity).toolbar_save.setOnClickListener {
+            scheduleViewModel.saveSchedule()
+        }
+
 
         scheduleViewModel.stateData.observe(viewLifecycleOwner, Observer { state ->
             when(state){
                 //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
                 is ScheduleViewStates.LoadingState -> {
-                    //TODO progress bar visible, no buttons
+                    recycler_schedule.visibility = View.GONE
+                    (activity as MainActivity).toolbar_edit.visibility = View.GONE
+                    (activity as MainActivity).toolbar_save.visibility = View.GONE
+                    progress_bar_schedule.visibility = View.VISIBLE
                     scheduleViewModel.initData()
                 }
-                is ScheduleViewStates.Editing -> {
-                    //TODO save button, edit button gone
+                is ScheduleViewStates.EditingState -> {
+                    progress_bar_schedule.visibility = View.GONE
+                    recycler_schedule.visibility = View.VISIBLE
+                    (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
+                    configRecyclerData(state.data)
                 }
                 is ScheduleViewStates.LoadedState -> {
-                    //TODO progressbar.hide, editBtn.show
+                    progress_bar_schedule.visibility = View.GONE
+                    recycler_schedule.visibility = View.VISIBLE
+                    (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
                     configRecyclerData(state.data)
                 }
                 is ScheduleViewStates.ErrorState -> {

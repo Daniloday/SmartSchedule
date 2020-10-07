@@ -23,6 +23,7 @@ class ScheduleViewModel : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
+    var edit: Boolean = false
 
     var nodesLiveData = MutableLiveData<ArrayList<TreeNode<ScheduleModel>>>()
     var editStateLiveData = MutableLiveData<Boolean>()
@@ -34,12 +35,23 @@ class ScheduleViewModel : ViewModel() {
         //lessonsLiveData.value = lessons
     }
 
+    fun editSchedule(){
+        edit = true
+        stateData.value = ScheduleViewStates.LoadingState
+    }
+
+    fun saveSchedule(){
+        edit = false
+        stateData.value = ScheduleViewStates.LoadingState
+    }
+
     fun initData() {
         GlobalScope.launch(Dispatchers.IO) {
             val nodes = ArrayList<TreeNode<ScheduleModel>>()
             initAllDays(nodes = nodes)//, edit = edit)
             withContext(Dispatchers.Main){
-                stateData.value = ScheduleViewStates.LoadedState(nodes)
+                if (edit) stateData.value = ScheduleViewStates.EditingState(nodes)
+                else stateData.value = ScheduleViewStates.LoadedState(nodes)
             }
         }
     }
@@ -53,7 +65,7 @@ class ScheduleViewModel : ViewModel() {
                 val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
                 if (lessonId != null) weekDay.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
                 else {
-                    if(false) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
+                    if(edit) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
                         else weekDay.addChild(TreeNode(EmptyLesson()))
                 }
             }

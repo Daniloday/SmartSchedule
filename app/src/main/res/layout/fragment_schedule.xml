@@ -15,7 +15,16 @@
         android:layout_width="match_parent"
         android:paddingTop="8dp"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_schedule" />
+        android:id="@+id/recycler_schedule"
+        />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_schedule"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        />
 
 </FrameLayout>
 
