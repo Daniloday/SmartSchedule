@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ import com.missclick.smartschedule.data.models.ScheduleModel
 import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.app_bar_main.view.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import tellh.com.recyclertreeview_lib.LayoutItemType
 import tellh.com.recyclertreeview_lib.TreeNode
@@ -60,15 +62,16 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        scheduleViewModel.initData()
+        scheduleViewModel.initData(edit = false)
         configRecyclerView()
         (activity as MainActivity).toolbar_edit.setOnClickListener {
-            toolbar_edit.text = "Save"
-
+            it.toolbar_edit.text = "Save"
+            scheduleViewModel.initData(edit = true)
+            configRecyclerView()
         }
     }
 
-    fun configRecyclerView(){
+    private fun configRecyclerView(){
         scheduleViewModel.nodesLiveData.observe(viewLifecycleOwner, Observer {
             recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
             val adapter = TreeViewAdapter(it as List<TreeNode<LayoutItemType>>?,

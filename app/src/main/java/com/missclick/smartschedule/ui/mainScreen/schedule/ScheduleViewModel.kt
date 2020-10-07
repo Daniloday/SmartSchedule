@@ -29,17 +29,17 @@ class ScheduleViewModel : ViewModel() {
         //lessonsLiveData.value = lessons
     }
 
-    fun initData() {
+    fun initData(edit : Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             val nodes = ArrayList<TreeNode<ScheduleModel>>()
-            initAllDays(nodes = nodes)
+            initAllDays(nodes = nodes, edit = edit)
             withContext(Dispatchers.Main){
                 nodesLiveData.value = nodes
             }
         }
     }
 
-    private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>){
+    private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>, edit: Boolean){
         val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val daysEntity = repository.getAllDays()
         for(day in days) {
@@ -48,7 +48,7 @@ class ScheduleViewModel : ViewModel() {
                 val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
                 if (lessonId != null) weekDay.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
                 else {
-                    if(true) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
+                    if(edit) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
                         else weekDay.addChild(TreeNode(EmptyLesson()))
                 }
             }
