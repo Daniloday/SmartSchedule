@@ -43,6 +43,7 @@ class ScheduleViewModel : ViewModel() {
 
     fun onResume(){
         if(onPause) editSchedule()
+        onPause = false
     }
 
     fun saveSchedule(){
