@@ -5,7 +5,7 @@ import tellh.com.recyclertreeview_lib.LayoutItemType
 
 class ScheduleModel(var name : String) : LayoutItemType{
     override fun getLayoutId(): Int {
-        return R.layout.list_lesson_item
+        return R.layout.day_in_schedule_list_item
     }
 
 }
