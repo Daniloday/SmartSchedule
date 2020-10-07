@@ -23,3 +23,9 @@ class AddLessonToScheduleModel(val day : String, val couple: Int) : LayoutItemTy
     }
 
 }
+
+class EmptyLesson() : LayoutItemType {
+    override fun getLayoutId(): Int {
+        return R.layout.schedule_lesson_empty
+    }
+}

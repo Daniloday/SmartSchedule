@@ -24,4 +24,5 @@ class DayNodeBinder : TreeViewBinder<DayNodeBinder.ViewHolder>() {
     class ViewHolder(rootView: View) : TreeViewBinder.ViewHolder(rootView) {
         var tvName : TextView = rootView.findViewById(R.id.text_day_schedule_name)
     }
+
 }

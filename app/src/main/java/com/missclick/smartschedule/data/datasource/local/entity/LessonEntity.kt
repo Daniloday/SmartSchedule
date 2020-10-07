@@ -19,6 +19,9 @@ data class LessonEntity (
     @ColumnInfo(name = "teacherName")
     var teacherName : String,
 
+    @ColumnInfo(name = "type")
+    var type : String,
+
     @ColumnInfo(name = "links") // "zoom":"link","tg":"link" ...
     var links : String,
 

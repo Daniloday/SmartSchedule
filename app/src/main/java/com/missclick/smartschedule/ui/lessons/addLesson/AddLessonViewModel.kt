@@ -46,7 +46,7 @@ class AddLessonViewModel : ViewModel() {
 
     fun saveLesson(lessonName : String, teacherName : String, links : String, description : String){
         Log.e("DeepLinks",links)
-        val entity = LessonEntity(name = lessonName, teacherName = teacherName, links = "Zoom:default", description = description)
+        val entity = LessonEntity(name = lessonName, teacherName = teacherName, links = "Zoom:default", description = description, type = "lection")
         repository.insertLesson(entity)
     }
 }

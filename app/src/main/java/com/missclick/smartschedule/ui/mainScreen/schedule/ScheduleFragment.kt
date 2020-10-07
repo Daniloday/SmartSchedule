@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.DayNodeBinder
+import com.missclick.smartschedule.adapters.EmptyLessonsNodeBinder
 import com.missclick.smartschedule.adapters.LessonToScheduleNodeBinder
 import com.missclick.smartschedule.adapters.LessonsNodeBinder
 import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
+import com.missclick.smartschedule.data.models.EmptyLesson
 import com.missclick.smartschedule.data.models.ScheduleModel
 import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import tellh.com.recyclertreeview_lib.LayoutItemType
 import tellh.com.recyclertreeview_lib.TreeNode
@@ -59,6 +62,10 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         scheduleViewModel.initData()
         configRecyclerView()
+        (activity as MainActivity).toolbar_edit.setOnClickListener {
+            toolbar_edit.text = "Save"
+
+        }
     }
 
     fun configRecyclerView(){
@@ -66,6 +73,7 @@ class ScheduleFragment : Fragment() {
             recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
             val adapter = TreeViewAdapter(it as List<TreeNode<LayoutItemType>>?,
                 listOf(DayNodeBinder(),
+                    EmptyLessonsNodeBinder(),
                     LessonsNodeBinder(),
                     LessonToScheduleNodeBinder(
                     object : LessonToScheduleNodeBinder.Callback {

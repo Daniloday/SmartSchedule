@@ -9,8 +9,9 @@ data class LessonModel(
     var teacherName : String,
     //var times : List<LessonTime>,
     var links : Map<String, String>,
-    var description : String
+    var description : String,
     //var week : Int
+    var type: String
 ):Serializable
 
 data class LessonTime(

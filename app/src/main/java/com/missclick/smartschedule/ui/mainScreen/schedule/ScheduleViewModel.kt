@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
-import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
-import com.missclick.smartschedule.data.models.LessonInSchedule
-import com.missclick.smartschedule.data.models.LessonModel
-import com.missclick.smartschedule.data.models.ScheduleModel
+import com.missclick.smartschedule.data.models.*
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -25,6 +22,7 @@ class ScheduleViewModel : ViewModel() {
     lateinit var repository: ILessonRepository
 
     var nodesLiveData = MutableLiveData<ArrayList<TreeNode<ScheduleModel>>>()
+    var editStateLiveData = MutableLiveData<Boolean>()
 
     init {
         App.appComponent.inject(this)
@@ -49,7 +47,10 @@ class ScheduleViewModel : ViewModel() {
             for(couple in 1..4){
                 val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
                 if (lessonId != null) weekDay.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
-                else weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
+                else {
+                    if(true) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
+                        else weekDay.addChild(TreeNode(EmptyLesson()))
+                }
             }
             nodes.add(weekDay)
         }
@@ -63,35 +64,9 @@ class ScheduleViewModel : ViewModel() {
         return null
     }
 
-//    private fun getLessonsInDay(days : List<DayEntity>, day: String) : List<Int>{
-//        val lessons = mutableListOf<Int>()
-//        for (dayEntity in days){
-//                if(dayEntity.dayName == day)
-//                    lessons.add(dayEntity.lessonId)
-//        }
-//        return lessons
+//    fun editSchedule(){
+//        initAllDays(edit = true)
 //    }
-
-//    private suspend fun addChildToDay(node : TreeNode<ScheduleModel>, day : String, lessons : List<Int>){
-//        val dayList = listOf<ScheduleModel>()
-//        for(lessonId in lessons)
-//            node.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
-//        if(dayList.isEmpty()) {
-//            Log.e("ScheduleViewModel", "empty")
-//            node.addChild(TreeNode(AddLessonToScheduleModel(day)))
-//        }
-//
-//    }
-//
-
-
-//        val monday = TreeNode<ScheduleModel>(ScheduleModel("Monday"))
-//        nodes.add(monday)
-//        monday.addChild(TreeNode(ScheduleModel("ded")))
-//        monday.addChild(TreeNode(ScheduleModel("kek")))
-//        val thu = TreeNode<ScheduleModel>(ScheduleModel("Thursday"))
-//        nodes.add(thu)
-//        thu.addChild(TreeNode(ScheduleModel("kirienko")))
 
 
 }

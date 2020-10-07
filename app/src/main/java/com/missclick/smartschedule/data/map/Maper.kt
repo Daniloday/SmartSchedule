@@ -11,7 +11,8 @@ fun mapLessonEntityToModel(lessonEntity: LessonEntity) : LessonModel {
         lessonName = lessonEntity.name,
         teacherName = lessonEntity.teacherName,
         links = links,
-        description = lessonEntity.description
+        description = lessonEntity.description,
+        type = lessonEntity.type
     )
 }
 
@@ -23,7 +24,8 @@ fun mapLessonModelToEntity(lessonModel: LessonModel) : LessonEntity{
         name = lessonModel.lessonName,
         teacherName = lessonModel.teacherName,
         links = links,
-        description = lessonModel.description
+        description = lessonModel.description,
+        type = lessonModel.type
     )
 }
 
