@@ -34,12 +34,14 @@ class ScheduleViewModel : ViewModel() {
             val nodes = ArrayList<TreeNode<ScheduleModel>>()
             initAllDays(nodes = nodes, edit = edit)
             withContext(Dispatchers.Main){
+                Log.e("SchViewModel","value")
                 nodesLiveData.value = nodes
             }
         }
     }
 
     private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>, edit: Boolean){
+
         val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val daysEntity = repository.getAllDays()
         for(day in days) {

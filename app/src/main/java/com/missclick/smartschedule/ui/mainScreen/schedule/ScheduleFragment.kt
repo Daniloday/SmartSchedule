@@ -113,6 +113,7 @@ class ScheduleFragment : Fragment() {
                 }
 
             })
+            Log.e("SchFragment",it[0].childList[0].content.toString())
             recycler_schedule.adapter = adapter
         })
     }
