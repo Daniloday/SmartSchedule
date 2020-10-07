@@ -18,8 +18,10 @@ class LessonAdapter(var items: List<LessonModel>, val callback: Callback) : Recy
     }
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name = itemView.findViewById<TextView>(R.id.text_name_list_lesson_item)
+        private val teacherName = itemView.findViewById<TextView>(R.id.text_teacher_name_list_lesson_item)
         fun bind(item: LessonModel) {
             name.text = item.lessonName
+            teacherName.text = item.teacherName
             itemView.setOnClickListener {
                 if (adapterPosition != androidx.recyclerview.widget.RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
             }
