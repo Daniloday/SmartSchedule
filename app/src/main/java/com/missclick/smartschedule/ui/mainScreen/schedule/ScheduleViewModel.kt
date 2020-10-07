@@ -16,7 +16,7 @@ import tellh.com.recyclertreeview_lib.TreeNode
 import java.util.prefs.NodeChangeEvent
 import javax.inject.Inject
 
-class ScheduleViewModel : ViewModel() {
+class ScheduleViewModel() : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository

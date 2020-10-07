@@ -53,12 +53,7 @@ class ScheduleFragment : Fragment() {
     ): View? {
         scheduleViewModel =
             ViewModelProvider(requireActivity()).get(ScheduleViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_schedule, container, false)
-        //val textView: TextView = root.findViewById(R.id.text_gallery)
-//        scheduleViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = paramStart
-//        })
-        return root
+        return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,10 +61,28 @@ class ScheduleFragment : Fragment() {
         scheduleViewModel.initData(edit = false)
         configRecyclerView()
         (activity as MainActivity).toolbar_edit.setOnClickListener {
-            it.toolbar_edit.text = "Save"
+            it.visibility = View.GONE
+            (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
             scheduleViewModel.initData(edit = true)
-            configRecyclerView()
         }
+        (activity as MainActivity).toolbar_save.setOnClickListener {
+            it.visibility = View.GONE
+            (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
+            scheduleViewModel.initData(edit = false)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e("OnPause","works")
+        (activity as MainActivity).toolbar_save.visibility = View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
+        (activity as MainActivity).toolbar_edit.visibility = View.GONE
+//        scheduleViewModel.initData(edit = true)
     }
 
     private fun configRecyclerView(){
@@ -82,7 +95,6 @@ class ScheduleFragment : Fragment() {
                     LessonToScheduleNodeBinder(
                     object : LessonToScheduleNodeBinder.Callback {
                         override fun onItemClicked(item: AddLessonToScheduleModel) {
-                            Log.e("AddLessonToSchedule", item.day)
                             view?.findNavController()?.navigate(
                                 R.id.nav_lessons,
                                 LessonsFragment.newInstance(day = item.day, couple = item.couple
@@ -92,7 +104,7 @@ class ScheduleFragment : Fragment() {
                     })
                 )
             )
-            //Log.e("data", (data as List<TreeNode<LayoutItemType>>?).toString())
+
             adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
                 override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
                     if (!node?.isLeaf()!!) {
