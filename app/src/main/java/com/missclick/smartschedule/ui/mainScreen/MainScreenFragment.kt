@@ -10,13 +10,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.missclick.smartschedule.App
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.SectionsPagerAdapter
 import com.missclick.smartschedule.data.repository.LessonRepository
-import com.missclick.smartschedule.di.AppComponent
-import com.missclick.smartschedule.di.module.AppModule
 import com.missclick.smartschedule.viewstates.MainViewStates
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.main_screen_fragment.*
@@ -25,25 +22,15 @@ import javax.inject.Inject
 
 class MainScreenFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainScreenFragment()
-    }
-
     private lateinit var viewModel: MainScreenViewModel
     @Inject lateinit var repository: LessonRepository
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
-        val root = inflater.inflate(R.layout.main_screen_fragment, container, false)
-        return root
+        return inflater.inflate(R.layout.main_screen_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +40,6 @@ class MainScreenFragment : Fragment() {
                 activity as MainActivity,
                 childFragmentManager
             )
-        (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             view.findNavController().navigate(R.id.edit_schedule)
         }
@@ -87,7 +73,5 @@ class MainScreenFragment : Fragment() {
         (activity as MainActivity).toolbar_edit.visibility = View.GONE
         (activity as MainActivity).toolbar_save.visibility = View.GONE
     }
-
-
 
 }
