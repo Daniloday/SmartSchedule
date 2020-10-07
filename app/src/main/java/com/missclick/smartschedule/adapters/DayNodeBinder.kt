@@ -18,10 +18,10 @@ class DayNodeBinder : TreeViewBinder<DayNodeBinder.ViewHolder>() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.list_lesson_item
+        return R.layout.day_in_schedule_list_item
     }
 
     class ViewHolder(rootView: View) : TreeViewBinder.ViewHolder(rootView) {
-        var tvName : TextView = rootView.findViewById(R.id.text_name_list_lesson_item)
+        var tvName : TextView = rootView.findViewById(R.id.text_day_schedule_name)
     }
 }
