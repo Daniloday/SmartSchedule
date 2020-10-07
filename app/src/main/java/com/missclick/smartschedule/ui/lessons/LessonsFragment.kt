@@ -23,12 +23,14 @@ class LessonsFragment : Fragment() {
 
     private lateinit var viewModel: LessonsViewModel
     var day : String? = null
+    var couple : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LessonsViewModel::class.java)
         arguments?.let {
             day = it.getString("day")
+            couple = it.getInt("couple")
         }
     }
 
@@ -56,7 +58,7 @@ class LessonsFragment : Fragment() {
                         }
                         else{
                             //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
-                            viewModel.addLessonToSchedule(day = day!!, lessonModel = item)
+                            viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item)
                             (activity as MainActivity).onBackPressed()
                         }
                     }
@@ -69,12 +71,14 @@ class LessonsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getLessons()
+        Log.e("OnResume","works!")
     }
 
     companion object {
-        fun newInstance(param : String) : Bundle {
+        fun newInstance(day : String, couple : Int) : Bundle {
             return Bundle().apply {
-                putString("day", param)
+                putString("day", day)
+                putInt("couple", couple)
             }
         }
     }

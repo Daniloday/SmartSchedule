@@ -17,7 +17,7 @@ class LessonInSchedule(var lessonModel: LessonModel) : LayoutItemType{
 
 }
 
-class AddLessonToScheduleModel(var day : String) : LayoutItemType{
+class AddLessonToScheduleModel(val day : String, val couple: Int) : LayoutItemType{
     override fun getLayoutId(): Int {
         return R.layout.schedule_add_lesson_to_schedule_list_item
     }

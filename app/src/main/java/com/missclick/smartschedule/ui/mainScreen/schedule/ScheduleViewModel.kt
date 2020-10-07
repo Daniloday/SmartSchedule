@@ -44,36 +44,46 @@ class ScheduleViewModel : ViewModel() {
     private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>){
         val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val daysEntity = repository.getAllDays()
-
         for(day in days) {
-            val node = TreeNode(ScheduleModel(day))
-            addChildToDay(node = node,
-                day = day,
-                lessons = getLessonsInDay(days = daysEntity, day = day))
-            nodes.add(node)
+            val weekDay = TreeNode(ScheduleModel(day))
+            for(couple in 1..4){
+                val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
+                if (lessonId != null) weekDay.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
+                else weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
+            }
+            nodes.add(weekDay)
         }
     }
 
-    private fun getLessonsInDay(days : List<DayEntity>, day: String) : List<Int>{
-        val lessons = mutableListOf<Int>()
+    private fun getLessonId(days : List<DayEntity>, day: String, couple : Int) : Int?{
         for (dayEntity in days){
-            if(dayEntity.dayName == day)
-                lessons.add(dayEntity.lessonId)
+                if(dayEntity.dayName == day && dayEntity.couple == couple)
+                    return dayEntity.lessonId
         }
-        return lessons
+        return null
     }
 
-    private suspend fun addChildToDay(node : TreeNode<ScheduleModel>, day : String, lessons : List<Int>){
-        val dayList = listOf<ScheduleModel>()
-        for(lessonId in lessons)
-            node.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
-        if(dayList.isEmpty()) {
-            Log.e("ScheduleViewModel", "empty")
-            node.addChild(TreeNode(AddLessonToScheduleModel(day)))
-        }
+//    private fun getLessonsInDay(days : List<DayEntity>, day: String) : List<Int>{
+//        val lessons = mutableListOf<Int>()
+//        for (dayEntity in days){
+//                if(dayEntity.dayName == day)
+//                    lessons.add(dayEntity.lessonId)
+//        }
+//        return lessons
+//    }
 
-    }
-}
+//    private suspend fun addChildToDay(node : TreeNode<ScheduleModel>, day : String, lessons : List<Int>){
+//        val dayList = listOf<ScheduleModel>()
+//        for(lessonId in lessons)
+//            node.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
+//        if(dayList.isEmpty()) {
+//            Log.e("ScheduleViewModel", "empty")
+//            node.addChild(TreeNode(AddLessonToScheduleModel(day)))
+//        }
+//
+//    }
+//
+
 
 //        val monday = TreeNode<ScheduleModel>(ScheduleModel("Monday"))
 //        nodes.add(monday)
@@ -82,3 +92,6 @@ class ScheduleViewModel : ViewModel() {
 //        val thu = TreeNode<ScheduleModel>(ScheduleModel("Thursday"))
 //        nodes.add(thu)
 //        thu.addChild(TreeNode(ScheduleModel("kirienko")))
+
+
+}

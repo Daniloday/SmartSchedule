@@ -65,7 +65,7 @@ class ScheduleFragment : Fragment() {
         scheduleViewModel.nodesLiveData.observe(viewLifecycleOwner, Observer {
             recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
             val adapter = TreeViewAdapter(it as List<TreeNode<LayoutItemType>>?,
-                Arrays.asList(DayNodeBinder(),
+                listOf(DayNodeBinder(),
                     LessonsNodeBinder(),
                     LessonToScheduleNodeBinder(
                     object : LessonToScheduleNodeBinder.Callback {
@@ -73,7 +73,7 @@ class ScheduleFragment : Fragment() {
                             Log.e("AddLessonToSchedule", item.day)
                             view?.findNavController()?.navigate(
                                 R.id.nav_lessons,
-                                LessonsFragment.newInstance(item.day
+                                LessonsFragment.newInstance(day = item.day, couple = item.couple
                                 )
                             )
                         }
