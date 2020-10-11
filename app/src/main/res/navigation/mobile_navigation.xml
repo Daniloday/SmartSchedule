@@ -37,7 +37,16 @@
         android:id="@+id/nav_main_screen"
         android:name="com.missclick.smartschedule.ui.mainScreen.MainScreenFragment"
         android:label="main_screen_fragment"
-        tools:layout="@layout/main_screen_fragment" />
+        tools:layout="@layout/main_screen_fragment"
+        >
+
+
+        <action
+            android:id="@+id/action_nav_main_screen_self"
+            app:destination="@id/nav_main_screen"
+            app:launchSingleTop="false"
+            />
+    </fragment>
     <fragment
         android:id="@+id/nav_lessons"
         android:name="com.missclick.smartschedule.ui.lessons.LessonsFragment"

@@ -41,6 +41,7 @@ class ScheduleFragment : Fragment() {
     private lateinit var scheduleViewModel: ScheduleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.e("fragment", "schedule")
         super.onCreate(savedInstanceState)
         arguments?.let {
             paramStart = it.getString("from")
@@ -85,6 +86,8 @@ class ScheduleFragment : Fragment() {
                     configRecyclerData(state.data)
                 }
                 is ScheduleViewStates.LoadedState -> {
+                    Log.e("state", "loaded")
+                    Log.e("adapter", state.data.toString())
                     progress_bar_schedule.visibility = View.GONE
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE

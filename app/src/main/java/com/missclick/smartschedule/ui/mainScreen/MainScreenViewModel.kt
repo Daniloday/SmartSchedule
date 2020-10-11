@@ -20,7 +20,7 @@ class MainScreenViewModel : ViewModel() {
     // TODO: Implement the ViewModel
     val state = MutableLiveData<MainViewStates>().default(initialValue = MainViewStates.LoadedState(Schedule()))
 
-    fun kek(){
-        repository.getSchedule()
-    }
+//    fun kek(){
+//        repository.getSchedule()
+//    }
 }
