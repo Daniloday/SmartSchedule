@@ -67,10 +67,5 @@ class MainScreenFragment : Fragment() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-        (activity as MainActivity).toolbar_edit.visibility = View.GONE
-        (activity as MainActivity).toolbar_save.visibility = View.GONE
-    }
 
 }

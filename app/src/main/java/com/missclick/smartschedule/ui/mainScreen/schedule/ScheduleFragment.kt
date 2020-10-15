@@ -5,12 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,13 +18,12 @@ import com.missclick.smartschedule.adapters.EmptyLessonsNodeBinder
 import com.missclick.smartschedule.adapters.LessonToScheduleNodeBinder
 import com.missclick.smartschedule.adapters.LessonsNodeBinder
 import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
-import com.missclick.smartschedule.data.models.EmptyLesson
+import com.missclick.smartschedule.data.models.LessonInSchedule
 import com.missclick.smartschedule.data.models.ScheduleModel
 import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
 import com.missclick.smartschedule.viewstates.ScheduleViewStates
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.app_bar_main.view.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import tellh.com.recyclertreeview_lib.LayoutItemType
 import tellh.com.recyclertreeview_lib.TreeNode
@@ -77,7 +73,7 @@ class ScheduleFragment : Fragment() {
                     (activity as MainActivity).toolbar_edit.visibility = View.GONE
                     (activity as MainActivity).toolbar_save.visibility = View.GONE
                     progress_bar_schedule.visibility = View.VISIBLE
-                    scheduleViewModel.initData()
+                    scheduleViewModel.initData(state.edit)
                 }
                 is ScheduleViewStates.EditingState -> {
                     progress_bar_schedule.visibility = View.GONE
@@ -106,16 +102,27 @@ class ScheduleFragment : Fragment() {
         scheduleViewModel.onResume()
     }
 
+
     private fun configRecyclerData(data : ArrayList<TreeNode<ScheduleModel>>){
         recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
         val adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
             listOf(DayNodeBinder(),
                 EmptyLessonsNodeBinder(),
-                LessonsNodeBinder(),
+                LessonsNodeBinder(
+                    object : LessonsNodeBinder.Callback {
+                        override fun onItemClicked(item: LessonInSchedule) {
+                            scheduleViewModel.onPause(2)
+                            view?.findNavController()?.navigate(
+                                R.id.lessonInfoFragment,
+                                LessonInfoFragment.newInstance(param = item.lessonModel)
+                            )
+                        }
+                    }
+                ),
                 LessonToScheduleNodeBinder(
                     object : LessonToScheduleNodeBinder.Callback {
                         override fun onItemClicked(item: AddLessonToScheduleModel) {
-                            scheduleViewModel.onPause = true
+                            scheduleViewModel.onPause(1)
                             view?.findNavController()?.navigate(
                                 R.id.nav_lessons,
                                 LessonsFragment.newInstance(day = item.day, couple = item.couple
@@ -125,11 +132,12 @@ class ScheduleFragment : Fragment() {
                     })
             )
         )
+
         adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
             override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
-                if (!node?.isLeaf()!!) {
+                if (!node?.isLeaf!!) {
                     //Update and toggle the node.
-                    onToggle(!node.isExpand(), holder);
+                    onToggle(!node.isExpand, holder);
 //                    if (!node.isExpand())
 //                        adapter.collapseBrotherNode(node);
                 }
@@ -146,8 +154,10 @@ class ScheduleFragment : Fragment() {
             }
 
         })
-        Log.e("SchFragment", data[0].childList[0].content.toString())
         recycler_schedule.adapter = adapter
+//        val view1: View = recycler_schedule.findViewHolderForAdapterPosition(1)!!.itemView
+//        view1.callOnClick()
+//        recycler_schedule.findViewHolderForAdapterPosition(2)!!.itemView.performClick()
     }
 
     companion object {

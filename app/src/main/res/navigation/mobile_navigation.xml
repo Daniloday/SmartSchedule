@@ -18,17 +18,6 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_export"
-        android:name="com.missclick.smartschedule.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_export"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.missclick.smartschedule.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/nav_schedule"
         android:name="com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment"
         android:label="fragment_schedule"
@@ -69,11 +58,7 @@
         android:label="fragment_lesson_info"
         tools:layout="@layout/lesson_info_fragment" />
 
-    <fragment
-        android:id="@+id/edit_schedule"
-        android:name="com.missclick.smartschedule.ui.mainScreen.edit.EditScheduleFragment"
-        android:label="edit_schedule_fragment"
-        tools:layout="@layout/edit_schedule_fragment" />
+
 
 
 </navigation>

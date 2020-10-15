@@ -49,7 +49,7 @@ class EditLessonFragment : Fragment() {
             lesson!!.teacherName = edit_teacher_name.text.toString()
             lesson!!.description = edit_description.text.toString()
             viewModel.editLesson(lesson = lesson!!)
-            it.findNavController().navigate(R.id.nav_lessons)
+            it.findNavController().popBackStack()
         }
     }
 

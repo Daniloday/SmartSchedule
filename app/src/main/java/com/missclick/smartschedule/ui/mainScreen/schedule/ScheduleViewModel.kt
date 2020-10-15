@@ -18,43 +18,43 @@ import kotlinx.coroutines.withContext
 import tellh.com.recyclertreeview_lib.TreeNode
 import java.util.prefs.NodeChangeEvent
 import javax.inject.Inject
+import kotlin.reflect.typeOf
 
 class ScheduleViewModel : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
-    var edit: Boolean = false
-    var onPause: Boolean = false
-
+    var onPause: Int = 0 // 0 - not onPause, 1 - in add lesson, 2 - in info
     var nodesLiveData = MutableLiveData<ArrayList<TreeNode<ScheduleModel>>>()
     var editStateLiveData = MutableLiveData<Boolean>()
-    val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState)
-    //val stateRedactor = MutableLiveData<RedactorState>().default(initialValue = RedactorState.Saving)
+    val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState())
 
     init {
         App.appComponent.inject(this)
-        //lessonsLiveData.value = lessons
     }
 
     fun editSchedule(){
-        edit = true
-        stateData.value = ScheduleViewStates.LoadingState
+        stateData.value = ScheduleViewStates.LoadingState(true)
     }
 
     fun onResume(){
-        if(onPause) editSchedule()
-        onPause = false
+        if(onPause == 1) stateData.value = ScheduleViewStates.LoadingState(true)
+        if(onPause == 2) stateData.value = ScheduleViewStates.LoadingState()
+        onPause = 0
+    }
+
+    fun onPause(where : Int){
+        onPause = where
     }
 
     fun saveSchedule(){
-        edit = false
-        stateData.value = ScheduleViewStates.LoadingState
+        stateData.value = ScheduleViewStates.LoadingState()
     }
 
-    fun initData() {
+    fun initData(edit : Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             val nodes = ArrayList<TreeNode<ScheduleModel>>()
-            initAllDays(nodes = nodes)//, edit = edit)
+            initAllDays(nodes = nodes, edit = edit)//, edit = edit)
             withContext(Dispatchers.Main){
                 if (edit) stateData.value = ScheduleViewStates.EditingState(nodes)
                 else stateData.value = ScheduleViewStates.LoadedState(nodes)
@@ -62,7 +62,7 @@ class ScheduleViewModel : ViewModel() {
         }
     }
 
-    private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>){//, edit: Boolean){
+    private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>, edit : Boolean){//, edit: Boolean){
         val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val daysEntity = repository.getAllDays()
         for(day in days) {

@@ -7,7 +7,7 @@ import java.lang.Exception
 
 sealed class ScheduleViewStates {
     //object NoDataState : ScheduleViewStates()
-    object LoadingState : ScheduleViewStates()
+    class LoadingState(var edit : Boolean = false) : ScheduleViewStates()
     class EditingState(var data: ArrayList<TreeNode<ScheduleModel>>) : ScheduleViewStates()
     class LoadedState(var data : ArrayList<TreeNode<ScheduleModel>>) : ScheduleViewStates()
     class ErrorState(e : Exception) : ScheduleViewStates()
