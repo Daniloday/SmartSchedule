@@ -13,14 +13,13 @@ import com.missclick.smartschedule.viewstates.MainViewStates
 import javax.inject.Inject
 
 class MainScreenViewModel : ViewModel() {
+
     @Inject lateinit var repository: ILessonRepository
+
     init {
         App.appComponent.inject(this)
     }
-    // TODO: Implement the ViewModel
-    val state = MutableLiveData<MainViewStates>().default(initialValue = MainViewStates.LoadedState(Schedule()))
 
-//    fun kek(){
-//        repository.getSchedule()
-//    }
+//    val state = MutableLiveData<MainViewStates>().default(initialValue = MainViewStates.LoadedState(Schedule()))
+
 }
