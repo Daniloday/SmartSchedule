@@ -28,6 +28,6 @@
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
         android:text="@string/add_lessons"
-        app:backgroundTint="#2196F3" />
+        app:backgroundTint="#FF8A65" />
 
 </FrameLayout>

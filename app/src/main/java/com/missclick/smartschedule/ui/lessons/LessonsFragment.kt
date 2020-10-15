@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.transition.MaterialSharedAxis
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.LessonAdapter
@@ -32,6 +33,11 @@ class LessonsFragment : Fragment() {
             day = it.getString("day")
             couple = it.getInt("couple")
         }
+        val backward = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        reenterTransition = backward
+
+        val forward = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        exitTransition = forward
     }
 
     override fun onCreateView(

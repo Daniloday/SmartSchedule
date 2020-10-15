@@ -21,19 +21,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginRight="50dp"
-                android:text="edit"
-                android:visibility="gone" />
+                app:iconPadding="0dp"
+                app:iconSize="32dp"
+                android:background="@android:color/transparent"
+                app:icon="@drawable/edit"
+                android:visibility="gone"
+                app:iconTint="#fff"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/toolbar_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="save"
-                android:layout_gravity = "end"
-                android:layout_marginRight="50dp"
-                android:visibility="gone"/>
+                android:layout_gravity="end"
+                app:iconPadding="0dp"
+                android:background="@android:color/transparent"
+                app:iconSize="32dp"
+                app:iconTint="#fff"
+                app:icon="@drawable/save_outlined_diskette"
+                android:visibility="gone" />
 
 
         </com.google.android.material.appbar.MaterialToolbar>

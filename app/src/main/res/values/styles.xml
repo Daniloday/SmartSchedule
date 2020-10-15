@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
 
     <style name="AppTheme" parent="Theme.MaterialComponents">
-        <item name="colorPrimary">#bb86fc</item>
+        <item name="colorPrimary">#FF8A65</item>
         <item name="colorPrimaryVariant">#3700b3</item>
         <item name="colorSecondary">#03DAC6</item>
         <item name="android:colorBackground">@color/background</item>
@@ -10,8 +10,8 @@
         <item name="colorOnPrimary">#000000</item>
         <item name="colorOnBackground">#FFFFFF</item>
         <item name="colorOnSurface">#FFFFFF</item>
-        <item name="android:fontFamily">@font/libre_franklin_thin</item>
-        <item name="fontFamily">@font/libre_franklin_thin</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
 
 
