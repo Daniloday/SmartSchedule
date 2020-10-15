@@ -13,28 +13,28 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Write lesson name:"
             android:layout_gravity="center"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_teacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Write teacher name:"
             android:layout_gravity="center"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Description:"
             android:layout_gravity="center"/>
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_week"
             android:text="Repeat every week"
             android:layout_width="wrap_content"
@@ -48,13 +48,13 @@
             android:layout_gravity="center"
             android:entries="@array/links" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter zoom:"
             android:layout_gravity="center"/>
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
