@@ -1,6 +1,7 @@
 package com.missclick.smartschedule.ui.mainScreen.schedule
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +36,9 @@ class ScheduleFragment : Fragment() {
 
     private var paramStart: String? = null
     private lateinit var scheduleViewModel: ScheduleViewModel
-
+    var LM : Parcelable? = null
+    var adapter : TreeViewAdapter? = null
+    var data : ArrayList<TreeNode<ScheduleModel>>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.e("fragment", "schedule")
         super.onCreate(savedInstanceState)
@@ -58,6 +61,7 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
+//            refresh()
             scheduleViewModel.editSchedule()
         }
 
@@ -69,7 +73,7 @@ class ScheduleFragment : Fragment() {
             when(state){
                 //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
                 is ScheduleViewStates.LoadingState -> {
-                    recycler_schedule.visibility = View.GONE
+//                    recycler_schedule.visibility = View.GONE
                     (activity as MainActivity).toolbar_edit.visibility = View.GONE
                     (activity as MainActivity).toolbar_save.visibility = View.GONE
                     progress_bar_schedule.visibility = View.VISIBLE
@@ -79,7 +83,9 @@ class ScheduleFragment : Fragment() {
                     progress_bar_schedule.visibility = View.GONE
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-                    configRecyclerData(state.data)
+//                    data = state.data
+                    refresh()
+
                 }
                 is ScheduleViewStates.LoadedState -> {
                     Log.e("state", "loaded")
@@ -103,9 +109,20 @@ class ScheduleFragment : Fragment() {
     }
 
 
+    fun refresh(){
+        Log.e("refresh",adapter.toString())
+//        adapter?.refresh(data as List<TreeNode<LayoutItemType>>?)
+//        adapter?.expand()
+//        data?.get(2)?.d
+//        adapter?.
+
+//        this.data?.get(1)?.collapse()
+    }
+
     private fun configRecyclerData(data : ArrayList<TreeNode<ScheduleModel>>){
+        this.data = data
         recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
-        val adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
+        adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
             listOf(DayNodeBinder(),
                 EmptyLessonsNodeBinder(),
                 LessonsNodeBinder(
@@ -133,7 +150,7 @@ class ScheduleFragment : Fragment() {
             )
         )
 
-        adapter.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
+        adapter!!.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener{
             override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
                 if (!node?.isLeaf!!) {
                     //Update and toggle the node.
@@ -155,9 +172,11 @@ class ScheduleFragment : Fragment() {
 
         })
         recycler_schedule.adapter = adapter
-//        val view1: View = recycler_schedule.findViewHolderForAdapterPosition(1)!!.itemView
-//        view1.callOnClick()
-//        recycler_schedule.findViewHolderForAdapterPosition(2)!!.itemView.performClick()
+
+
+//        recycler_schedule.setAddStatesFromChildren(true)
+        if(LM != null ) (recycler_schedule.layoutManager as LinearLayoutManager).onRestoreInstanceState(LM)
+
     }
 
     companion object {
