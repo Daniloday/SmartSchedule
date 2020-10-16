@@ -7,13 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
-import com.missclick.smartschedule.adapters.groupie.DayAdapter
-import com.missclick.smartschedule.adapters.groupie.LessonAdapter
+import com.missclick.smartschedule.adapters.groupie.DayItem
+import com.missclick.smartschedule.adapters.groupie.LessonItem
 import com.missclick.smartschedule.adapters.tree.DayNodeBinder
 import com.missclick.smartschedule.adapters.tree.EmptyLessonsNodeBinder
 import com.missclick.smartschedule.adapters.tree.LessonToScheduleNodeBinder
@@ -23,17 +22,15 @@ import com.missclick.smartschedule.data.models.LessonInSchedule
 import com.missclick.smartschedule.data.models.ScheduleModel
 import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.viewstates.ScheduleViewStates
-import com.xwray.groupie.ExpandableGroup
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Section
+import com.xwray.groupie.*
+import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import tellh.com.recyclertreeview_lib.LayoutItemType
 import tellh.com.recyclertreeview_lib.TreeNode
 import tellh.com.recyclertreeview_lib.TreeViewAdapter
 import java.util.*
-
+import kotlin.text.Typography.section
 
 
 class ScheduleFragment : Fragment() {
@@ -41,10 +38,7 @@ class ScheduleFragment : Fragment() {
     private var paramStart: String? = null
     private lateinit var scheduleViewModel: ScheduleViewModel
 
-    //    var adapter : TreeViewAdapter? = null
-//    var data : ArrayList<TreeNode<ScheduleModel>>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("fragment", "schedule")
         super.onCreate(savedInstanceState)
         arguments?.let {
             paramStart = it.getString("from")
@@ -63,10 +57,8 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        groupie()
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
-//            refresh()
             scheduleViewModel.editSchedule()
         }
 
@@ -89,7 +81,7 @@ class ScheduleFragment : Fragment() {
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
 //                    configRecyclerData(state.data)
-                    groupie()
+                    groupie(state.data)
                 }
                 is ScheduleViewStates.LoadedState -> {
                     Log.e("state", "loaded")
@@ -98,7 +90,7 @@ class ScheduleFragment : Fragment() {
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
 //                    configRecyclerData(state.data)
-                    groupie()
+                    groupie(state.data)
                 }
                 is ScheduleViewStates.ErrorState -> {
                     //TODO exception (nado sdelat try catch dlya raboti s bd)
@@ -114,15 +106,7 @@ class ScheduleFragment : Fragment() {
     }
 
 
-    fun refresh() {
-//        Log.e("refresh",adapter.toString())
-//        adapter?.refresh(data as List<TreeNode<LayoutItemType>>?)
-//        adapter?.expand()
-//        data?.get(2)?.d
-//        adapter?.
 
-//        this.data?.get(1)?.collapse()
-    }
 
     private fun configRecyclerData(data: ArrayList<TreeNode<ScheduleModel>>) {
         recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
@@ -185,59 +169,21 @@ class ScheduleFragment : Fragment() {
     }
 
     //groupie
-    fun groupie() {
-        val excitingSection = Section()
-        val boringFancyItems = generateFancyItems(6)
-        val excitingFancyItems = generateFancyItems(12)
+    fun groupie(data: List<List<Item>>) {
+        val groupAdapter = GroupAdapter<GroupieViewHolder>()
 
-        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
-            spanCount = 1
+        for (day in data){
+            ExpandableGroup(DayItem("Monday")).apply {
+                add(Section(day))
+                groupAdapter.add(this)
+            }
         }
 
         recycler_schedule.apply {
-            layoutManager =
-                GridLayoutManager((activity as MainActivity), groupAdapter.spanCount).apply {
-                    spanSizeLookup = groupAdapter.spanSizeLookup
-                }
+            layoutManager = LinearLayoutManager(activity as MainActivity)
             adapter = groupAdapter
         }
-
-        ExpandableGroup(DayAdapter("Boring Group"), true).apply {
-            add(Section(boringFancyItems))
-            groupAdapter.add(this)
-        }
-
-        ExpandableGroup(DayAdapter("Exciting Group"), false).apply {
-            excitingSection.addAll(excitingFancyItems)
-            add(excitingSection)
-            groupAdapter.add(this)
-        }
     }
-
-    private fun generateFancyItems(count: Int): MutableList<LessonAdapter> {
-        return MutableList(count) {
-            LessonAdapter(10)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-////        return when (item.itemId) {
-////            R.id.action_settings -> true
-////            else -> super.onOptionsItemSelected(item)
-////        }
-//    }
-
-
-
 
     companion object {
         @JvmStatic

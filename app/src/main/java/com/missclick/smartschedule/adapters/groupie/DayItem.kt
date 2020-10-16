@@ -7,10 +7,10 @@ import kotlinx.android.synthetic.main.schedule_day.*
 import kotlinx.android.synthetic.main.schedule_lesson.*
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.ExpandableItem
+import kotlinx.android.synthetic.main.day_in_schedule_list_item.*
 
 
-
-class DayAdapter(private val title: String)
+class DayItem(private val title: String)
     : Item(), ExpandableItem{
 
     private lateinit var expandableGroup: ExpandableGroup
@@ -18,24 +18,16 @@ class DayAdapter(private val title: String)
 
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-//        viewHolder.text_day_schedule.text = title
-//        viewHolder.item_expandable_header_icon.setImageResource(getRotatedIconResId())
 
-        viewHolder.item_expandable_header_root.setOnClickListener {
+        viewHolder.day_in_schedule_root.setOnClickListener {
             expandableGroup.onToggleExpanded()
-//            viewHolder.item_expandable_header_icon.setImageResource(getRotatedIconResId())
         }
     }
 
-    override fun getLayout() = R.layout.schedule_lesson
+    override fun getLayout() = R.layout.day_in_schedule_list_item
 
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
         expandableGroup = onToggleListener
     }
 
-//    private fun getRotatedIconResId() =
-//        if (expandableGroup.isExpanded)
-//            R.drawable.ic_keyboard_arrow_up_black_24dp
-//        else
-//            R.drawable.ic_keyboard_arrow_down_black_24dp
 }

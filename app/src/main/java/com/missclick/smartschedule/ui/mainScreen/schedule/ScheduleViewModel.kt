@@ -5,12 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
+import com.missclick.smartschedule.adapters.groupie.AddLessonButtonItem
+import com.missclick.smartschedule.adapters.groupie.LessonEmptyItem
+import com.missclick.smartschedule.adapters.groupie.LessonItem
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.models.*
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import com.missclick.smartschedule.extensions.default
 import com.missclick.smartschedule.viewstates.MainViewStates
 import com.missclick.smartschedule.viewstates.ScheduleViewStates
+import com.xwray.groupie.Section
+import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -51,33 +56,63 @@ class ScheduleViewModel : ViewModel() {
         stateData.value = ScheduleViewStates.LoadingState()
     }
 
+
     fun initData(edit : Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
-            val nodes = ArrayList<TreeNode<ScheduleModel>>()
-            initAllDays(nodes = nodes, edit = edit)//, edit = edit)
+            val days : MutableList<MutableList<Item>> = mutableListOf()
+            initAllDays(daysItem = days, edit = edit)
             withContext(Dispatchers.Main){
-                if (edit) stateData.value = ScheduleViewStates.EditingState(nodes)
-                else stateData.value = ScheduleViewStates.LoadedState(nodes)
+                if (edit) stateData.value = ScheduleViewStates.EditingState(days)
+                else stateData.value = ScheduleViewStates.LoadedState(days)
             }
         }
     }
 
-    private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>, edit : Boolean){//, edit: Boolean){
+
+//    fun initData(edit : Boolean) {
+//        GlobalScope.launch(Dispatchers.IO) {
+//            val nodes = ArrayList<TreeNode<ScheduleModel>>()
+//            initAllDays(nodes = nodes, edit = edit)//, edit = edit)
+//            withContext(Dispatchers.Main){
+//                if (edit) stateData.value = ScheduleViewStates.EditingState(nodes)
+//                else stateData.value = ScheduleViewStates.LoadedState(nodes)
+//            }
+//        }
+//    }
+
+    private suspend fun initAllDays(daysItem: MutableList<MutableList<Item>>, edit : Boolean){
         val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val daysEntity = repository.getAllDays()
         for(day in days) {
-            val weekDay = TreeNode(ScheduleModel(day))
+            val weekDay : MutableList<Item> = mutableListOf()
             for(couple in 1..4){
                 val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
-                if (lessonId != null) weekDay.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
+                if (lessonId != null) weekDay.add(LessonItem(repository.getLessonById(lessonId)))
                 else {
-                    if(edit) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
-                        else weekDay.addChild(TreeNode(EmptyLesson()))
+                    if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple))
+                    else weekDay.add(LessonEmptyItem())
                 }
             }
-            nodes.add(weekDay)
+            daysItem.add(weekDay)
         }
     }
+
+//    private suspend fun initAllDays(nodes : ArrayList<TreeNode<ScheduleModel>>, edit : Boolean){//, edit: Boolean){
+//        val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+//        val daysEntity = repository.getAllDays()
+//        for(day in days) {
+//            val weekDay = TreeNode(ScheduleModel(day))
+//            for(couple in 1..4){
+//                val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
+//                if (lessonId != null) weekDay.addChild(TreeNode(LessonInSchedule(repository.getLessonById(lessonId))))
+//                else {
+//                    if(edit) weekDay.addChild(TreeNode(AddLessonToScheduleModel(day = day, couple = couple)))
+//                        else weekDay.addChild(TreeNode(EmptyLesson()))
+//                }
+//            }
+//            nodes.add(weekDay)
+//        }
+//    }
 
     private fun getLessonId(days : List<DayEntity>, day: String, couple : Int) : Int?{
         for (dayEntity in days){
