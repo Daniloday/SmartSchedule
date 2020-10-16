@@ -1,20 +1,22 @@
-package com.missclick.smartschedule.adapters
+package com.missclick.smartschedule.adapters.tree
 
 import android.view.View
 import android.widget.TextView
 import com.missclick.smartschedule.R
-import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
 import com.missclick.smartschedule.data.models.LessonInSchedule
-import com.missclick.smartschedule.data.models.LessonModel
 import tellh.com.recyclertreeview_lib.TreeNode
 import tellh.com.recyclertreeview_lib.TreeViewBinder
 
 class LessonsNodeBinder(var callback: Callback) : TreeViewBinder<LessonsNodeBinder.ViewHolder>() {
     override fun provideViewHolder(itemView: View?): ViewHolder? {
-        return itemView?.let { LessonsNodeBinder.ViewHolder(it) }
+        return itemView?.let {
+            ViewHolder(
+                it
+            )
+        }
     }
 
-    override fun bindView(holder: LessonsNodeBinder.ViewHolder?, p1: Int, node: TreeNode<*>?) {
+    override fun bindView(holder: ViewHolder?, p1: Int, node: TreeNode<*>?) {
         val lessonNode = node?.content as LessonInSchedule
         holder?.tvName?.text = lessonNode.lessonModel.lessonName
         holder?.tvType?.text = lessonNode.lessonModel.type
