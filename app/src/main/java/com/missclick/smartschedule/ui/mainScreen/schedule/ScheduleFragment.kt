@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.groupie.DayItem
+import com.missclick.smartschedule.adapters.groupie.LessonEmptyItem
 import com.missclick.smartschedule.adapters.groupie.LessonItem
 import com.missclick.smartschedule.adapters.tree.DayNodeBinder
 import com.missclick.smartschedule.adapters.tree.EmptyLessonsNodeBinder
@@ -26,6 +27,7 @@ import com.xwray.groupie.*
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.coroutines.flow.callbackFlow
 import tellh.com.recyclertreeview_lib.LayoutItemType
 import tellh.com.recyclertreeview_lib.TreeNode
 import tellh.com.recyclertreeview_lib.TreeViewAdapter
@@ -37,6 +39,8 @@ class ScheduleFragment : Fragment() {
 
     private var paramStart: String? = null
     private lateinit var scheduleViewModel: ScheduleViewModel
+    private lateinit var groupAdapter : GroupAdapter<GroupieViewHolder>
+    private var data = mutableListOf<Section>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +61,7 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        recycleInit()
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             scheduleViewModel.editSchedule()
         }
@@ -70,18 +74,17 @@ class ScheduleFragment : Fragment() {
             when (state) {
                 //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
                 is ScheduleViewStates.LoadingState -> {
-                    recycler_schedule.visibility = View.GONE
+//                    recycler_schedule.visibility = View.GONE
                     (activity as MainActivity).toolbar_edit.visibility = View.GONE
                     (activity as MainActivity).toolbar_save.visibility = View.GONE
-                    progress_bar_schedule.visibility = View.VISIBLE
+//                    progress_bar_schedule.visibility = View.VISIBLE
                     scheduleViewModel.initData(state.edit)
                 }
                 is ScheduleViewStates.EditingState -> {
                     progress_bar_schedule.visibility = View.GONE
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-//                    configRecyclerData(state.data)
-                    groupie(state.data)
+                    recyclerUpdate(state.data)
                 }
                 is ScheduleViewStates.LoadedState -> {
                     Log.e("state", "loaded")
@@ -89,8 +92,7 @@ class ScheduleFragment : Fragment() {
                     progress_bar_schedule.visibility = View.GONE
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-//                    configRecyclerData(state.data)
-                    groupie(state.data)
+                    recyclerUpdate(state.data)
                 }
                 is ScheduleViewStates.ErrorState -> {
                     //TODO exception (nado sdelat try catch dlya raboti s bd)
@@ -169,21 +171,29 @@ class ScheduleFragment : Fragment() {
     }
 
     //groupie
-    fun groupie(data: List<List<Item>>) {
-        val groupAdapter = GroupAdapter<GroupieViewHolder>()
-
-        for (day in data){
-            ExpandableGroup(DayItem("Monday")).apply {
-                add(Section(day))
+    private fun recycleInit() {
+        groupAdapter = GroupAdapter()
+        for (i in 0..4){
+            val dayName =  resources.getStringArray(R.array.week_days)[i]
+            ExpandableGroup(DayItem(dayName)).apply {
+                val section = Section()
+                add(section)
+                data.add(section)
                 groupAdapter.add(this)
             }
         }
-
         recycler_schedule.apply {
             layoutManager = LinearLayoutManager(activity as MainActivity)
             adapter = groupAdapter
         }
     }
+
+    private fun recyclerUpdate(newData : List<List<Item>>){
+        for (i in 0..4){
+            data[i].update(newData[i])
+        }
+    }
+
 
     companion object {
         @JvmStatic
@@ -194,5 +204,4 @@ class ScheduleFragment : Fragment() {
                 }
             }
     }
-
 }

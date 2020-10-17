@@ -15,7 +15,8 @@ class LessonItem(private val lesson: LessonModel) : Item() {
 
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.text_name_list_lesson_in_schedule_item.text = lesson.id.toString()
+        viewHolder.text_name_list_lesson_in_schedule_item.text = lesson.lessonName
+        viewHolder.text_type_lesson_in_schedule_item.text = lesson.type
     }
 
     override fun getLayout() = R.layout.schedule_lesson_in_schedule
