@@ -79,6 +79,7 @@ class ScheduleFragment : Fragment() {
                     (activity as MainActivity).toolbar_save.visibility = View.GONE
 //                    progress_bar_schedule.visibility = View.VISIBLE
                     scheduleViewModel.initData(state.edit)
+                    Log.e("state","loading")
                 }
                 is ScheduleViewStates.EditingState -> {
                     progress_bar_schedule.visibility = View.GONE
@@ -107,6 +108,11 @@ class ScheduleFragment : Fragment() {
         scheduleViewModel.onResume()
     }
 
+    override fun onPause() {
+        super.onPause()
+        scheduleViewModel.onPause()
+    }
+
 
 
 
@@ -120,7 +126,7 @@ class ScheduleFragment : Fragment() {
                     object :
                         LessonsNodeBinder.Callback {
                         override fun onItemClicked(item: LessonInSchedule) {
-                            scheduleViewModel.onPause(2)
+//                            scheduleViewModel.onPause(2)
 //                            view?.findNavController()?.navigate(
 //                                R.id.lessonInfoFragment,
 //                                LessonInfoFragment.newInstance(param = item.lessonModel)
@@ -133,7 +139,7 @@ class ScheduleFragment : Fragment() {
                     object :
                         LessonToScheduleNodeBinder.Callback {
                         override fun onItemClicked(item: AddLessonToScheduleModel) {
-                            scheduleViewModel.onPause(1)
+//                            scheduleViewModel.onPause(1)
                             view?.findNavController()?.navigate(
                                 R.id.nav_lessons,
                                 LessonsFragment.newInstance(
@@ -189,6 +195,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun recyclerUpdate(newData : List<List<Item>>){
+        Log.e("recycle","update")
         for (i in 0..4){
             data[i].update(newData[i])
         }

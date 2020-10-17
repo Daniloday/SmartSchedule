@@ -40,16 +40,18 @@ class ScheduleViewModel : ViewModel() {
 
     fun editSchedule(){
         stateData.value = ScheduleViewStates.LoadingState(true)
+
     }
 
     fun onResume(){
+        Log.e("View",onPause.toString())
         if(onPause == 1) stateData.value = ScheduleViewStates.LoadingState(true)
         if(onPause == 2) stateData.value = ScheduleViewStates.LoadingState()
-        onPause = 0
+//        onPause = 0
     }
 
-    fun onPause(where : Int){
-        onPause = where
+    fun onPause(){
+        onPause = 1
     }
 
     fun saveSchedule(){
@@ -74,7 +76,7 @@ class ScheduleViewModel : ViewModel() {
         for(day in days) {
             val weekDay : MutableList<Item> = mutableListOf()
             for(couple in 1..4){
-                val lessonId = getLessonId(days = daysEntity, day = day, couple = couple)
+                val lessonId = getLessonById(days = daysEntity, day = day, couple = couple)
                 if (lessonId != null) weekDay.add(LessonItem(repository.getLessonById(lessonId)))
                 else {
                     if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple))
@@ -85,7 +87,7 @@ class ScheduleViewModel : ViewModel() {
         }
     }
 
-    private fun getLessonId(days : List<DayEntity>, day: String, couple : Int) : Int?{
+    private fun getLessonById(days : List<DayEntity>, day: String, couple : Int) : Int?{
         for (dayEntity in days){
                 if(dayEntity.dayName == day && dayEntity.couple == couple)
                     return dayEntity.lessonId

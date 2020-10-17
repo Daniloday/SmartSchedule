@@ -65,7 +65,7 @@ class LessonsFragment : Fragment() {
                         else{
                             //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
                             viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item)
-                            (activity as MainActivity).onBackPressed()
+                            view.findNavController().popBackStack()
                         }
                     }
                 }
