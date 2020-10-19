@@ -6,33 +6,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.groupie.DayItem
-import com.missclick.smartschedule.adapters.groupie.LessonEmptyItem
-import com.missclick.smartschedule.adapters.groupie.LessonItem
-import com.missclick.smartschedule.adapters.tree.DayNodeBinder
-import com.missclick.smartschedule.adapters.tree.EmptyLessonsNodeBinder
-import com.missclick.smartschedule.adapters.tree.LessonToScheduleNodeBinder
-import com.missclick.smartschedule.adapters.tree.LessonsNodeBinder
-import com.missclick.smartschedule.data.models.AddLessonToScheduleModel
-import com.missclick.smartschedule.data.models.LessonInSchedule
-import com.missclick.smartschedule.data.models.ScheduleModel
-import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.viewstates.ScheduleViewStates
 import com.xwray.groupie.*
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.coroutines.flow.callbackFlow
-import tellh.com.recyclertreeview_lib.LayoutItemType
-import tellh.com.recyclertreeview_lib.TreeNode
-import tellh.com.recyclertreeview_lib.TreeViewAdapter
-import java.util.*
-import kotlin.text.Typography.section
 
 
 class ScheduleFragment : Fragment() {

@@ -30,7 +30,6 @@ class ScheduleViewModel : ViewModel() {
     @Inject
     lateinit var repository: ILessonRepository
     var onPause: Int = 0 // 0 - not onPause, 1 - in add lesson, 2 - in info
-    var nodesLiveData = MutableLiveData<ArrayList<TreeNode<ScheduleModel>>>()
     var editStateLiveData = MutableLiveData<Boolean>()
     val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState())
 
