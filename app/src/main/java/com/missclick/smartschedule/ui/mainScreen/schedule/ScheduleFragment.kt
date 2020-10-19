@@ -41,7 +41,8 @@ class ScheduleFragment : Fragment() {
     private lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var groupAdapter : GroupAdapter<GroupieViewHolder>
     private var data = mutableListOf<Section>()
-
+    private  var expData = mutableListOf<Boolean>()
+    private var expDataGroup = mutableListOf<ExpandableGroup>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -89,7 +90,6 @@ class ScheduleFragment : Fragment() {
                 }
                 is ScheduleViewStates.LoadedState -> {
                     Log.e("state", "loaded")
-                    Log.e("adapter", state.data.toString())
                     progress_bar_schedule.visibility = View.GONE
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
@@ -110,87 +110,35 @@ class ScheduleFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        scheduleViewModel.onPause()
+        expData = mutableListOf()
+        for(state in expDataGroup){
+            expData.add(state.isExpanded)
+        }
     }
 
-
-
-
-    private fun configRecyclerData(data: ArrayList<TreeNode<ScheduleModel>>) {
-        recycler_schedule.layoutManager = LinearLayoutManager(activity as MainActivity)
-        val adapter = TreeViewAdapter(data as List<TreeNode<LayoutItemType>>?,
-            listOf(
-                DayNodeBinder(),
-                EmptyLessonsNodeBinder(),
-                LessonsNodeBinder(
-                    object :
-                        LessonsNodeBinder.Callback {
-                        override fun onItemClicked(item: LessonInSchedule) {
-//                            scheduleViewModel.onPause(2)
-//                            view?.findNavController()?.navigate(
-//                                R.id.lessonInfoFragment,
-//                                LessonInfoFragment.newInstance(param = item.lessonModel)
-//                            )
-                            data[1].expand()
-                        }
-                    }
-                ),
-                LessonToScheduleNodeBinder(
-                    object :
-                        LessonToScheduleNodeBinder.Callback {
-                        override fun onItemClicked(item: AddLessonToScheduleModel) {
-//                            scheduleViewModel.onPause(1)
-                            view?.findNavController()?.navigate(
-                                R.id.nav_lessons,
-                                LessonsFragment.newInstance(
-                                    day = item.day, couple = item.couple
-                                )
-                            )
-                        }
-                    })
-            )
-        )
-
-        adapter!!.setOnTreeNodeListener(object : TreeViewAdapter.OnTreeNodeListener {
-            override fun onClick(node: TreeNode<*>?, holder: RecyclerView.ViewHolder?): Boolean {
-                if (!node?.isLeaf!!) {
-                    //Update and toggle the node.
-                    onToggle(!node.isExpand, holder);
-//                    if (!node.isExpand())
-//                        adapter.collapseBrotherNode(node);
-                }
-                return false
-            }
-
-            override fun onToggle(p0: Boolean, p1: RecyclerView.ViewHolder?) {
-//                val dirViewHolder: DirectoryNodeBinder.ViewHolder =
-//                    holder as DirectoryNodeBinder.ViewHolder
-//                val ivArrow: ImageView = dirViewHolder.getIvArrow()
-//                val rotateDegree = if (isExpand) 90 else -90
-//                ivArrow.animate().rotationBy(rotateDegree)
-//                    .start()
-            }
-
-        })
-        recycler_schedule.adapter = adapter
-
-    }
-
-    //groupie
     private fun recycleInit() {
+        Log.e("recycle", "init")
+        data = mutableListOf()
+        expDataGroup = mutableListOf<ExpandableGroup>()
         groupAdapter = GroupAdapter()
         for (i in 0..4){
             val dayName =  resources.getStringArray(R.array.week_days)[i]
-            ExpandableGroup(DayItem(dayName)).apply {
+            val exp = ExpandableGroup(DayItem(dayName)).apply {
                 val section = Section()
                 add(section)
                 data.add(section)
                 groupAdapter.add(this)
             }
+            expDataGroup.add(exp)
         }
         recycler_schedule.apply {
             layoutManager = LinearLayoutManager(activity as MainActivity)
             adapter = groupAdapter
+        }
+        if (expData.size != 0 ){
+            for (i in 0..4){
+                expDataGroup[i].isExpanded = expData[i]
+            }
         }
     }
 

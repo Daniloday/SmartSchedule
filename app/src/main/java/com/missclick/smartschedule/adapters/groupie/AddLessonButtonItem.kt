@@ -7,7 +7,7 @@ import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.schedule_add_lesson_to_schedule_list_item.*
 
-class AddLessonButtonItem(private val day: String, private val couple : Int) : Item() {
+class AddLessonButtonItem(private val day: String, private val couple : Int, private val callback: ItemClickCallback) : Item() {
 
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
@@ -18,10 +18,14 @@ class AddLessonButtonItem(private val day: String, private val couple : Int) : I
                     day = day, couple = couple
                 )
             )
+            callback.onItemClicked()
         }
     }
 
     override fun getLayout() = R.layout.schedule_add_lesson_to_schedule_list_item
 
+    interface ItemClickCallback{
+        fun onItemClicked()
+    }
 
 }
