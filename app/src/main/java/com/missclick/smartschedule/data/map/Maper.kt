@@ -17,15 +17,15 @@ fun mapLessonEntityToModel(lessonEntity: LessonEntity) : LessonModel {
 }
 
 fun mapLessonModelToEntity(lessonModel: LessonModel) : LessonEntity{
-    val linksStr = lessonModel.links
-    val links = mapToStr(linksStr)
+    val links = mapToStr(lessonModel.links)
     return LessonEntity(
         id = lessonModel.id,
         name = lessonModel.lessonName,
         teacherName = lessonModel.teacherName,
+        type = lessonModel.type,
         links = links,
-        description = lessonModel.description,
-        type = lessonModel.type
+        description = lessonModel.description
+
     )
 }
 

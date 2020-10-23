@@ -5,6 +5,7 @@ import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
+import com.missclick.smartschedule.data.map.mapLessonModelToEntity
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.Schedule
 
@@ -25,8 +26,8 @@ class LessonRepository(
         return lessonsModels
     }
 
-    override fun insertLesson(lessonEntity: LessonEntity) {
-        //local.insertLessonAsync(lessonEntity = mapLessonModelToEntity(lessonModel))
+    override fun insertLesson(lessonModel : LessonModel) {
+        val lessonEntity = mapLessonModelToEntity(lessonModel = lessonModel)
         local.insertLessonAsync(lessonEntity = lessonEntity)
 
     }

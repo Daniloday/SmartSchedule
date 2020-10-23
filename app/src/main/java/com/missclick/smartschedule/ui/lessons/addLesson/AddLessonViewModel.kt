@@ -1,8 +1,5 @@
 package com.missclick.smartschedule.ui.lessons.addLesson
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
@@ -19,34 +16,15 @@ class AddLessonViewModel : ViewModel() {
         App.appComponent.inject(this)
     }
 
-    private val _text = MutableLiveData<String>().apply {
-        value = ""
-    }
-    var links : MutableLiveData<String> = _text
-
-    fun addLesson(old: String, add : String, spinChoose : String){
-
-        fun validator(a : String, b : String ) : Boolean{
-            val list = b.split(",", ":")
-            for( i in list)
-                if (i == a) return true
-            return false
-        }
-
-        var new = ""
-
-        if (add != "" && !validator(a = spinChoose, b = old)){
-            new = if (old != "")
-                "$old,$spinChoose:$add"
-            else
-                "$spinChoose:$add"
-        }
-        links.value = new
-    }
-
-    fun saveLesson(lessonName : String, teacherName : String, links : String, description : String, type: String){
-        Log.e("DeepLinks",links)
-        val entity = LessonEntity(name = lessonName, teacherName = teacherName, links = "Zoom:default", description = description, type = type)
-        repository.insertLesson(entity)
+    fun saveLesson(lessonName: String, teacherName: String, links: Map<String, String>, description: String, type: String){
+        val lesson = LessonModel(
+            lessonName = lessonName,
+            teacherName = teacherName,
+            type = type,
+            links = links,
+            description = description
+        )
+//        val entity = LessonEntity(name = lessonName, teacherName = teacherName, links = "link", description = description, type = type)
+        repository.insertLesson(lessonModel = lesson)
     }
 }

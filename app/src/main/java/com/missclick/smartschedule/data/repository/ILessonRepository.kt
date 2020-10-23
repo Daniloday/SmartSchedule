@@ -8,7 +8,7 @@ import com.missclick.smartschedule.data.models.Schedule
 interface ILessonRepository {
     fun getSchedule() : Schedule
     suspend fun getLessons() : List<LessonModel>
-    fun insertLesson(lessonEntity: LessonEntity)
+    fun insertLesson(lessonModel: LessonModel)
     fun insertDay(dayEntity: DayEntity)
     suspend fun getAllDays() : List<DayEntity>
     suspend fun getLessonById(lessonId : Int) : LessonModel

@@ -7,15 +7,8 @@ data class LessonModel(
     var id : Int? = null,
     var lessonName : String,
     var teacherName : String,
-    //var times : List<LessonTime>,
-    var links : Map<String, String>,
-    var description : String,
-    //var week : Int
     var type: String,
-    var week : Int = 0
+    var links : Map<String, String>,
+    var description : String
 ):Serializable
 
-data class LessonTime(
-    var time : String,
-    var date : String
-)
