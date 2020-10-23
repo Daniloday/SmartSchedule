@@ -1,5 +1,6 @@
 package com.missclick.smartschedule.data.datasource.local
 
+import android.provider.Settings
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import kotlinx.coroutines.*
@@ -33,6 +34,12 @@ class LocalDataSource(var database : ScheduleDatabase){
     fun getLessonByIdAsync(lessonId: Int) : Deferred<LessonEntity>{
         return GlobalScope.async {
             database.lessonsDao().getLessonById(id = lessonId)
+        }
+    }
+
+    fun deleteDayAsync(dayEntity: DayEntity){
+        GlobalScope.async {
+            database.dayDao().removeDay(dayEntity = dayEntity)
         }
     }
 }

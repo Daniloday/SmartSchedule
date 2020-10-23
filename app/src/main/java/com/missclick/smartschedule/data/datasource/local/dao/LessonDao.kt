@@ -1,9 +1,6 @@
 package com.missclick.smartschedule.data.datasource.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 
 @Dao
@@ -16,4 +13,7 @@ interface LessonDao{
 
     @Query("SELECT * FROM lessons WHERE lessonId = :id")
     fun getLessonById(id : Int) : LessonEntity
+
+    @Delete
+    fun removeLesson(lessonEntity: LessonEntity)
 }

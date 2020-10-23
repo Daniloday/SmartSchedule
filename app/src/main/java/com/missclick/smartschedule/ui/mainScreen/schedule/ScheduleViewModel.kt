@@ -77,7 +77,8 @@ class ScheduleViewModel() : ViewModel() {
         for(day in days) {
             val weekDay : MutableList<Item> = mutableListOf()
             for(couple in 1..4){
-                val lessonId = getLessonById(days = daysEntity, day = day, couple = couple, week = week)
+                val dayEntity = getLessonById(days = daysEntity, day = day, couple = couple, week = week)
+                val lessonId = dayEntity?.lessonId
                 if (lessonId != null)
                     if(edit)
                         weekDay.add(LessonItem(repository.getLessonById(lessonId),
@@ -86,8 +87,14 @@ class ScheduleViewModel() : ViewModel() {
                                     get() = true
                                 override fun onItemClicked() {
                                     //todo delete from repository
-                                    initData(edit = true)
-                                    ScheduleViewStates.LoadingState(edit = true)
+                                    //repository.deleteDay(repository.getLessonById(lessonId))
+                                    GlobalScope.launch(Dispatchers.IO){
+                                        repository.deleteDay(dayEntity)
+                                        withContext(Dispatchers.Main){
+                                            initData(edit = true)
+                                            ScheduleViewStates.LoadingState(edit = true)
+                                        }
+                                    }
                                 }
                             }))
                     else
@@ -114,11 +121,11 @@ class ScheduleViewModel() : ViewModel() {
         }
     }
 
-    private fun getLessonById(days : List<DayEntity>, day: String, couple : Int, week: Int) : Int?{
+    private fun getLessonById(days : List<DayEntity>, day: String, couple : Int, week: Int) : DayEntity?{
         for (dayEntity in days){
                 if(dayEntity.dayName == day && dayEntity.couple == couple &&
                     (dayEntity.week == 0 || dayEntity.week == week))
-                    return dayEntity.lessonId
+                    return dayEntity
         }
         return null
     }

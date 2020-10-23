@@ -12,4 +12,5 @@ interface ILessonRepository {
     fun insertDay(dayEntity: DayEntity)
     suspend fun getAllDays() : List<DayEntity>
     suspend fun getLessonById(lessonId : Int) : LessonModel
+    suspend fun deleteDay(dayEntity: DayEntity)
 }

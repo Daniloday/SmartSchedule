@@ -1,15 +1,12 @@
 package com.missclick.smartschedule.data.repository
 
-import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
-import com.missclick.smartschedule.data.map.mapLessonModelToEntity
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.Schedule
-import javax.inject.Inject
 
 class LessonRepository(
     var local : LocalDataSource,
@@ -39,13 +36,16 @@ class LessonRepository(
     }
 
     override suspend fun getAllDays(): List<DayEntity> {
-        val list = local.getAllDaysAsync().await()
-        return list
+        return local.getAllDaysAsync().await()
     }
 
     override suspend fun getLessonById(lessonId : Int): LessonModel {
         val entity = local.getLessonByIdAsync(lessonId = lessonId).await()
         return mapLessonEntityToModel(lessonEntity = entity)
+    }
+
+    override suspend fun deleteDay(dayEntity: DayEntity) {
+        local.deleteDayAsync(dayEntity = dayEntity)
     }
 
 }
