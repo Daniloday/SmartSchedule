@@ -82,12 +82,11 @@ class ScheduleViewModel() : ViewModel() {
                 if (lessonId != null)
                     if(edit)
                         weekDay.add(LessonItem(repository.getLessonById(lessonId),
+                            edit = true,
                             callback = object : LessonItem.ItemClickCallback{
                                 override val edit: Boolean
                                     get() = true
                                 override fun onItemClicked() {
-                                    //todo delete from repository
-                                    //repository.deleteDay(repository.getLessonById(lessonId))
                                     GlobalScope.launch(Dispatchers.IO){
                                         repository.deleteDay(dayEntity)
                                         withContext(Dispatchers.Main){
@@ -99,6 +98,7 @@ class ScheduleViewModel() : ViewModel() {
                             }))
                     else
                         weekDay.add(LessonItem(repository.getLessonById(lessonId),
+                            edit = false,
                             callback = object : LessonItem.ItemClickCallback{
                                 override val edit: Boolean
                                     get() = false

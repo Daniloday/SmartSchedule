@@ -1,6 +1,7 @@
 package com.missclick.smartschedule.adapters.groupie
 
 
+import android.view.View
 import androidx.annotation.ColorInt
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +16,16 @@ import kotlinx.android.synthetic.main.schedule_lesson.*
 import kotlinx.android.synthetic.main.schedule_lesson_in_schedule.*
 
 
-class LessonItem(private val lesson: LessonModel, private val callback: LessonItem.ItemClickCallback) : Item() {
+class LessonItem(private val lesson: LessonModel,
+                 private val callback: ItemClickCallback,
+                 private val edit: Boolean) : Item() {
 
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.text_name_list_lesson_in_schedule_item.text = lesson.lessonName
         viewHolder.text_type_lesson_in_schedule_item.text = lesson.type
+        if(edit) viewHolder.text_delete_lesson.visibility = View.VISIBLE
+        else viewHolder.text_delete_lesson.visibility = View.INVISIBLE
         viewHolder.card_view_schedule_lesson.setOnClickListener{
             if(!callback.edit){
                 it.findNavController()?.navigate(
@@ -30,6 +35,7 @@ class LessonItem(private val lesson: LessonModel, private val callback: LessonIt
                     )
                 )
             }
+
             callback.onItemClicked()
         }
     }

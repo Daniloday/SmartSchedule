@@ -17,6 +17,7 @@ import com.xwray.groupie.*
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.schedule_lesson_in_schedule.*
 
 
 class ScheduleFragment : Fragment() {
