@@ -22,12 +22,14 @@ class LessonItem(private val lesson: LessonModel, private val callback: LessonIt
         viewHolder.text_name_list_lesson_in_schedule_item.text = lesson.lessonName
         viewHolder.text_type_lesson_in_schedule_item.text = lesson.type
         viewHolder.card_view_schedule_lesson.setOnClickListener{
-            it.findNavController()?.navigate(
-                R.id.lessonInfoFragment,
-                LessonInfoFragment.newInstance(
-                    param = lesson
+            if(!callback.edit){
+                it.findNavController()?.navigate(
+                    R.id.lessonInfoFragment,
+                    LessonInfoFragment.newInstance(
+                        param = lesson
+                    )
                 )
-            )
+            }
             callback.onItemClicked()
         }
     }
@@ -35,6 +37,7 @@ class LessonItem(private val lesson: LessonModel, private val callback: LessonIt
     override fun getLayout() = R.layout.schedule_lesson_in_schedule
 
     interface ItemClickCallback{
+        val edit : Boolean
         fun onItemClicked()
     }
 }

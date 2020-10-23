@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.DayOfWeek
 import javax.inject.Inject
 
 class LessonsViewModel : ViewModel() {
@@ -26,10 +27,10 @@ class LessonsViewModel : ViewModel() {
         //lessonsLiveData.value = lessons
     }
 
-    fun addLessonToSchedule(day : String, couple : Int, lessonModel: LessonModel){
+    fun addLessonToSchedule(day : String, couple : Int, lessonModel: LessonModel, week : Int){
         GlobalScope.launch(Dispatchers.IO){
             lessonModel.id?.let {
-                DayEntity(dayName = day, lessonId = it, couple = couple)
+                DayEntity(dayName = day, lessonId = it, couple = couple, week = week)
             }?.let {
                 repository.insertDay(dayEntity = it)
             }

@@ -19,6 +19,9 @@ data class DayEntity (
     var lessonId : Int,
 
     @ColumnInfo(name = "couple")
-    var couple : Int
+    var couple : Int,
+
+    @ColumnInfo(name = "week")
+    var week : Int
 
 )

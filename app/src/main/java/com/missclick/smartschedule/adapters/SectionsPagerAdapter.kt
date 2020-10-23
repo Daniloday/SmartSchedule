@@ -16,10 +16,10 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
 
         return if(position == 0){
             Log.e("adapter", "schedule")
-            ScheduleFragment.newInstance("from 1")
+            ScheduleFragment.newInstance(week = 1)
         } else{
             Log.e("adapter", "schedule")
-            ScheduleFragment.newInstance("from 2")
+            ScheduleFragment.newInstance(week = 2)
         }
     }
 

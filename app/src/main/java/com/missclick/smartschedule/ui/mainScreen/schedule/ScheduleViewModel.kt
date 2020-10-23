@@ -25,12 +25,11 @@ import java.util.prefs.NodeChangeEvent
 import javax.inject.Inject
 import kotlin.reflect.typeOf
 
-class ScheduleViewModel : ViewModel() {
+class ScheduleViewModel() : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
-    var onPause: Int = 0 // 0 - not onPause, 1 - in add lesson, 2 - in info
-    var editStateLiveData = MutableLiveData<Boolean>()
+    private var onPause: Int = 0 // 0 - not onPause, 1 - in add lesson, 2 - in info
     val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState())
 
     init {
@@ -60,30 +59,48 @@ class ScheduleViewModel : ViewModel() {
 
     fun initData(edit : Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
-            val days : MutableList<MutableList<Item>> = mutableListOf()
-            initAllDays(daysItem = days, edit = edit)
+            val days1 : MutableList<MutableList<Item>> = mutableListOf()
+            val days2 : MutableList<MutableList<Item>> = mutableListOf()
+            initAllDays(daysItem = days1, edit = edit, week = 1)
+            initAllDays(daysItem = days2, edit = edit, week = 2)
             withContext(Dispatchers.Main){
-                if (edit) stateData.value = ScheduleViewStates.EditingState(days)
-                else stateData.value = ScheduleViewStates.LoadedState(days)
+                if (edit) stateData.value = ScheduleViewStates.EditingState(days1,days2)
+                else stateData.value = ScheduleViewStates.LoadedState(days1, days2)
+                onPause(0)
             }
         }
     }
 
-    private suspend fun initAllDays(daysItem: MutableList<MutableList<Item>>, edit : Boolean){
+    private suspend fun initAllDays(daysItem: MutableList<MutableList<Item>>, edit : Boolean, week: Int){
         val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
         val daysEntity = repository.getAllDays()
         for(day in days) {
             val weekDay : MutableList<Item> = mutableListOf()
             for(couple in 1..4){
-                val lessonId = getLessonById(days = daysEntity, day = day, couple = couple)
-                if (lessonId != null) weekDay.add(LessonItem(repository.getLessonById(lessonId),
-                    callback = object : LessonItem.ItemClickCallback{
-                    override fun onItemClicked() {
-                        onPause(2)
-                    }
-                }))
+                val lessonId = getLessonById(days = daysEntity, day = day, couple = couple, week = week)
+                if (lessonId != null)
+                    if(edit)
+                        weekDay.add(LessonItem(repository.getLessonById(lessonId),
+                            callback = object : LessonItem.ItemClickCallback{
+                                override val edit: Boolean
+                                    get() = true
+                                override fun onItemClicked() {
+                                    //todo delete from repository
+                                    initData(edit = true)
+                                    ScheduleViewStates.LoadingState(edit = true)
+                                }
+                            }))
+                    else
+                        weekDay.add(LessonItem(repository.getLessonById(lessonId),
+                            callback = object : LessonItem.ItemClickCallback{
+                                override val edit: Boolean
+                                    get() = false
+                                override fun onItemClicked() {
+                                onPause(2)
+                            }
+                            }))
                 else {
-                    if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple,
+                    if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple,week = week,
                         callback = object : AddLessonButtonItem.ItemClickCallback{
                             override fun onItemClicked() {
                                 onPause(1)
@@ -97,9 +114,10 @@ class ScheduleViewModel : ViewModel() {
         }
     }
 
-    private fun getLessonById(days : List<DayEntity>, day: String, couple : Int) : Int?{
+    private fun getLessonById(days : List<DayEntity>, day: String, couple : Int, week: Int) : Int?{
         for (dayEntity in days){
-                if(dayEntity.dayName == day && dayEntity.couple == couple)
+                if(dayEntity.dayName == day && dayEntity.couple == couple &&
+                    (dayEntity.week == 0 || dayEntity.week == week))
                     return dayEntity.lessonId
         }
         return null

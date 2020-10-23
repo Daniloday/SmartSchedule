@@ -11,7 +11,8 @@ data class LessonModel(
     var links : Map<String, String>,
     var description : String,
     //var week : Int
-    var type: String
+    var type: String,
+    var week : Int = 0
 ):Serializable
 
 data class LessonTime(

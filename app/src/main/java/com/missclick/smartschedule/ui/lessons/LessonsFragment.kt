@@ -16,6 +16,7 @@ import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.LessonAdapter
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.lessons_fragment.*
 import kotlinx.coroutines.GlobalScope
 import java.io.Serializable
@@ -25,6 +26,7 @@ class LessonsFragment : Fragment() {
     private lateinit var viewModel: LessonsViewModel
     var day : String? = null
     var couple : Int? = null
+    var week : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class LessonsFragment : Fragment() {
         arguments?.let {
             day = it.getString("day")
             couple = it.getInt("couple")
+            week = it.getInt("week")
         }
         val backward = MaterialSharedAxis(MaterialSharedAxis.Z, false)
         reenterTransition = backward
@@ -49,6 +52,8 @@ class LessonsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).toolbar_edit.visibility = View.GONE
+        (activity as MainActivity).toolbar_save.visibility = View.GONE
         button_add_lesson.setOnClickListener{
             it.findNavController().navigate(R.id.addLessonFragment)
         }
@@ -64,7 +69,8 @@ class LessonsFragment : Fragment() {
                         }
                         else{
                             //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
-                            viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item)
+                            viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item, week = week!!)
+                            Log.e("LessonAdd",week.toString())
                             view.findNavController().popBackStack()
                         }
                     }
@@ -81,10 +87,11 @@ class LessonsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(day : String, couple : Int) : Bundle {
+        fun newInstance(day : String, couple : Int, week : Int) : Bundle {
             return Bundle().apply {
                 putString("day", day)
                 putInt("couple", couple)
+                putInt("week", week)
             }
         }
     }
