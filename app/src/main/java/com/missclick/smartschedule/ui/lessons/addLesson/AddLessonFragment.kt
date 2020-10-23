@@ -52,41 +52,20 @@ class AddLessonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AddLessonViewModel::class.java)
-        var spinnerChoose = spinner_link.selectedItem.toString()
-        spinner_link.onItemSelectedListener = (object : OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                itemSelected: View, selectedItemPosition: Int, selectedId: Long
-            ) {
-                spinnerChoose = spinner_link.selectedItem.toString()
-                edit_link.hint = "Enter $spinnerChoose"
-            }
-        })
 
-        button_add_link.setOnClickListener {
-            viewModel.addLesson(old = text_choose.text.toString(), add = edit_link.text.toString(),
-            spinChoose = spinnerChoose)
-
-        }
-
-        viewModel.links.observe(viewLifecycleOwner, Observer {
-            text_choose.text = it
-        })
 
         button_save_lesson.setOnClickListener {
             viewModel.saveLesson(
                 lessonName = edit_lesson_name.text.toString(),
                 teacherName = edit_lesson_teacher.text.toString(),
-                links = text_choose.text.toString(),
+                type = spinner_lesson_types.selectedItem.toString(),
+                links = edit_telegram_add_lesson.toString(),
                 description = edit_lesson_description.text.toString()
             )
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view.windowToken, 0)
-            //it.findNavController().navigate(R.id.nav_lessons)
             (activity as MainActivity).onBackPressed()
+
         }
 
     }

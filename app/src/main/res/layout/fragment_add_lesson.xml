@@ -27,45 +27,92 @@
             android:hint="Write teacher name:"
             android:layout_gravity="center"/>
 
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_lesson_types"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/lesson_types" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Telegram: "/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter telegram"
+                android:id="@+id/edit_telegram_add_lesson"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zoom: "/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter telegram"
+                android:id="@+id/edit_zoom_add_lesson"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone: "/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter telegram"
+                android:id="@+id/edit_phone_add_lesson"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E-mail: "/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter telegram"
+                android:id="@+id/edit_email_add_lesson"/>
+
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Description:"
-            android:layout_gravity="center"/>
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_week"
-            android:text="Repeat every week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-        <Spinner
-            android:id="@+id/spinner_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:entries="@array/links" />
+            android:hint="Description:" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Enter zoom:"
-            android:layout_gravity="center"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_add_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:layout_gravity="center"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_choose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save_lesson"
