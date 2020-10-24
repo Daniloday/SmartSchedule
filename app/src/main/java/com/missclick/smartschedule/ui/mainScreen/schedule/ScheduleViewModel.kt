@@ -1,7 +1,6 @@
 package com.missclick.smartschedule.ui.mainScreen.schedule
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
@@ -12,18 +11,13 @@ import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.models.*
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import com.missclick.smartschedule.extensions.default
-import com.missclick.smartschedule.viewstates.MainViewStates
 import com.missclick.smartschedule.viewstates.ScheduleViewStates
-import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import tellh.com.recyclertreeview_lib.TreeNode
-import java.util.prefs.NodeChangeEvent
 import javax.inject.Inject
-import kotlin.reflect.typeOf
 
 class ScheduleViewModel() : ViewModel() {
 
@@ -121,7 +115,7 @@ class ScheduleViewModel() : ViewModel() {
         }
     }
 
-    private fun getLessonById(days : List<DayEntity>, day: String, couple : Int, week: Int) : DayEntity?{
+    private fun getLessonById(days: List<ScheduleDayModel>, day: String, couple: Int, week: Int) : ScheduleDayModel? {
         for (dayEntity in days){
                 if(dayEntity.dayName == day && dayEntity.couple == couple &&
                     (dayEntity.week == 0 || dayEntity.week == week))

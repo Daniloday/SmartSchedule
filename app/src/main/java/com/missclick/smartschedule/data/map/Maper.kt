@@ -1,7 +1,10 @@
 package com.missclick.smartschedule.data.map
 
+import android.util.Log
+import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.models.LessonModel
+import com.missclick.smartschedule.data.models.ScheduleDayModel
 
 fun mapLessonEntityToModel(lessonEntity: LessonEntity) : LessonModel {
     val linksStr = lessonEntity.links
@@ -10,9 +13,9 @@ fun mapLessonEntityToModel(lessonEntity: LessonEntity) : LessonModel {
         id = lessonEntity.id,
         lessonName = lessonEntity.name,
         teacherName = lessonEntity.teacherName,
+        type = lessonEntity.type,
         links = links,
-        description = lessonEntity.description,
-        type = lessonEntity.type
+        description = lessonEntity.description
     )
 }
 
@@ -25,22 +28,46 @@ fun mapLessonModelToEntity(lessonModel: LessonModel) : LessonEntity{
         type = lessonModel.type,
         links = links,
         description = lessonModel.description
+    )
+}
 
+fun mapDayEntityToScheduleDayModel(dayEntity: DayEntity) : ScheduleDayModel{
+    return ScheduleDayModel(
+        id = dayEntity.id,
+        dayName = dayEntity.dayName,
+        lessonId = dayEntity.lessonId,
+        couple = dayEntity.couple,
+        week = dayEntity.week
+    )
+}
+
+fun mapScheduleDayModelToEntity(scheduleDayModel: ScheduleDayModel) : DayEntity{
+    return DayEntity(
+        id = scheduleDayModel.id,
+        dayName = scheduleDayModel.dayName,
+        lessonId = scheduleDayModel.lessonId,
+        couple = scheduleDayModel.couple,
+        week = scheduleDayModel.week
     )
 }
 
 //map() -> "zoom":"link","tg":"link" ...
 fun mapToStr(map : Map<String, String>) : String{
-    return "zoom:link"
+    var links = ""
+    for((key, value) in map){
+        links += "$key:$value,"
+    }
+    links = links.dropLast(1)
+    return links
 }
 
 // "zoom":"link","tg":"link" ... -> map()
-fun strToMap(str : String) : Map<String, String>{
+fun strToMap(strLinks : String) : Map<String, String>{
     val links = mutableMapOf<String, String>()
-    val splitedStr = str.split(",")
-    for(cell in splitedStr){
-        val splited2 = cell.split(":")
-        links[splited2[0]] = splited2[1]
+    val couples = strLinks.split(",")
+    for(couple in couples){
+        val splitCouple = couple.split(":")
+        links[splitCouple[0]] = splitCouple[1]
     }
     return links
 }

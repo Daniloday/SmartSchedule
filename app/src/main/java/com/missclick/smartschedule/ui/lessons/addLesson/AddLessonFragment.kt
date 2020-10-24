@@ -3,6 +3,7 @@ package com.missclick.smartschedule.ui.lessons.addLesson
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,14 +48,15 @@ class AddLessonFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(AddLessonViewModel::class.java)
 
 
-        val links = mapOf(
-            edit_telegram_add_lesson.toString() to "telegram",
-            edit_zoom_add_lesson.toString() to "zoom",
-            edit_phone_add_lesson.toString() to "phone",
-            edit_email_add_lesson.toString() to "email"
-        )
+
 
         button_save_lesson.setOnClickListener {
+            val links = mapOf(
+                "telegram" to edit_telegram_add_lesson.text.toString(),
+                "zoom" to edit_zoom_add_lesson.text.toString(),
+                "phone" to edit_phone_add_lesson.text.toString(),
+                "email" to edit_email_add_lesson.text.toString()
+            )
             viewModel.saveLesson(
                 lessonName = edit_lesson_name.text.toString(),
                 teacherName = edit_lesson_teacher.text.toString(),

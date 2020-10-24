@@ -1,9 +1,6 @@
 package com.missclick.smartschedule.viewstates
 
-import com.missclick.smartschedule.data.models.Schedule
-import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.Item
-import tellh.com.recyclertreeview_lib.TreeNode
 import java.lang.Exception
 
 sealed class ScheduleViewStates {

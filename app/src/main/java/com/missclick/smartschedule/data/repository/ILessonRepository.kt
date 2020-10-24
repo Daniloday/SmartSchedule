@@ -1,16 +1,18 @@
 package com.missclick.smartschedule.data.repository
 
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
-import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.models.LessonModel
-import com.missclick.smartschedule.data.models.Schedule
+import com.missclick.smartschedule.data.models.ScheduleDayModel
 
 interface ILessonRepository {
-    fun getSchedule() : Schedule
+
+    // with lesson
     suspend fun getLessons() : List<LessonModel>
-    fun insertLesson(lessonModel: LessonModel)
-    fun insertDay(dayEntity: DayEntity)
-    suspend fun getAllDays() : List<DayEntity>
+    fun insertLesson(lessonModel : LessonModel)
     suspend fun getLessonById(lessonId : Int) : LessonModel
-    suspend fun deleteDay(dayEntity: DayEntity)
+
+    //with scheduleDay
+    fun insertDay(scheduleDayModel : ScheduleDayModel)
+    suspend fun getAllDays() : List<ScheduleDayModel>
+    suspend fun deleteDay(scheduleDayModel: ScheduleDayModel)
 }

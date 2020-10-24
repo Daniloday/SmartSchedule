@@ -6,6 +6,7 @@ import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.models.LessonModel
+import com.missclick.smartschedule.data.models.ScheduleDayModel
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -30,9 +31,10 @@ class LessonsViewModel : ViewModel() {
     fun addLessonToSchedule(day : String, couple : Int, lessonModel: LessonModel, week : Int){
         GlobalScope.launch(Dispatchers.IO){
             lessonModel.id?.let {
-                DayEntity(dayName = day, lessonId = it, couple = couple, week = week)
+                ScheduleDayModel(dayName = day, lessonId = it, couple = couple, week = week)
+//                DayEntity(dayName = day, lessonId = it, couple = couple, week = week)
             }?.let {
-                repository.insertDay(dayEntity = it)
+                repository.insertDay(scheduleDayModel = it)
             }
         }
     }

@@ -2,28 +2,30 @@ package com.missclick.smartschedule.data.repository
 
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
-import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
+import com.missclick.smartschedule.data.map.mapDayEntityToScheduleDayModel
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
 import com.missclick.smartschedule.data.map.mapLessonModelToEntity
+import com.missclick.smartschedule.data.map.mapScheduleDayModelToEntity
 import com.missclick.smartschedule.data.models.LessonModel
-import com.missclick.smartschedule.data.models.Schedule
+import com.missclick.smartschedule.data.models.ScheduleDayModel
 
 class LessonRepository(
     var local : LocalDataSource,
     var remote : RemoteDataSource
 ) : ILessonRepository{
 
-    override fun getSchedule(): Schedule {
-        return Schedule()
-    }
+//    override fun getSchedule(): ScheduleDayModel {
+//        return ScheduleDayModel()
+//    }
 
+    //function with lesson
     override suspend fun getLessons(): List<LessonModel> {
-        val lessonsEntities =  local.getLessonsAsync().await()
-        val lessonsModels = mutableListOf<LessonModel>()
-        for(lesson in lessonsEntities)
-            lessonsModels.add(mapLessonEntityToModel(lessonEntity = lesson))
-        return lessonsModels
+        val lessonEntities =  local.getLessonsAsync().await()
+        val lessonModels = mutableListOf<LessonModel>()
+        for(lesson in lessonEntities)
+            lessonModels.add(mapLessonEntityToModel(lessonEntity = lesson))
+        return lessonModels
     }
 
     override fun insertLesson(lessonModel : LessonModel) {
@@ -32,20 +34,27 @@ class LessonRepository(
 
     }
 
-    override fun insertDay(dayEntity: DayEntity) {
-        local.insertLessonToScheduleAsync(dayEntity = dayEntity)
-    }
-
-    override suspend fun getAllDays(): List<DayEntity> {
-        return local.getAllDaysAsync().await()
-    }
-
     override suspend fun getLessonById(lessonId : Int): LessonModel {
         val entity = local.getLessonByIdAsync(lessonId = lessonId).await()
         return mapLessonEntityToModel(lessonEntity = entity)
     }
 
-    override suspend fun deleteDay(dayEntity: DayEntity) {
+    //function with scheduleDay
+    override fun insertDay(scheduleDayModel: ScheduleDayModel) {
+        val dayEntity = mapScheduleDayModelToEntity(scheduleDayModel = scheduleDayModel)
+        local.insertLessonToScheduleAsync(dayEntity = dayEntity)
+    }
+
+    override suspend fun getAllDays(): List<ScheduleDayModel> {
+        val dayEntities = local.getAllDaysAsync().await()
+        val scheduleDayModels = mutableListOf<ScheduleDayModel>()
+        for(day in dayEntities)
+            scheduleDayModels.add(mapDayEntityToScheduleDayModel(dayEntity = day))
+        return scheduleDayModels
+    }
+
+    override suspend fun deleteDay(scheduleDayModel: ScheduleDayModel) {
+        val dayEntity = mapScheduleDayModelToEntity(scheduleDayModel = scheduleDayModel)
         local.deleteDayAsync(dayEntity = dayEntity)
     }
 
