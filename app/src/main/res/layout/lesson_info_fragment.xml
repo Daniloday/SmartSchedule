@@ -46,7 +46,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button_telegram_info_lesson"
-                app:icon="@drawable/ic_launcher_foreground"/>
+                android:text="tg"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_zoom_info_lesson"
+                android:text="zoom"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_phone_info_lesson"
+                android:text="phone"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_email_info_lesson"
+                android:text="email"/>
 
 
         </LinearLayout>

@@ -1,5 +1,7 @@
 package com.missclick.smartschedule.ui.lessons.info
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Parcelable
@@ -61,7 +63,31 @@ class LessonInfoFragment : Fragment() {
         text_lesson_types_info_lesson.text = paramStart!!.type
         text_lesson_description_info_lesson.text = paramStart!!.description
 
-        //todo links
+
+
+        button_telegram_info_lesson.setOnClickListener{
+            val tg = "http://t.me/" + paramStart!!.links["telegram"]
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tg))
+            startActivity(intent)
+        }
+
+        button_zoom_info_lesson.setOnClickListener{
+            val zoom = paramStart!!.links["zoom"]
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(zoom))
+            startActivity(intent)
+        }
+
+        button_email_info_lesson.setOnClickListener{
+            val email = "mailto:" + paramStart!!.links["email"]
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse(email))
+            startActivity(intent)
+        }
+
+        button_phone_info_lesson.setOnClickListener{
+            val phone = "tel:" + paramStart!!.links["phone"]
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
+            startActivity(intent)
+        }
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             view.findNavController().navigate(R.id.editFragment,EditLessonFragment.newInstance(
