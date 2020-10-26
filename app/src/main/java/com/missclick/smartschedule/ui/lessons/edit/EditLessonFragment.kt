@@ -41,7 +41,7 @@ class EditLessonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         edit_lesson_name_edit_lesson.setText(lesson!!.lessonName)
         edit_lesson_teacher_edit_lesson.setText(lesson!!.teacherName)
-//        spinner_lesson_types_edit_lesson.
+//        spinner_lesson_types_edit_lesson.todo spinner
         edit_telegram_edit_lesson.setText(lesson!!.links["telegram"])
         edit_zoom_edit_lesson.setText(lesson!!.links["zoom"])
         edit_phone_edit_lesson.setText(lesson!!.links["phone"])
@@ -52,6 +52,7 @@ class EditLessonFragment : Fragment() {
             hideSoftInputFromWindow(view.windowToken, 0)
             lesson!!.lessonName = edit_lesson_name_edit_lesson.text.toString()
             lesson!!.teacherName = edit_lesson_teacher_edit_lesson.text.toString()
+            //todo spinner type
             lesson!!.links["telegram"] = edit_telegram_edit_lesson.text.toString()
             lesson!!.links["zoom"] = edit_zoom_edit_lesson.text.toString()
             lesson!!.links["phone"] = edit_phone_edit_lesson.text.toString()

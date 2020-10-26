@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.lessons.info.LessonInfoFragment">
 
 
@@ -13,29 +14,45 @@
         android:gravity="center">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_lesson_name"
+            android:id="@+id/text_lesson_name_info_lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_lesson_teacher_info_lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_lesson_types_info_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_teacher_name"
+            android:id="@+id/text_lesson_description_info_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-             />
+            android:layout_gravity="center" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_description"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/text_link"
-            android:layout_gravity="center"/>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_telegram_info_lesson"
+                app:icon="@drawable/ic_launcher_foreground"/>
+
+
+        </LinearLayout>
+
+
+
 
 
 

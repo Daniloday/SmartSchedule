@@ -56,9 +56,12 @@ class LessonInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-        text_lesson_name.text = paramStart!!.lessonName
-        text_teacher_name.text = paramStart!!.teacherName
-        text_description.text = paramStart!!.description
+        text_lesson_name_info_lesson.text = paramStart!!.lessonName
+        text_lesson_teacher_info_lesson.text = paramStart!!.teacherName
+        text_lesson_types_info_lesson.text = paramStart!!.type
+        text_lesson_description_info_lesson.text = paramStart!!.description
+
+        //todo links
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             view.findNavController().navigate(R.id.editFragment,EditLessonFragment.newInstance(
