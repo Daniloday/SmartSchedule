@@ -39,15 +39,24 @@ class EditLessonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        edit_lesson_name.setText(lesson!!.lessonName)
-        edit_teacher_name.setText(lesson!!.teacherName)
-        edit_description.setText(lesson!!.description)
-        button_save_edit.setOnClickListener {
+        edit_lesson_name_edit_lesson.setText(lesson!!.lessonName)
+        edit_lesson_teacher_edit_lesson.setText(lesson!!.teacherName)
+//        spinner_lesson_types_edit_lesson.
+        edit_telegram_edit_lesson.setText(lesson!!.links["telegram"])
+        edit_zoom_edit_lesson.setText(lesson!!.links["zoom"])
+        edit_phone_edit_lesson.setText(lesson!!.links["phone"])
+        edit_email_edit_lesson.setText(lesson!!.links["email"])
+        edit_lesson_description_edit_lesson.setText(lesson!!.description)
+        button_save_lesson_edit_lesson.setOnClickListener {
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
             hideSoftInputFromWindow(view.windowToken, 0)
-            lesson!!.lessonName = edit_lesson_name.text.toString()
-            lesson!!.teacherName = edit_teacher_name.text.toString()
-            lesson!!.description = edit_description.text.toString()
+            lesson!!.lessonName = edit_lesson_name_edit_lesson.text.toString()
+            lesson!!.teacherName = edit_lesson_teacher_edit_lesson.text.toString()
+            lesson!!.links["telegram"] = edit_telegram_edit_lesson.text.toString()
+            lesson!!.links["zoom"] = edit_zoom_edit_lesson.text.toString()
+            lesson!!.links["phone"] = edit_phone_edit_lesson.text.toString()
+            lesson!!.links["email"] = edit_email_edit_lesson.text.toString()
+            lesson!!.description = edit_lesson_description_edit_lesson.text.toString()
             viewModel.editLesson(lesson = lesson!!)
             it.findNavController().popBackStack()
         }

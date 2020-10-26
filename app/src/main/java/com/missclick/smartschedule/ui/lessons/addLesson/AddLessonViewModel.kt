@@ -16,7 +16,7 @@ class AddLessonViewModel : ViewModel() {
         App.appComponent.inject(this)
     }
 
-    fun saveLesson(lessonName: String, teacherName: String, links: Map<String, String>, description: String, type: String){
+    fun saveLesson(lessonName: String, teacherName: String, links: MutableMap<String, String>, description: String, type: String){
         val lesson = LessonModel(
             lessonName = lessonName,
             teacherName = teacherName,

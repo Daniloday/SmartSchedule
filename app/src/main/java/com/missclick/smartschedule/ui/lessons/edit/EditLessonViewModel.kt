@@ -17,7 +17,6 @@ class EditLessonViewModel : ViewModel() {
     }
 
     fun editLesson(lesson : LessonModel){
-//        val entity = LessonEntity(name = lesson.lessonName, teacherName = lesson.teacherName, links = "Zoom:default", description = lesson.description, id = lesson.id, type = "Labs")
-        repository.insertLesson(lesson)
+        repository.insertLesson(lessonModel = lesson)
     }
 }

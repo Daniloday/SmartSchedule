@@ -14,21 +14,21 @@
         android:gravity="center">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_lesson_name"
+            android:id="@+id/edit_lesson_name_add_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Write lesson name:"
             android:layout_gravity="center"/>
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_lesson_teacher"
+            android:id="@+id/edit_lesson_teacher_add_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Write teacher name:"
             android:layout_gravity="center"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinner_lesson_types"
+            android:id="@+id/spinner_lesson_types_add_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -107,7 +107,7 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_lesson_description"
+            android:id="@+id/edit_lesson_description_add_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -115,7 +115,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_save_lesson"
+            android:id="@+id/button_save_lesson_add_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

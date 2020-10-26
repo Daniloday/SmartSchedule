@@ -62,7 +62,7 @@ fun mapToStr(map : Map<String, String>) : String{
 }
 
 // "zoom":"link","tg":"link" ... -> map()
-fun strToMap(strLinks : String) : Map<String, String>{
+fun strToMap(strLinks : String) : MutableMap<String, String>{
     val links = mutableMapOf<String, String>()
     val couples = strLinks.split(",")
     for(couple in couples){

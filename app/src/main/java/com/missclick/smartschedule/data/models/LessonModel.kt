@@ -8,7 +8,7 @@ data class LessonModel(
     var lessonName : String,
     var teacherName : String,
     var type: String,
-    var links : Map<String, String>,
+    var links : MutableMap<String, String>,
     var description : String
 ):Serializable
 

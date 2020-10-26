@@ -50,19 +50,19 @@ class AddLessonFragment : Fragment() {
 
 
 
-        button_save_lesson.setOnClickListener {
-            val links = mapOf(
+        button_save_lesson_add_lesson.setOnClickListener {
+            val links = mutableMapOf(
                 "telegram" to edit_telegram_add_lesson.text.toString(),
                 "zoom" to edit_zoom_add_lesson.text.toString(),
                 "phone" to edit_phone_add_lesson.text.toString(),
                 "email" to edit_email_add_lesson.text.toString()
             )
             viewModel.saveLesson(
-                lessonName = edit_lesson_name.text.toString(),
-                teacherName = edit_lesson_teacher.text.toString(),
-                type = spinner_lesson_types.selectedItem.toString(),
+                lessonName = edit_lesson_name_add_lesson.text.toString(),
+                teacherName = edit_lesson_teacher_add_lesson.text.toString(),
+                type = spinner_lesson_types_add_lesson.selectedItem.toString(),
                 links = links,
-                description = edit_lesson_description.text.toString()
+                description = edit_lesson_description_add_lesson.text.toString()
             )
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view.windowToken, 0)
             (activity as MainActivity).onBackPressed()
