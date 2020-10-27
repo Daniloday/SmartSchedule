@@ -79,7 +79,7 @@ class LessonInfoFragment : Fragment() {
 
         button_email_info_lesson.setOnClickListener{
             val email = "mailto:" + paramStart!!.links["email"]
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse(email))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(email))
             startActivity(intent)
         }
 

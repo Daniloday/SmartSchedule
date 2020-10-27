@@ -51,22 +51,22 @@ fun mapScheduleDayModelToEntity(scheduleDayModel: ScheduleDayModel) : DayEntity{
     )
 }
 
-//map() -> "zoom":"link","tg":"link" ...
+//map() -> "zoom"::"link","tg"::"link" ...
 fun mapToStr(map : Map<String, String>) : String{
     var links = ""
     for((key, value) in map){
-        links += "$key:$value,"
+        links += "$key::$value,"
     }
     links = links.dropLast(1)
     return links
 }
 
-// "zoom":"link","tg":"link" ... -> map()
+// "zoom"::"link","tg"::"link" ... -> map()
 fun strToMap(strLinks : String) : MutableMap<String, String>{
     val links = mutableMapOf<String, String>()
     val couples = strLinks.split(",")
     for(couple in couples){
-        val splitCouple = couple.split(":")
+        val splitCouple = couple.split("::")
         links[splitCouple[0]] = splitCouple[1]
     }
     return links
