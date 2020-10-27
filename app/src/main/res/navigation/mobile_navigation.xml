@@ -6,59 +6,86 @@
     app:startDestination="@+id/nav_main_screen">
 
     <fragment
-        android:id="@+id/nav_create"
-        android:name="com.missclick.smartschedule.ui.home.HomeFragment"
-        android:label="@string/menu_create"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_main_screen"
+        android:name="com.missclick.smartschedule.ui.mainScreen.MainScreenFragment"
+        android:label="@string/menu_schedule"
+        tools:layout="@layout/main_screen_fragment"
+        >
+        <action
+            android:id="@+id/action_nav_main_screen_to_nav_lessons"
+            app:destination="@id/nav_lessons" />
+        <action
+            android:id="@+id/action_nav_main_screen_to_nav_import"
+            app:destination="@id/nav_import" />
+        <action
+            android:id="@+id/action_nav_main_screen_to_nav_export"
+            app:destination="@id/nav_export" />
+        <action
+            android:id="@+id/action_nav_main_screen_to_nav_settings"
+            app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_nav_main_screen_to_nav_schedule4"
+            app:destination="@id/nav_schedule" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_lessons"
+        android:name="com.missclick.smartschedule.ui.lessons.LessonsFragment"
+        android:label="@string/menu_lessons"
+        tools:layout="@layout/lessons_fragment" >
+        <action
+            android:id="@+id/action_nav_lessons_to_lesson_info_fragment"
+            app:destination="@id/lesson_info_fragment" />
+        <action
+            android:id="@+id/action_nav_lessons_to_add_lesson_fragment"
+            app:destination="@id/add_lesson_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_import"
-        android:name="com.missclick.smartschedule.ui.gallery.GalleryFragment"
+        android:name="com.missclick.smartschedule.ui.importScreen.ImportFragment"
         android:label="@string/menu_import"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/import_fragment" />
+
+    <fragment
+        android:id="@+id/nav_export"
+        android:name="com.missclick.smartschedule.ui.share.ExportFragment"
+        android:label="@string/menu_export"
+        tools:layout="@layout/export_fragment" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.missclick.smartschedule.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/settings_fragment" />
+
+
+    <fragment
+        android:id="@+id/edit_fragment"
+        android:name="com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment"
+        android:label="Editing"
+        tools:layout="@layout/edit_lesson_fragment" />
+
+    <fragment
+        android:id="@+id/add_lesson_fragment"
+        android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLessonFragment"
+        android:label="@string/add_lesson"
+        tools:layout="@layout/add_lesson_fragment" />
+
+    <fragment
+        android:id="@+id/lesson_info_fragment"
+        android:name="com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment"
+        android:label="Lesson Info"
+        tools:layout="@layout/lesson_info_fragment" >
+        <action
+            android:id="@+id/action_lesson_info_fragment_to_edit_fragment"
+            app:destination="@id/edit_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_schedule"
         android:name="com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment"
         android:label="fragment_schedule"
-        tools:layout="@layout/fragment_schedule" />
-    <fragment
-        android:id="@+id/nav_main_screen"
-        android:name="com.missclick.smartschedule.ui.mainScreen.MainScreenFragment"
-        android:label="Schedule"
-        tools:layout="@layout/main_screen_fragment"
-        >
-
-
-        <action
-            android:id="@+id/action_nav_main_screen_self"
-            app:destination="@id/nav_main_screen"
-            app:launchSingleTop="false"
-            />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_lessons"
-        android:name="com.missclick.smartschedule.ui.lessons.LessonsFragment"
-        android:label="Lessons"
-        tools:layout="@layout/lessons_fragment" />
-    <fragment
-        android:id="@+id/editFragment"
-        android:name="com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment"
-        android:label="Editing"
-        tools:layout="@layout/edit_lesson_fragment" />
-    <fragment
-        android:id="@+id/addLessonFragment"
-        android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLessonFragment"
-        android:label="Add Lesson"
-        tools:layout="@layout/fragment_add_lesson" />
-
-    <fragment
-        android:id="@+id/lessonInfoFragment"
-        android:name="com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment"
-        android:label="Lesson Info"
-        tools:layout="@layout/lesson_info_fragment" />
-
-
-
+        tools:layout="@layout/schedule_fragment" />
 
 </navigation>

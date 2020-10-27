@@ -1,4 +1,4 @@
-package com.missclick.smartschedule.ui.home
+package com.missclick.smartschedule.ui.importScreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,22 +10,23 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.missclick.smartschedule.R
 
-class HomeFragment : Fragment() {
+class ImportFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var importViewModel: ImportViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        importViewModel =
+                ViewModelProviders.of(this).get(ImportViewModel::class.java)
+        val root = inflater.inflate(R.layout.import_fragment, container, false)
+        val textView: TextView = root.findViewById(R.id.text_gallery)
+        importViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
     }
+
 }

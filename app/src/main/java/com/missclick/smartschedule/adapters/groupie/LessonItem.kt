@@ -2,18 +2,13 @@ package com.missclick.smartschedule.adapters.groupie
 
 
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
-import com.missclick.smartschedule.ui.lessons.LessonsFragment
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.schedule_add_lesson_to_schedule_list_item.*
-import kotlinx.android.synthetic.main.schedule_lesson.*
-import kotlinx.android.synthetic.main.schedule_lesson_in_schedule.*
+import kotlinx.android.synthetic.main.schedule_lesson_in_schedule_item.*
 
 
 class LessonItem(private val lesson: LessonModel,
@@ -28,10 +23,10 @@ class LessonItem(private val lesson: LessonModel,
         else viewHolder.text_delete_lesson.visibility = View.INVISIBLE
         viewHolder.card_view_schedule_lesson.setOnClickListener{
             if(!callback.edit){
-                it.findNavController()?.navigate(
-                    R.id.lessonInfoFragment,
+                it.findNavController().navigate(
+                    R.id.lesson_info_fragment,
                     LessonInfoFragment.newInstance(
-                        param = lesson
+                        lesson = lesson
                     )
                 )
             }
@@ -40,7 +35,7 @@ class LessonItem(private val lesson: LessonModel,
         }
     }
 
-    override fun getLayout() = R.layout.schedule_lesson_in_schedule
+    override fun getLayout() = R.layout.schedule_lesson_in_schedule_item
 
     interface ItemClickCallback{
         val edit : Boolean

@@ -3,25 +3,21 @@ package com.missclick.smartschedule.ui.lessons.addLesson
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
-import kotlinx.android.synthetic.main.fragment_add_lesson.*
+import kotlinx.android.synthetic.main.add_lesson_fragment.*
 
 
 
 class AddLessonFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = AddLessonFragment()
-    }
 
     private lateinit var viewModel: AddLessonViewModel
 
@@ -29,7 +25,7 @@ class AddLessonFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_add_lesson, container, false)
+        return inflater.inflate(R.layout.add_lesson_fragment, container, false)
     }
 
 
@@ -47,9 +43,6 @@ class AddLessonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AddLessonViewModel::class.java)
 
-
-
-
         button_save_lesson_add_lesson.setOnClickListener {
             val links = mutableMapOf(
                 "telegram" to edit_telegram_add_lesson.text.toString(),
@@ -65,7 +58,7 @@ class AddLessonFragment : Fragment() {
                 description = edit_lesson_description_add_lesson.text.toString()
             )
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view.windowToken, 0)
-            (activity as MainActivity).onBackPressed()
+            it.findNavController().popBackStack()
 
         }
 

@@ -13,6 +13,4 @@ class MainScreenViewModel : ViewModel() {
         App.appComponent.inject(this)
     }
 
-//    val state = MutableLiveData<MainViewStates>().default(initialValue = MainViewStates.LoadedState(Schedule()))
-
 }

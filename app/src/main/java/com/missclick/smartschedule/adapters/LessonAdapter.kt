@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
-import java.io.Serializable
 
 class LessonAdapter(var items: List<LessonModel>, val callback: Callback) : RecyclerView.Adapter<LessonAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -23,7 +22,7 @@ class LessonAdapter(var items: List<LessonModel>, val callback: Callback) : Recy
             name.text = item.lessonName
             teacherName.text = item.teacherName
             itemView.setOnClickListener {
-                if (adapterPosition != androidx.recyclerview.widget.RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
+                if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
             }
         }
     }

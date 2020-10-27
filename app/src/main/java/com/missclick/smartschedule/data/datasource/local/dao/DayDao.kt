@@ -2,7 +2,6 @@ package com.missclick.smartschedule.data.datasource.local.dao
 
 import androidx.room.*
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
-import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 
 @Dao
 interface DayDao{

@@ -7,15 +7,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_create">Create schedule</string>
+    <string name="menu_schedule">Schedule</string>
+    <string name="menu_lessons">Lessons</string>
     <string name="menu_import">Import schedule</string>
     <string name="menu_export">Share schedule</string>
-    <string name="menu_lessons">Lessons</string>
     <string name="menu_settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_lessons">Add lessons</string>
-    <string name="schedule">Schedule</string>
+
     <string name="add_lesson_to_schedule">Add Lesson</string>
     <string name="add_lesson">Add Lesson</string>
 

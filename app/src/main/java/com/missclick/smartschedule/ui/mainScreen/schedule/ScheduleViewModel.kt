@@ -7,7 +7,6 @@ import com.missclick.smartschedule.App
 import com.missclick.smartschedule.adapters.groupie.AddLessonButtonItem
 import com.missclick.smartschedule.adapters.groupie.LessonEmptyItem
 import com.missclick.smartschedule.adapters.groupie.LessonItem
-import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.models.*
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import com.missclick.smartschedule.extensions.default
@@ -38,8 +37,6 @@ class ScheduleViewModel() : ViewModel() {
     fun onResume(){
         if(onPause == 1) stateData.value = ScheduleViewStates.LoadingState(true)
         if(onPause == 2) stateData.value = ScheduleViewStates.LoadingState()
-//        onPause = 0
-        Log.e("OnResume",onPause.toString())
     }
 
     fun onPause(where : Int){
@@ -49,7 +46,6 @@ class ScheduleViewModel() : ViewModel() {
     fun saveSchedule(){
         stateData.value = ScheduleViewStates.LoadingState()
     }
-
 
     fun initData(edit : Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -66,40 +62,15 @@ class ScheduleViewModel() : ViewModel() {
     }
 
     private suspend fun initAllDays(daysItem: MutableList<MutableList<Item>>, edit : Boolean, week: Int){
-        val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
-        val daysEntity = repository.getAllDays()
+        val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday") //todo days like int in model
+        val scheduleDays= repository.getAllDays()
         for(day in days) {
             val weekDay : MutableList<Item> = mutableListOf()
             for(couple in 1..4){
-                val dayEntity = getLessonById(days = daysEntity, day = day, couple = couple, week = week)
-                val lessonId = dayEntity?.lessonId
+                val scheduleDay = getLessonById(days = scheduleDays, day = day, couple = couple, week = week)
+                val lessonId = scheduleDay?.lessonId
                 if (lessonId != null)
-                    if(edit)
-                        weekDay.add(LessonItem(repository.getLessonById(lessonId),
-                            edit = true,
-                            callback = object : LessonItem.ItemClickCallback{
-                                override val edit: Boolean
-                                    get() = true
-                                override fun onItemClicked() {
-                                    GlobalScope.launch(Dispatchers.IO){
-                                        repository.deleteDay(dayEntity)
-                                        withContext(Dispatchers.Main){
-                                            initData(edit = true)
-                                            ScheduleViewStates.LoadingState(edit = true)
-                                        }
-                                    }
-                                }
-                            }))
-                    else
-                        weekDay.add(LessonItem(repository.getLessonById(lessonId),
-                            edit = false,
-                            callback = object : LessonItem.ItemClickCallback{
-                                override val edit: Boolean
-                                    get() = false
-                                override fun onItemClicked() {
-                                onPause(2)
-                            }
-                            }))
+                    weekDay.add(getLessonItem(edit = edit, lessonId = lessonId, day = scheduleDay))
                 else {
                     if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple,week = week,
                         callback = object : AddLessonButtonItem.ItemClickCallback{
@@ -123,4 +94,35 @@ class ScheduleViewModel() : ViewModel() {
         }
         return null
     }
+
+    private suspend fun getLessonItem(edit: Boolean, lessonId : Int, day: ScheduleDayModel): LessonItem{
+        if(edit)
+            return LessonItem(
+                repository.getLessonById(lessonId),
+                edit = true,
+                callback = object : LessonItem.ItemClickCallback{
+                    override val edit: Boolean
+                        get() = true
+                    override fun onItemClicked() {
+                        GlobalScope.launch(Dispatchers.IO){
+                            repository.deleteDay(day)
+                            withContext(Dispatchers.Main){
+                                initData(edit = true)
+                                ScheduleViewStates.LoadingState(edit = true)
+                            }
+                        }
+                    }
+                })
+        else
+            return LessonItem(repository.getLessonById(lessonId),
+                edit = false,
+                callback = object : LessonItem.ItemClickCallback{
+                    override val edit: Boolean
+                        get() = false
+                    override fun onItemClicked() {
+                        onPause(2)
+                    }
+                })
+    }
+
 }

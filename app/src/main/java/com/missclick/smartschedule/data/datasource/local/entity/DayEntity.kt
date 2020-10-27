@@ -23,5 +23,4 @@ data class DayEntity (
 
     @ColumnInfo(name = "week")
     var week : Int
-
 )

@@ -1,7 +1,6 @@
 package com.missclick.smartschedule;
 
 import android.app.Application;
-
 import com.missclick.smartschedule.di.AppComponent;
 import com.missclick.smartschedule.di.DaggerAppComponent;
 import com.missclick.smartschedule.di.module.AppModule;
@@ -13,17 +12,13 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //appComponent = DaggerAppComponent.create();
-        appComponent = initializiteDagger();
+        appComponent = initializeDagger();
     }
 
-    private AppComponent initializiteDagger(){
+    private AppComponent initializeDagger(){
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
     }
 
-    public static AppComponent getComponent(){
-        return appComponent;
-    }
 }

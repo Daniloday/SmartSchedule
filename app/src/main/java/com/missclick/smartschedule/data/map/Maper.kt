@@ -1,6 +1,5 @@
 package com.missclick.smartschedule.data.map
 
-import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.models.LessonModel

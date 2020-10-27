@@ -4,8 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,30 +13,18 @@ import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment
-import com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.lesson_info_fragment.*
-import kotlinx.android.synthetic.main.list_lesson_item.*
-import java.io.Serializable
 
 class LessonInfoFragment : Fragment() {
 
-    companion object {
-        fun newInstance(param : LessonModel):Bundle{
-            return Bundle().apply {
-                putSerializable("from", param)
-            }
-        }
-
-    }
-
     private lateinit var viewModel: LessonInfoViewModel
-    private var paramStart: LessonModel? = null
+    private var lesson: LessonModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            paramStart = it.getSerializable("from") as LessonModel?
+            lesson = it.getSerializable("lesson") as LessonModel?
         }
     }
 
@@ -57,41 +43,40 @@ class LessonInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-        text_lesson_name_info_lesson.text = paramStart!!.lessonName
-        text_lesson_teacher_info_lesson.text = paramStart!!.teacherName
-        text_lesson_types_info_lesson.text = paramStart!!.type
-        text_lesson_description_info_lesson.text = paramStart!!.description
-
-
+        text_lesson_name_info_lesson.text = lesson!!.lessonName
+        text_lesson_teacher_info_lesson.text = lesson!!.teacherName
+        text_lesson_types_info_lesson.text = lesson!!.type
+        text_lesson_description_info_lesson.text = lesson!!.description
 
         button_telegram_info_lesson.setOnClickListener{
-            val tg = "http://t.me/" + paramStart!!.links["telegram"]
+            val tg = "http://t.me/" + lesson!!.links["telegram"]
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tg))
             startActivity(intent)
         }
 
         button_zoom_info_lesson.setOnClickListener{
-            val zoom = paramStart!!.links["zoom"]
+            val zoom = lesson!!.links["zoom"]
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(zoom))
             startActivity(intent)
         }
 
         button_email_info_lesson.setOnClickListener{
-            val email = "mailto:" + paramStart!!.links["email"]
+            val email = "mailto:" + lesson!!.links["email"]
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(email))
             startActivity(intent)
         }
 
         button_phone_info_lesson.setOnClickListener{
-            val phone = "tel:" + paramStart!!.links["phone"]
+            val phone = "tel:" + lesson!!.links["phone"]
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
             startActivity(intent)
         }
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
-            view.findNavController().navigate(R.id.editFragment,EditLessonFragment.newInstance(
-                paramStart!!
+            view.findNavController().navigate(R.id.edit_fragment,EditLessonFragment.newInstance(
+                lesson = lesson!!
             ))
         }
     }
@@ -99,6 +84,14 @@ class LessonInfoFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         (activity as MainActivity).toolbar_edit.visibility = View.GONE
+    }
+
+    companion object {
+        fun newInstance(lesson : LessonModel):Bundle{
+            return Bundle().apply {
+                putSerializable("lesson", lesson)
+            }
+        }
     }
 
 }

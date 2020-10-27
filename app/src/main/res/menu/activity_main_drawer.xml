@@ -7,7 +7,13 @@
         <item
             android:id="@+id/nav_main_screen"
             android:icon="@android:drawable/ic_menu_my_calendar"
-            android:title="@string/schedule" />
+            android:title="@string/menu_schedule" />
+
+        <item
+            android:id="@+id/nav_lessons"
+            android:icon="?attr/actionModePasteDrawable"
+            android:title="@string/menu_lessons" />
+
         <item
             android:id="@+id/nav_import"
             android:icon="@android:drawable/stat_sys_download"
@@ -18,16 +24,10 @@
             android:title="@string/menu_export" />
 
         <item
-            android:id="@+id/nav_lessons"
-            android:icon="?attr/actionModePasteDrawable"
-            android:title="@string/menu_lessons" />
-
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
             android:iconTint="#fff"
             android:title="@string/menu_settings" />
-
 
     </group>
 </menu>

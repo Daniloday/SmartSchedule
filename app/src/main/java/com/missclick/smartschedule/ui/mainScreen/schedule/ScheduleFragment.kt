@@ -1,24 +1,19 @@
 package com.missclick.smartschedule.ui.mainScreen.schedule
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.groupie.DayItem
-import com.missclick.smartschedule.ui.lessons.LessonsViewModel
 import com.missclick.smartschedule.viewstates.ScheduleViewStates
 import com.xwray.groupie.*
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.android.synthetic.main.schedule_lesson_in_schedule.*
-
+import kotlinx.android.synthetic.main.schedule_fragment.*
 
 class ScheduleFragment : Fragment() {
 
@@ -28,11 +23,11 @@ class ScheduleFragment : Fragment() {
     private var data = mutableListOf<Section>()
     private  var expData = mutableListOf<Boolean>()
     private var expDataGroup = mutableListOf<ExpandableGroup>()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             week = it.getInt("week")
-            Log.e("bundle", week.toString())
         }
     }
 
@@ -41,10 +36,9 @@ class ScheduleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        scheduleViewModel = //ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
+        scheduleViewModel = 
             ViewModelProvider(requireActivity()).get(ScheduleViewModel()::class.java)
-//        scheduleViewModel.week = week!!
-        return inflater.inflate(R.layout.fragment_schedule, container, false)
+        return inflater.inflate(R.layout.schedule_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,8 +61,6 @@ class ScheduleFragment : Fragment() {
                     (activity as MainActivity).toolbar_save.visibility = View.GONE
 //                    progress_bar_schedule.visibility = View.VISIBLE
                     scheduleViewModel.initData(state.edit)
-                    Log.e("LoadingStateFragment", state.edit.toString())
-                    Log.e("state","loading")
                 }
                 is ScheduleViewStates.EditingState -> {
                     progress_bar_schedule.visibility = View.GONE
@@ -78,7 +70,6 @@ class ScheduleFragment : Fragment() {
                     else recyclerUpdate(state.data2)
                 }
                 is ScheduleViewStates.LoadedState -> {
-                    Log.e("state", "loaded")
                     progress_bar_schedule.visibility = View.GONE
                     recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
@@ -108,7 +99,7 @@ class ScheduleFragment : Fragment() {
 
     private fun recycleInit() {
         data = mutableListOf()
-        expDataGroup = mutableListOf<ExpandableGroup>()
+        expDataGroup = mutableListOf()
         groupAdapter = GroupAdapter()
         for (i in 0..4){
             val dayName =  resources.getStringArray(R.array.week_days)[i]

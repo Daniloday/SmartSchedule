@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "lessons")
 data class LessonEntity (
     @PrimaryKey(autoGenerate = true)
@@ -22,7 +21,7 @@ data class LessonEntity (
     @ColumnInfo(name = "type")
     var type : String,
 
-    @ColumnInfo(name = "links") // "zoom":"link","tg":"link" ...
+    @ColumnInfo(name = "links") // "zoom"::"link","tg"::"link" ...
     var links : String,
 
     @ColumnInfo(name = "description")

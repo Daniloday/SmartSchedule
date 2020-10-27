@@ -1,6 +1,5 @@
 package com.missclick.smartschedule.data.datasource.local
 
-import android.provider.Settings
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import kotlinx.coroutines.*

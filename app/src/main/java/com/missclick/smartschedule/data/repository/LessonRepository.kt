@@ -1,7 +1,6 @@
 package com.missclick.smartschedule.data.repository
 
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
-import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.map.mapDayEntityToScheduleDayModel
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
@@ -14,10 +13,6 @@ class LessonRepository(
     var local : LocalDataSource,
     var remote : RemoteDataSource
 ) : ILessonRepository{
-
-//    override fun getSchedule(): ScheduleDayModel {
-//        return ScheduleDayModel()
-//    }
 
     //function with lesson
     override suspend fun getLessons(): List<LessonModel> {

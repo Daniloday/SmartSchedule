@@ -1,6 +1,5 @@
 package com.missclick.smartschedule.data.repository
 
-import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
 

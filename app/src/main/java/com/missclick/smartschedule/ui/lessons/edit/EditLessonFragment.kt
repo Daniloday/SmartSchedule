@@ -12,11 +12,8 @@ import androidx.navigation.findNavController
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
 import kotlinx.android.synthetic.main.edit_lesson_fragment.*
-import kotlinx.android.synthetic.main.lesson_info_fragment.*
 
 class EditLessonFragment : Fragment() {
-
-
 
     private lateinit var viewModel: EditLessonViewModel
     private var lesson: LessonModel? = null
@@ -39,6 +36,7 @@ class EditLessonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         edit_lesson_name_edit_lesson.setText(lesson!!.lessonName)
         edit_lesson_teacher_edit_lesson.setText(lesson!!.teacherName)
 //        spinner_lesson_types_edit_lesson.todo spinner
@@ -47,6 +45,7 @@ class EditLessonFragment : Fragment() {
         edit_phone_edit_lesson.setText(lesson!!.links["phone"])
         edit_email_edit_lesson.setText(lesson!!.links["email"])
         edit_lesson_description_edit_lesson.setText(lesson!!.description)
+
         button_save_lesson_edit_lesson.setOnClickListener {
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
             hideSoftInputFromWindow(view.windowToken, 0)
@@ -64,9 +63,9 @@ class EditLessonFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(param : LessonModel):Bundle{
+        fun newInstance(lesson : LessonModel):Bundle{
             return Bundle().apply {
-                putSerializable("lesson", param)
+                putSerializable("lesson", lesson)
             }
         }
     }

@@ -2,7 +2,6 @@ package com.missclick.smartschedule.ui.lessons
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,15 +17,13 @@ import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.lessons_fragment.*
-import kotlinx.coroutines.GlobalScope
-import java.io.Serializable
 
 class LessonsFragment : Fragment() {
 
     private lateinit var viewModel: LessonsViewModel
-    var day : String? = null
-    var couple : Int? = null
-    var week : Int? = null
+    private var day : String? = null
+    private var couple : Int? = null
+    private var week : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class LessonsFragment : Fragment() {
             couple = it.getInt("couple")
             week = it.getInt("week")
         }
-        val backward = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        val backward = MaterialSharedAxis(MaterialSharedAxis.Z, false)  // wh's it?
         reenterTransition = backward
 
         val forward = MaterialSharedAxis(MaterialSharedAxis.Z, true)
@@ -54,25 +51,16 @@ class LessonsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).toolbar_edit.visibility = View.GONE
         (activity as MainActivity).toolbar_save.visibility = View.GONE
+
         button_add_lesson.setOnClickListener{
-            it.findNavController().navigate(R.id.addLessonFragment)
+            it.findNavController().navigate(R.id.add_lesson_fragment)
         }
         viewModel.getLessons()
         viewModel.lessonsLiveData.observe(viewLifecycleOwner, Observer {
             recycle_lessons.adapter = LessonAdapter(it,
                 object : LessonAdapter.Callback {
                     override fun onItemClicked(item: LessonModel) {
-                        Log.e("Callback","works!")
-                        if(day == null){
-                            LessonInfoFragment.newInstance(param = item)
-                            view.findNavController().navigate(R.id.lessonInfoFragment, LessonInfoFragment.newInstance(item))
-                        }
-                        else{
-                            //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
-                            viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item, week = week!!)
-                            Log.e("LessonAdd",week.toString())
-                            view.findNavController().popBackStack()
-                        }
+                        callbackLessonClicked(item)
                     }
                 }
             )
@@ -83,7 +71,18 @@ class LessonsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getLessons()
-        Log.e("OnResume","works!")
+    }
+
+    fun callbackLessonClicked(item : LessonModel){
+        if(day == null){
+            LessonInfoFragment.newInstance(lesson = item)
+            view!!.findNavController().navigate(R.id.lesson_info_fragment, LessonInfoFragment.newInstance(item))
+        }
+        else{
+            //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
+            viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item, week = week!!)
+            view!!.findNavController().popBackStack()
+        }
     }
 
     companion object {

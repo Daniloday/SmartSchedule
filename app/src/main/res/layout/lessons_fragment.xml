@@ -27,7 +27,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
-        android:text="@string/add_lessons"
+        android:text="@string/add_lesson"
         app:backgroundTint="#FF8A65" />
 
 </FrameLayout>

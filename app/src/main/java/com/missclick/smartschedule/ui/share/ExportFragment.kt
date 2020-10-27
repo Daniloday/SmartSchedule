@@ -1,4 +1,4 @@
-package com.missclick.smartschedule.ui.gallery
+package com.missclick.smartschedule.ui.share
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,24 +10,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.missclick.smartschedule.R
 
-class GalleryFragment : Fragment() {
+class ExportFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var exportViewModel: ExportViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+        exportViewModel =
+                ViewModelProviders.of(this).get(ExportViewModel::class.java)
+        val root = inflater.inflate(R.layout.export_fragment, container, false)
+        val textView: TextView = root.findViewById(R.id.text_home)
+        exportViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
     }
-
-
 }

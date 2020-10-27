@@ -11,10 +11,8 @@ import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.SectionsPagerAdapter
 import com.missclick.smartschedule.data.repository.LessonRepository
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.main_screen_fragment.*
 import javax.inject.Inject
-
 
 class MainScreenFragment : Fragment() {
 
@@ -34,7 +32,6 @@ class MainScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val sectionsPagerAdapter =
             SectionsPagerAdapter(
-                activity as MainActivity,
                 childFragmentManager
             )
 
@@ -66,6 +63,5 @@ class MainScreenFragment : Fragment() {
         tabs.setupWithViewPager(view_pager)
 
     }
-
 
 }
