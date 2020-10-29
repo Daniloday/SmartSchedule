@@ -6,19 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.lessons.LessonsFragment">
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
+        android:id="@+id/swipeToRefresh"
+        android:layout_height="match_parent" >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:paddingTop="8dp"
-            android:id="@+id/recycle_lessons"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="8dp"
+                android:id="@+id/recycle_lessons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add_lesson"

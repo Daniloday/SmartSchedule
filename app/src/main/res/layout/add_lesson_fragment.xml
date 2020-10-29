@@ -7,37 +7,48 @@
     android:orientation="vertical"
     tools:context=".ui.lessons.addLesson.AddLessonFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_margin="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:gravity="center">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_name_add_lesson"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Write lesson name:"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_teacher_add_lesson"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Write teacher name:"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_lesson_types_add_lesson"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:entries="@array/lesson_types" />
+            android:entries="@array/lesson_types"
+            android:layout_marginBottom="4dp"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -45,7 +56,7 @@
                 android:text="Telegram: "/>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
                 android:id="@+id/edit_telegram_add_lesson"/>
@@ -53,9 +64,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -63,7 +75,7 @@
                 android:text="Zoom: "/>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
                 android:id="@+id/edit_zoom_add_lesson"/>
@@ -71,9 +83,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -81,7 +94,7 @@
                 android:text="Phone: "/>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
                 android:id="@+id/edit_phone_add_lesson"/>
@@ -89,9 +102,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -99,7 +113,7 @@
                 android:text="E-mail: "/>
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
                 android:id="@+id/edit_email_add_lesson"/>
@@ -108,10 +122,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_description_add_lesson"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="Description:" />
+            android:hint="Description:"
+            android:layout_marginBottom="4dp"/>
 
 
         <com.google.android.material.button.MaterialButton
@@ -124,6 +139,7 @@
 
     </LinearLayout>
 
+    </ScrollView>
 
 
 

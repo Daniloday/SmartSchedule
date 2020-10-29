@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
 
-class LessonAdapter(var items: List<LessonModel>, val callback: Callback) : RecyclerView.Adapter<LessonAdapter.MainHolder>() {
+class LessonAdapter(var items: MutableList<LessonModel>, val callback: Callback) : RecyclerView.Adapter<LessonAdapter.MainHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             = MainHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_lesson_item, parent, false))
     override fun getItemCount() = items.size
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.bind(items[position])
+    }
+    fun removeAt(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
     }
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name = itemView.findViewById<TextView>(R.id.text_name_list_lesson_item)

@@ -12,6 +12,7 @@
         <item name="colorOnSurface">#FFFFFF</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="fontFamily">sans-serif</item>
+        <item name="android:textColor">#fff</item>
     </style>
 
 

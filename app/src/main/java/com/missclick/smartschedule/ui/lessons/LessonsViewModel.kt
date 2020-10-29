@@ -17,6 +17,9 @@ class LessonsViewModel : ViewModel() {
     @Inject
     lateinit var repository: ILessonRepository
     var lessonsLiveData = MutableLiveData<List<LessonModel>>()
+    var refreshing = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 
     init {
         App.appComponent.inject(this)
@@ -33,10 +36,12 @@ class LessonsViewModel : ViewModel() {
     }
 
      fun getLessons(){
+         refreshing.value = true
         GlobalScope.launch(Dispatchers.IO) {
             val lessons = repository.getLessons()
             withContext(Dispatchers.Main){
                 lessonsLiveData.value = lessons
+                refreshing.value = false
             }
         }
     }
