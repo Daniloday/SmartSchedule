@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LessonsViewModel : ViewModel() {
+
     @Inject
     lateinit var repository: ILessonRepository
     var lessonsLiveData = MutableLiveData<List<LessonModel>>()
