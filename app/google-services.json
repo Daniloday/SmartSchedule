@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "76417137030",
+    "firebase_url": "https://smartschedule-68ace.firebaseio.com",
+    "project_id": "smartschedule-68ace",
+    "storage_bucket": "smartschedule-68ace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76417137030:android:2329e5ff3559082d1c1407",
+        "android_client_info": {
+          "package_name": "com.missclick.smartschedule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76417137030-7qtr4mkfjisqfnmdh7jtkmtnntu1g088.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrmLrFlD0v9SEAJq50pEV4VDde61sqycM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76417137030-7qtr4mkfjisqfnmdh7jtkmtnntu1g088.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

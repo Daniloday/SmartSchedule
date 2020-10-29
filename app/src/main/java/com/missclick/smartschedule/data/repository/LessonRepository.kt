@@ -37,14 +37,6 @@ class LessonRepository(
         return mapLessonEntityToModel(lessonEntity = entity)
     }
 
-    override suspend fun exportLessons(){
-        val lessonEntities =  local.getLessonsAsync().await()
-        val builder = GsonBuilder()
-        val gson = builder.create()
-        Log.i("GSON", gson.toJson(lessonEntities[0]))
-
-    }
-
     //function with scheduleDay
     override fun insertDay(scheduleDayModel: ScheduleDayModel) {
         val dayEntity = mapScheduleDayModelToEntity(scheduleDayModel = scheduleDayModel)
@@ -62,6 +54,17 @@ class LessonRepository(
     override suspend fun deleteDay(scheduleDayModel: ScheduleDayModel) {
         val dayEntity = mapScheduleDayModelToEntity(scheduleDayModel = scheduleDayModel)
         local.deleteDayAsync(dayEntity = dayEntity)
+    }
+
+    //imp/exp
+    override suspend fun exportSchedule():String?{
+        val lessons =  local.getLessonsAsync().await()
+        val dayEntities =  local.getAllDaysAsync().await()
+        return remote.addScheduleToFirebase(lessons = lessons, dayEntities = dayEntities)
+    }
+
+    override suspend fun importSchedule(id : String){
+        remote.importScheduleFromFirebase(id = id)
     }
 
 }

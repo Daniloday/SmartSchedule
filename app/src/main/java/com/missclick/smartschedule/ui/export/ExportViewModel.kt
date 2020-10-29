@@ -27,7 +27,7 @@ class ExportViewModel : ViewModel() {
     fun export(){
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main){
-                repository.exportLessons()
+                repository.exportSchedule()
             }
         }
     }
