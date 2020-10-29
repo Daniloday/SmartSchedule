@@ -9,6 +9,7 @@ interface ILessonRepository {
     suspend fun getLessons() : List<LessonModel>
     fun insertLesson(lessonModel : LessonModel)
     suspend fun getLessonById(lessonId : Int) : LessonModel
+    suspend fun exportLessons()
 
     //with scheduleDay
     fun insertDay(scheduleDayModel : ScheduleDayModel)

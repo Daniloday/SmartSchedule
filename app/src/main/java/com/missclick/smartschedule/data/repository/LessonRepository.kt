@@ -1,5 +1,7 @@
 package com.missclick.smartschedule.data.repository
 
+import android.util.Log
+import com.google.gson.GsonBuilder
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.map.mapDayEntityToScheduleDayModel
@@ -8,6 +10,7 @@ import com.missclick.smartschedule.data.map.mapLessonModelToEntity
 import com.missclick.smartschedule.data.map.mapScheduleDayModelToEntity
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
+
 
 class LessonRepository(
     var local : LocalDataSource,
@@ -32,6 +35,14 @@ class LessonRepository(
     override suspend fun getLessonById(lessonId : Int): LessonModel {
         val entity = local.getLessonByIdAsync(lessonId = lessonId).await()
         return mapLessonEntityToModel(lessonEntity = entity)
+    }
+
+    override suspend fun exportLessons(){
+        val lessonEntities =  local.getLessonsAsync().await()
+        val builder = GsonBuilder()
+        val gson = builder.create()
+        Log.i("GSON", gson.toJson(lessonEntities[0]))
+
     }
 
     //function with scheduleDay

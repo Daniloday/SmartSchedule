@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.repository.ILessonRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ExportViewModel : ViewModel() {
@@ -21,6 +25,11 @@ class ExportViewModel : ViewModel() {
     }
 
     fun export(){
-        //todo command to repository
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main){
+                repository.exportLessons()
+            }
+        }
     }
+
 }

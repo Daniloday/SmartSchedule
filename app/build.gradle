@@ -54,14 +54,16 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.android.gms:play-services:12.0.1'
     androidExtensions {
         experimental = true
     }
 
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     def daggerVersion = 2.21
 
