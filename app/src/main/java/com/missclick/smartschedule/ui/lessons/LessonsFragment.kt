@@ -6,15 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SimpleAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.MaterialSharedAxis
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.LessonAdapter
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.ui.lessons.info.LessonInfoFragment
+import com.missclick.smartschedule.ui.lessons.info.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.lessons_fragment.*
 
@@ -51,20 +55,34 @@ class LessonsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).toolbar_edit.visibility = View.GONE
         (activity as MainActivity).toolbar_save.visibility = View.GONE
-
+        swipeToRefresh.setOnRefreshListener {
+            viewModel.getLessons()
+        }
         button_add_lesson.setOnClickListener{
             it.findNavController().navigate(R.id.add_lesson_fragment)
         }
         viewModel.getLessons()
         viewModel.lessonsLiveData.observe(viewLifecycleOwner, Observer {
-            recycle_lessons.adapter = LessonAdapter(it,
+            recycle_lessons.adapter = LessonAdapter(
+                it as MutableList<LessonModel>,
                 object : LessonAdapter.Callback {
                     override fun onItemClicked(item: LessonModel) {
                         callbackLessonClicked(item)
                     }
                 }
             )
+            val swipeHandler = object : SwipeToDeleteCallback(activity as MainActivity){
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val adapter = recycle_lessons.adapter as LessonAdapter
+                    adapter.removeAt(viewHolder.adapterPosition)
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(recycle_lessons)
             recycle_lessons.layoutManager = LinearLayoutManager(activity as MainActivity)
+        })
+        viewModel.refreshing.observe(viewLifecycleOwner, Observer {
+            if(!it) swipeToRefresh.isRefreshing = false
         })
     }
 
@@ -84,6 +102,8 @@ class LessonsFragment : Fragment() {
             view!!.findNavController().popBackStack()
         }
     }
+
+
 
     companion object {
         fun newInstance(day : String, couple : Int, week : Int) : Bundle {
