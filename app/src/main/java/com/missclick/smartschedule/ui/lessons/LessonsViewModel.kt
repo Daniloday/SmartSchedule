@@ -46,4 +46,8 @@ class LessonsViewModel : ViewModel() {
         }
     }
 
+    fun removeLesson(){
+
+    }
+
 }

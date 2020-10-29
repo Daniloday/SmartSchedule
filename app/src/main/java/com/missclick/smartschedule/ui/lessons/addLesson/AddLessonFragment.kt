@@ -3,10 +3,12 @@ package com.missclick.smartschedule.ui.lessons.addLesson
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -63,6 +65,7 @@ class AddLessonFragment : Fragment() {
         }
 
     }
+
 
 
 

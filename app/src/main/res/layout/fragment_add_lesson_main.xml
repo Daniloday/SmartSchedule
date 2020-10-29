@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.lessons.addLesson.AddMain"
+    android:layout_margin="16dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edit_lesson_name_add_lesson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Write lesson name:"
+        android:maxLines="1"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:imeOptions="actionNext"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13999999" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edit_lesson_teacher_add_lesson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Write teacher name:"
+        android:textSize="21sp"
+        android:textAlignment="center"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_lesson_name_add_lesson"
+        app:layout_constraintVertical_bias="0.050000012" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner_lesson_types_add_lesson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/lesson_types"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_lesson_teacher_add_lesson"
+        app:layout_constraintVertical_bias="0.050000012" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/button_lesson_next_to_links"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:src="@drawable/next_button1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_lesson_types_add_lesson"
+        app:layout_constraintVertical_bias="0.16000003" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

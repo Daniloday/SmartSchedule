@@ -87,5 +87,15 @@
         android:name="com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/schedule_fragment" />
+    <fragment
+        android:id="@+id/addMain"
+        android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddMain"
+        android:label="Add Lesson"
+        tools:layout="@layout/fragment_add_lesson_main" />
+    <fragment
+        android:id="@+id/addLinks"
+        android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLinks"
+        android:label="Links"
+        tools:layout="@layout/fragment_add_links" />
 
 </navigation>
