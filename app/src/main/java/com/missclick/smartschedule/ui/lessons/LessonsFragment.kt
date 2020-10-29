@@ -59,7 +59,7 @@ class LessonsFragment : Fragment() {
             viewModel.getLessons()
         }
         button_add_lesson.setOnClickListener{
-            it.findNavController().navigate(R.id.add_lesson_fragment)
+            it.findNavController().navigate(R.id.addMain)
         }
         viewModel.getLessons()
         viewModel.lessonsLiveData.observe(viewLifecycleOwner, Observer {

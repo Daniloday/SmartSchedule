@@ -15,7 +15,9 @@
         <item name="android:textColor">#fff</item>
     </style>
 
-
+    <style name="spinnerLessonType" >
+        <item name="android:textSize">16dp</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

@@ -26,7 +26,10 @@
             android:layout_height="wrap_content"
             android:hint="Write lesson name:"
             android:layout_gravity="center"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_teacher_add_lesson"
@@ -34,7 +37,10 @@
             android:layout_height="wrap_content"
             android:hint="Write teacher name:"
             android:layout_gravity="center"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_lesson_types_add_lesson"
@@ -42,7 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:entries="@array/lesson_types"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +66,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
-                android:id="@+id/edit_telegram_add_lesson"/>
+                android:id="@+id/edit_telegram_add_lesson"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -78,7 +88,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
-                android:id="@+id/edit_zoom_add_lesson"/>
+                android:id="@+id/edit_zoom_add_lesson"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -97,7 +110,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
-                android:id="@+id/edit_phone_add_lesson"/>
+                android:id="@+id/edit_phone_add_lesson"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -116,7 +132,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter telegram"
-                android:id="@+id/edit_email_add_lesson"/>
+                android:id="@+id/edit_email_add_lesson"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -126,7 +145,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:hint="Description:"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
 
 
         <com.google.android.material.button.MaterialButton
