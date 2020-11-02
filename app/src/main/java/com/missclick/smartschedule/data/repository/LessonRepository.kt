@@ -1,9 +1,9 @@
 package com.missclick.smartschedule.data.repository
 
-import android.util.Log
-import com.google.gson.GsonBuilder
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
+import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
+import com.missclick.smartschedule.data.datasource.remote.remoteModels.ScheduleFB
 import com.missclick.smartschedule.data.map.mapDayEntityToScheduleDayModel
 import com.missclick.smartschedule.data.map.mapLessonEntityToModel
 import com.missclick.smartschedule.data.map.mapLessonModelToEntity
@@ -37,6 +37,11 @@ class LessonRepository(
         return mapLessonEntityToModel(lessonEntity = entity)
     }
 
+    override suspend fun deleteLesson(lessonModel: LessonModel) {
+        val lessonEntity = mapLessonModelToEntity(lessonModel = lessonModel)
+        local.deleteLessonAsync(lessonEntity = lessonEntity)
+    }
+
     //function with scheduleDay
     override fun insertDay(scheduleDayModel: ScheduleDayModel) {
         val dayEntity = mapScheduleDayModelToEntity(scheduleDayModel = scheduleDayModel)
@@ -64,7 +69,18 @@ class LessonRepository(
     }
 
     override suspend fun importSchedule(id : String){
-        remote.importScheduleFromFirebase(id = id)
+        remote.importScheduleFromFirebase(id = id , callback = object : Callback{
+            override fun insertDaysAndLesson(schedule: ScheduleFB) {
+                for (day in schedule.days!!)
+                    local.insertLessonToScheduleAsync(dayEntity = day)
+                for (lesson in schedule.lessons!!)
+                    local.insertLessonAsync(lessonEntity = lesson)
+            }
+        })
+    }
+
+    interface Callback {
+        fun insertDaysAndLesson(schedule : ScheduleFB)
     }
 
 }

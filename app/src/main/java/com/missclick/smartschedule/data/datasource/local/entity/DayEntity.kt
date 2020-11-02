@@ -13,14 +13,14 @@ data class DayEntity (
     var id : Int? = null,
 
     @ColumnInfo(name = "dayName")
-    var dayName : String,
+    var dayName : String = "",
 
     @ColumnInfo(name = "lessonId")
-    var lessonId : Int,
+    var lessonId : Int = 0,
 
     @ColumnInfo(name = "couple")
-    var couple : Int,
+    var couple : Int = 0,
 
     @ColumnInfo(name = "week")
-    var week : Int
+    var week : Int = 0
 )

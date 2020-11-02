@@ -13,17 +13,17 @@ data class LessonEntity (
     var id : Int? = null,
 
     @ColumnInfo(name = "name")
-    var name : String,
+    var name : String = "",
 
     @ColumnInfo(name = "teacherName")
-    var teacherName : String,
+    var teacherName : String = "",
 
     @ColumnInfo(name = "type")
-    var type : String,
+    var type : String = "",
 
     @ColumnInfo(name = "links") // "zoom"::"link","tg"::"link" ...
-    var links : String,
+    var links : String = "",
 
     @ColumnInfo(name = "description")
-    var description: String
+    var description: String = ""
 )

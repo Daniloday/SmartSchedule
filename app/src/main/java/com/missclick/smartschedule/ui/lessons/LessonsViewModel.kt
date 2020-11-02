@@ -6,6 +6,7 @@ import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
 import com.missclick.smartschedule.data.repository.ILessonRepository
+import com.missclick.smartschedule.viewstates.ScheduleViewStates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,7 +47,10 @@ class LessonsViewModel : ViewModel() {
         }
     }
 
-    fun removeLesson(){
+    fun removeLesson(lessonModel: LessonModel){
+        GlobalScope.launch(Dispatchers.IO){
+            repository.deleteLesson(lessonModel = lessonModel)
+        }
 
     }
 

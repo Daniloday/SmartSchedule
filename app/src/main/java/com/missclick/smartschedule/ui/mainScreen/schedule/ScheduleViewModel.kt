@@ -36,7 +36,7 @@ class ScheduleViewModel() : ViewModel() {
 
     fun onResume(){
         if(onPause == 1) stateData.value = ScheduleViewStates.LoadingState(true)
-        if(onPause == 2) stateData.value = ScheduleViewStates.LoadingState()
+        if(onPause == 0) stateData.value = ScheduleViewStates.LoadingState()
     }
 
     fun onPause(where : Int){
@@ -120,7 +120,7 @@ class ScheduleViewModel() : ViewModel() {
                     override val edit: Boolean
                         get() = false
                     override fun onItemClicked() {
-                        onPause(2)
+                        onPause(0)
                     }
                 })
     }

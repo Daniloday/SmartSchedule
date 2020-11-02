@@ -41,4 +41,10 @@ class LocalDataSource(var database : ScheduleDatabase){
             database.dayDao().removeDay(dayEntity = dayEntity)
         }
     }
+
+    fun deleteLessonAsync(lessonEntity: LessonEntity){
+        GlobalScope.async {
+            database.lessonsDao().removeLesson(lessonEntity = lessonEntity)
+        }
+    }
 }

@@ -75,6 +75,7 @@ class LessonsFragment : Fragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val adapter = recycle_lessons.adapter as LessonAdapter
                     adapter.removeAt(viewHolder.adapterPosition)
+//                    viewModel.removeLesson()
                 }
             }
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
