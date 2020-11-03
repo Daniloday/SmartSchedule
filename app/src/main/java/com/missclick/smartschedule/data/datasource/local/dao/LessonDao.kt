@@ -16,4 +16,7 @@ interface LessonDao{
 
     @Delete
     fun removeLesson(lessonEntity: LessonEntity)
+
+    @Query("DELETE FROM lessons")
+    fun deleteAllLessons()
 }

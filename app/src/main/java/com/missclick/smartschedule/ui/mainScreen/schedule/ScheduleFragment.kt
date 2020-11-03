@@ -56,22 +56,16 @@ class ScheduleFragment : Fragment() {
             when (state) {
                 //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
                 is ScheduleViewStates.LoadingState -> {
-//                    recycler_schedule.visibility = View.GONE
                     (activity as MainActivity).toolbar_edit.visibility = View.GONE
                     (activity as MainActivity).toolbar_save.visibility = View.GONE
-//                    progress_bar_schedule.visibility = View.VISIBLE
                     scheduleViewModel.initData(state.edit)
                 }
                 is ScheduleViewStates.EditingState -> {
-                    progress_bar_schedule.visibility = View.GONE
-                    recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
                     if (week == 1) recyclerUpdate(state.data1)
                     else recyclerUpdate(state.data2)
                 }
                 is ScheduleViewStates.LoadedState -> {
-                    progress_bar_schedule.visibility = View.GONE
-                    recycler_schedule.visibility = View.VISIBLE
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
                     if (week == 1) recyclerUpdate(state.data1)
                     else recyclerUpdate(state.data2)

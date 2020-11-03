@@ -76,7 +76,7 @@ class LessonsFragment : Fragment() {
             val swipeHandler = object : SwipeToDeleteCallback(activity as MainActivity){
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val adapter = recycle_lessons.adapter as LessonAdapter
-                    //viewModel.removeLesson(it[viewHolder.adapterPosition])
+                    viewModel.removeLesson(it[viewHolder.adapterPosition])
                     adapter.removeAt(viewHolder.adapterPosition)
                 }
             }

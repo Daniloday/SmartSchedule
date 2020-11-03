@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 class SettingsFragment : Fragment() {
 
@@ -24,6 +26,8 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        (activity as MainActivity).toolbar_edit.visibility = View.GONE
+        (activity as MainActivity).toolbar_save.visibility = View.GONE
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         // TODO: Use the ViewModel
