@@ -6,15 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.export.ExportFragment">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="275dp"
-        android:text="@string/menu_export"
+    <ProgressBar
+        android:id="@+id/progress_bar_export"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_your_code_help"
@@ -25,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_your_code"
@@ -35,17 +38,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
+
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_copy"
+        android:id="@+id/button_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:text="copy"
+        android:layout_marginTop="450dp"
+        android:text="share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
