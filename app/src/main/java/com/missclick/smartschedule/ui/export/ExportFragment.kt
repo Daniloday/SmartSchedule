@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.export_fragment.*
 
 
@@ -40,6 +41,8 @@ class ExportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).toolbar_edit.visibility = View.GONE
+        (activity as MainActivity).toolbar_save.visibility = View.GONE
         button_export.setOnClickListener {
             exportViewModel.export()
             text_your_code_help.visibility = View.VISIBLE
