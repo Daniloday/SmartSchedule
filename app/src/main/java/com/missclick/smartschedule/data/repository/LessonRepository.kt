@@ -40,6 +40,10 @@ class LessonRepository(
 
     override suspend fun deleteLesson(lessonModel: LessonModel) {
         val lessonEntity = mapLessonModelToEntity(lessonModel = lessonModel)
+        val dayEntities = local.getAllDaysAsync().await()
+        for (day in dayEntities){
+            if (day.lessonId == lessonEntity.id) local.deleteDayAsync(day)
+        }
         local.deleteLessonAsync(lessonEntity = lessonEntity)
     }
 
