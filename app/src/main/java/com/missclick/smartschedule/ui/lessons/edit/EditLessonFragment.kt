@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.navigation.findNavController
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
-import kotlinx.android.synthetic.main.edit_lesson_fragment.*
+import kotlinx.android.synthetic.main.edit_lesson_fragment_reborn.*
 
 class EditLessonFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class EditLessonFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.edit_lesson_fragment, container, false)
+        return inflater.inflate(R.layout.edit_lesson_fragment_reborn, container, false)
     }
 
 
@@ -44,7 +44,7 @@ class EditLessonFragment : Fragment() {
         edit_zoom_edit_lesson.setText(lesson!!.links["zoom"])
         edit_phone_edit_lesson.setText(lesson!!.links["phone"])
         edit_email_edit_lesson.setText(lesson!!.links["email"])
-        edit_lesson_description_edit_lesson.setText(lesson!!.description)
+        //edit_lesson_description_edit_lesson.setText(lesson!!.description)
 
         button_save_lesson_edit_lesson.setOnClickListener {
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
@@ -56,7 +56,7 @@ class EditLessonFragment : Fragment() {
             lesson!!.links["zoom"] = edit_zoom_edit_lesson.text.toString()
             lesson!!.links["phone"] = edit_phone_edit_lesson.text.toString()
             lesson!!.links["email"] = edit_email_edit_lesson.text.toString()
-            lesson!!.description = edit_lesson_description_edit_lesson.text.toString()
+            //lesson!!.description = edit_lesson_description_edit_lesson.text.toString()
             viewModel.editLesson(lesson = lesson!!)
             it.findNavController().popBackStack()
         }

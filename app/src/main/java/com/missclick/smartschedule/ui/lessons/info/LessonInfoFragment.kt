@@ -14,7 +14,8 @@ import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.lesson_info_fragment.*
+
+import kotlinx.android.synthetic.main.lesson_info_fragment_reborn.*
 
 class LessonInfoFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class LessonInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.lesson_info_fragment, container, false)
+        return inflater.inflate(R.layout.lesson_info_fragment_reborn, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -48,31 +49,53 @@ class LessonInfoFragment : Fragment() {
         text_lesson_name_info_lesson.text = lesson!!.lessonName
         text_lesson_teacher_info_lesson.text = lesson!!.teacherName
         text_lesson_types_info_lesson.text = lesson!!.type
-        text_lesson_description_info_lesson.text = lesson!!.description
-
-        button_telegram_info_lesson.setOnClickListener{
+        //text_lesson_description_info_lesson.text = lesson!!.description
+        if(lesson!!.links["telegram"] != ""){
             val tg = "http://t.me/" + lesson!!.links["telegram"]
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tg))
-            startActivity(intent)
-        }
+            button_telegram_info_lesson.setOnClickListener{
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tg))
+                startActivity(intent)
+            }
+            button_telegram_info_lesson.text = "t.me/" + lesson!!.links["telegram"]
+            button_telegram_info_lesson_top.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tg))
+                startActivity(intent)
+            }
+        } else button_telegram_info_lesson.visibility = View.GONE
 
-        button_zoom_info_lesson.setOnClickListener{
-            val zoom = lesson!!.links["zoom"]
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(zoom))
-            startActivity(intent)
-        }
-
-        button_email_info_lesson.setOnClickListener{
-            val email = "mailto:" + lesson!!.links["email"]
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(email))
-            startActivity(intent)
-        }
-
-        button_phone_info_lesson.setOnClickListener{
+        if(lesson!!.links["phone"] != ""){
             val phone = "tel:" + lesson!!.links["phone"]
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
-            startActivity(intent)
-        }
+            button_phone_info_lesson_top.setOnClickListener {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
+                startActivity(intent)
+            }
+            button_phone_info_lesson.text = lesson!!.links["phone"]
+            button_phone_info_lesson.setOnClickListener{
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
+                startActivity(intent)
+            }
+        } else button_phone_info_lesson.visibility = View.GONE
+
+        if(lesson!!.links["zoom"] != ""){
+            val zoom = lesson!!.links["zoom"]
+            button_zoom_info_lesson.setOnClickListener{
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(zoom))
+                startActivity(intent)
+            }
+            button_zoom_info_lesson.text = lesson!!.links["zoom"]
+        } else button_zoom_info_lesson.visibility = View.GONE
+
+        if(lesson!!.links["email"] != ""){
+            val email = "mailto:" + lesson!!.links["email"]
+            button_email_info_lesson.setOnClickListener{
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(email))
+                startActivity(intent)
+            }
+            button_email_info_lesson.text = lesson!!.links["email"]
+        } else button_email_info_lesson.visibility = View.GONE
+
+
+
 
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             view.findNavController().navigate(R.id.edit_fragment,EditLessonFragment.newInstance(
