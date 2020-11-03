@@ -16,4 +16,7 @@ interface DayDao{
 
     @Delete
     fun removeDay(dayEntity: DayEntity)
+
+    @Query("DELETE FROM days")
+    fun deleteAllDays()
 }

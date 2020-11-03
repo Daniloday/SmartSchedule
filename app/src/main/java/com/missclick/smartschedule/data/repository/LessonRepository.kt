@@ -77,6 +77,10 @@ class LessonRepository(
     override suspend fun importSchedule(id : String){
         remote.importScheduleFromFirebase(id = id , callback = object : Callback{
             override fun insertDaysAndLesson(schedule: ScheduleFB) {
+                if (schedule != null){ // mb replace on something
+                    local.deleteAllDays()
+                    local.deleteAllLessons()
+                }
                 for (day in schedule.days!!)
                     local.insertLessonToScheduleAsync(dayEntity = day)
                 for (lesson in schedule.lessons!!)
