@@ -73,7 +73,7 @@ class ExportFragment : Fragment() {
         }
 
         button_share.setOnClickListener {
-            val text = "Hello!\nWelcome to my schedule\nIt is id:\n${text_your_code.text}"
+            val text = "Hello!\nWelcome to my schedule\nIt is id:\n${text_your_code.text}\nhttps://smartschedule.com/import/${text_your_code.text}"
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, text)
