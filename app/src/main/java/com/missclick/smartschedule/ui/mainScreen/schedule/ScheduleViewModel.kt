@@ -22,7 +22,7 @@ class ScheduleViewModel() : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
-    private var onPause: Int = 0 // 0 - not onPause, 1 - in add lesson, 2 - in info
+    private var onPause: Int = 0 // 0 - not onPause or else, 1 - in add lesson
     val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState())
 
     init {

@@ -1,5 +1,6 @@
 package com.missclick.smartschedule.data.repository
 
+import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
@@ -62,10 +63,11 @@ class LessonRepository(
     }
 
     //imp/exp
-    override suspend fun exportSchedule():String?{
+    override suspend fun exportSchedule() : String?{
         val lessons =  local.getLessonsAsync().await()
         val dayEntities =  local.getAllDaysAsync().await()
-        return remote.addScheduleToFirebase(lessons = lessons, dayEntities = dayEntities)
+        val a = remote.addScheduleToFirebase(lessons = lessons, dayEntities = dayEntities).await()
+        return a
     }
 
     override suspend fun importSchedule(id : String){

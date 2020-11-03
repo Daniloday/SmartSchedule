@@ -15,10 +15,7 @@ class ExportViewModel : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is export Fragment"
-    }
-    val text: LiveData<String> = _text
+    val idCode = MutableLiveData<String>()
 
     init {
         App.appComponent.inject(this)
@@ -26,8 +23,9 @@ class ExportViewModel : ViewModel() {
 
     fun export(){
         GlobalScope.launch(Dispatchers.IO) {
+            val id = repository.exportSchedule()
             withContext(Dispatchers.Main){
-                repository.exportSchedule()
+                idCode.value = id
             }
         }
     }

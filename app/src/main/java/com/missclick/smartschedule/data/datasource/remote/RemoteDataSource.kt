@@ -9,6 +9,9 @@ import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.remote.remoteModels.ScheduleFB
 import com.missclick.smartschedule.data.repository.LessonRepository
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 class RemoteDataSource {
 
@@ -19,20 +22,15 @@ class RemoteDataSource {
         dbRef = db.getReference("Schedule")
     }
 
-    fun addScheduleToFirebase(lessons : List<LessonEntity>, dayEntities: List<DayEntity>):String? {
-        val idLog = dbRef.push().key
-//        if (idLog != null) {
-//            for(lesson in lessons)
-//                dbRef.child(idLog).child("Lessons").child(lesson.id.toString()).setValue(lesson)
-//            for(day in dayEntities)
-//                dbRef.child(idLog).child("Days").child(day.id.toString()).setValue(day)
-//            return idLog
-//        }
-        if (idLog != null) {
-            dbRef.child(idLog).setValue(ScheduleFB(lessons = lessons, days = dayEntities))
-            return idLog
+    fun addScheduleToFirebase(lessons : List<LessonEntity>, dayEntities: List<DayEntity>): Deferred<String?> {
+        return GlobalScope.async {
+            val idLog = dbRef.push().key
+            if (idLog != null) {
+                dbRef.child(idLog).setValue(ScheduleFB(lessons = lessons, days = dayEntities))
+                idLog
+            }
+            else null
         }
-        return null
     }
 
     fun importScheduleFromFirebase(id : String, callback : LessonRepository.Callback){
