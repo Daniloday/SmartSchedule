@@ -1,4 +1,4 @@
-package com.missclick.smartschedule.ui.contact
+ package com.missclick.smartschedule.ui.contact
 
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.contact_fragment.*
 import kotlinx.android.synthetic.main.lesson_info_fragment_reborn.*
 
@@ -30,6 +32,8 @@ class Contact : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).toolbar_edit.visibility = View.GONE
+        (activity as MainActivity).toolbar_save.visibility = View.GONE
         button_telegram_contact.setOnClickListener{
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://t.me/missclickcorporation"))
             startActivity(intent)

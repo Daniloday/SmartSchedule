@@ -2,6 +2,7 @@ package com.missclick.smartschedule.di
 
 import com.missclick.smartschedule.di.module.AppModule
 import com.missclick.smartschedule.di.module.RepositoryModule
+import com.missclick.smartschedule.notifications.CustomMessage
 import com.missclick.smartschedule.ui.export.ExportViewModel
 import com.missclick.smartschedule.ui.importScreen.ImportViewModel
 import com.missclick.smartschedule.ui.lessons.LessonsViewModel
@@ -22,4 +23,5 @@ interface AppComponent{
     fun inject(scheduleViewModel: ScheduleViewModel)
     fun inject(exportViewModel: ExportViewModel)
     fun inject(importViewModel: ImportViewModel)
+    fun inject(customMessage: CustomMessage)
 }

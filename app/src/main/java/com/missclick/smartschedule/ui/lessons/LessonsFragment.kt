@@ -97,12 +97,14 @@ class LessonsFragment : Fragment() {
     fun callbackLessonClicked(item : LessonModel){
         if(day == null){
             LessonInfoFragment.newInstance(lesson = item)
-            view!!.findNavController().navigate(R.id.lesson_info_fragment, LessonInfoFragment.newInstance(item))
+            requireView().findNavController().navigate(R.id.lesson_info_fragment, LessonInfoFragment.newInstance(item))
         }
         else{
             //Тогда этот фрагмент вызвался с расписания и надо внести в бд предмет и вернуться
+            (activity as MainActivity).cancelNotification()
             viewModel.addLessonToSchedule(day = day!!, couple = couple!!, lessonModel = item, week = week!!)
-            view!!.findNavController().popBackStack()
+            (activity as MainActivity).setNotification()
+            requireView().findNavController().popBackStack()
         }
     }
 

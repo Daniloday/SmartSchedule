@@ -22,12 +22,14 @@ class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var id : String? = null
+    val customMessage = CustomMessage()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        CustomMessage().scheduleMsg(this)
+        setNotification()
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -45,6 +47,14 @@ class MainActivity : AppCompatActivity(){
             if(id != null) findNavController(R.id.nav_host_fragment).navigate(R.id.nav_import, ImportFragment.newInstance(id = id!!))
         }
 
+    }
+
+    fun setNotification(){
+        customMessage.scheduleMsg(this)
+    }
+
+    fun cancelNotification(){
+        customMessage.cancel(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

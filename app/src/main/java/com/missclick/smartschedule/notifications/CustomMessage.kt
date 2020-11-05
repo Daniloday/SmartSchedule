@@ -5,43 +5,80 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import com.missclick.smartschedule.data.models.LessonModel
-import com.missclick.smartschedule.data.models.ShortLessonModel
+import androidx.core.content.ContextCompat.getSystemService
+import com.missclick.smartschedule.App
+import com.missclick.smartschedule.data.repository.ILessonRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 
 class CustomMessage {
-    fun scheduleMsg(context: Context) { //Для запуска пушей вызвать это
-        val calendar = Calendar.getInstance()
-        //calendar.setTimeInMillis(System.currentTimeMillis())
-        calendar.set(Calendar.MINUTE, 11,5,23, 9)
-        scheduleMessage(calendar, context, 0)
-        calendar.set(Calendar.MINUTE, 11,5,23, 9, 30)
-        scheduleMessage(calendar, context, 1)
+
+    @Inject
+    lateinit var repository: ILessonRepository
+
+    init {
+        App.appComponent.inject(this)
     }
 
-//    private fun createCalendar(): Calendar {
-//        val calendar: Calendar = Calendar.getInstance()
-//        calendar.set(Calendar.MINUTE, 11,5,22, 55)
-//        calendar.set(Calendar.MINUTE, 11,5,22, 54)
-//        //calendars.add(calendar)
-//        return calendar
-//    }
+    fun scheduleMsg(context: Context) { //Для запуска пушей вызвать это
+        GlobalScope.launch(Dispatchers.IO) {
+            val days = repository.getAllDays()
+            for(day in days){
+                val lesson = repository.getLessonById(day.lessonId)
+                val calendar = Calendar.getInstance()
+                calendar.setTimeInMillis(System.currentTimeMillis())
+                val time = getTimeByCouple(day.couple)
+                calendar.set(Calendar.MINUTE, 1, 6, time[0], time[1])
+                lesson.id?.let { lesson.links["zoom"]?.let { it1 ->
+                    scheduleMessage(
+                        calendar, context, it,
+                        it1
+                    )
+                } }
+            }
 
-    private fun scheduleMessage(calendar: Calendar, context: Context, type: Int) {
+        }
+
+    }
+
+
+    private fun scheduleMessage(calendar: Calendar, context: Context, type: Int, zoom: String) {
         val i = Intent(context, Receiver::class.java)
         i.putExtra(TYPE_EXTRA, type)
-        val pendingIntent = PendingIntent.getBroadcast(context, type, i, PendingIntent.FLAG_UPDATE_CURRENT)
+        i.putExtra("zoom", zoom)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            type,
+            i,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val alarmManagerRTC = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        //val interval = 1000 * 60 * 60 * 8
-        //Отправка через интервал
-        alarmManagerRTC.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-            60 * 1000, pendingIntent)
-        //alarmManagerRTC[AlarmManager.RTC_WAKEUP, calendar.timeInMillis] = pendingIntent
+        alarmManagerRTC.setRepeating(
+            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY * 7 * 2, pendingIntent
+        )
     }
 
     fun getNotificationManager(context: Context): Any? {
         return context.getSystemService(Context.NOTIFICATION_SERVICE)
+    }
+
+    fun getTimeByCouple(couple: Int) : List<Int>{
+        if (couple == 1) return listOf(8, 20)
+        if (couple == 2) return listOf(10, 15)
+        return if (couple == 3) listOf(12, 10)
+        else listOf(14, 5)
+    }
+
+    fun cancel(context: Context){
+        val alarmManagerRTC = context.getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, Receiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
+        alarmManagerRTC!!.cancel(pendingIntent)
     }
 
     companion object {

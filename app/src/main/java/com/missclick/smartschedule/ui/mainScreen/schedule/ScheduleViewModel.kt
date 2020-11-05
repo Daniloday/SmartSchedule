@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
+import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.adapters.groupie.AddLessonButtonItem
 import com.missclick.smartschedule.adapters.groupie.LessonEmptyItem
 import com.missclick.smartschedule.adapters.groupie.LessonItem
@@ -24,7 +25,7 @@ class ScheduleViewModel() : ViewModel() {
     lateinit var repository: ILessonRepository
     private var onPause: Int = 0 // 0 - not onPause or else, 1 - in add lesson
     val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState())
-
+    var mainActivity : MainActivity? = null
     init {
         App.appComponent.inject(this)
     }
@@ -105,7 +106,9 @@ class ScheduleViewModel() : ViewModel() {
                         get() = true
                     override fun onItemClicked() {
                         GlobalScope.launch(Dispatchers.IO){
+                            mainActivity?.cancelNotification()
                             repository.deleteDay(day)
+                            mainActivity?.setNotification()
                             withContext(Dispatchers.Main){
                                 initData(edit = true)
                                 ScheduleViewStates.LoadingState(edit = true)

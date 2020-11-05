@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.findNavController
+import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
 import kotlinx.android.synthetic.main.edit_lesson_fragment_reborn.*
@@ -57,7 +58,9 @@ class EditLessonFragment : Fragment() {
             lesson!!.links["phone"] = edit_phone_edit_lesson.text.toString()
             lesson!!.links["email"] = edit_email_edit_lesson.text.toString()
             //lesson!!.description = edit_lesson_description_edit_lesson.text.toString()
+            (activity as MainActivity).cancelNotification()
             viewModel.editLesson(lesson = lesson!!)
+            (activity as MainActivity).setNotification()
             it.findNavController().popBackStack()
         }
     }

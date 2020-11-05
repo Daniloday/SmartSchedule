@@ -43,6 +43,7 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        scheduleViewModel.mainActivity = activity as MainActivity
         recycleInit()
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             scheduleViewModel.editSchedule()
