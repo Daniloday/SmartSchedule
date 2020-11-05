@@ -20,6 +20,7 @@ class Receiver : BroadcastReceiver() {
         val type = intent.getIntExtra(CustomMessage.TYPE_EXTRA, 0)
         val zoom = intent.getStringExtra("zoom")
         val intentToRepeat = Intent(context, MainActivity::class.java)
+        intentToRepeat.putExtra("notif", zoom)
         intentToRepeat.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, PendingIntent.FLAG_UPDATE_CURRENT)
         val nm = CustomMessage().getNotificationManager(context)

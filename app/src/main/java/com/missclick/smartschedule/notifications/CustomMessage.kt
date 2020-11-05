@@ -32,7 +32,7 @@ class CustomMessage {
                 val calendar = Calendar.getInstance()
                 calendar.setTimeInMillis(System.currentTimeMillis())
                 val time = getTimeByCouple(day.couple)
-                calendar.set(Calendar.MINUTE, 1, 6, time[0], time[1])
+                calendar.set(Calendar.MINUTE, 1, 6, time[0], time[1] + 7, 0)
                 lesson.id?.let { lesson.links["zoom"]?.let { it1 ->
                     scheduleMessage(
                         calendar, context, it,
@@ -78,7 +78,7 @@ class CustomMessage {
         val alarmManagerRTC = context.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, Receiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
-        alarmManagerRTC!!.cancel(pendingIntent)
+        alarmManagerRTC.cancel(pendingIntent)
     }
 
     companion object {

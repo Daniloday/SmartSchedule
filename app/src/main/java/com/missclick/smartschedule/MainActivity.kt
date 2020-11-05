@@ -2,10 +2,12 @@ package com.missclick.smartschedule
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        cancelNotification()
         setNotification()
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -42,12 +45,21 @@ class MainActivity : AppCompatActivity(){
         val intent = intent;
         val action = intent.action;
         val data = intent.dataString;
+        val extras = intent?.extras
+        extras?.let {
+            if(it.containsKey("notif")){
+                val zoom = it.getString("notif")
+                val intentZoom = Intent(Intent.ACTION_VIEW, Uri.parse(zoom))
+                startActivity(intentZoom)
+            }
+        }
         if (Intent.ACTION_VIEW == action && data != null) {
             id = data.substring(data.lastIndexOf("/") + 1)
             if(id != null) findNavController(R.id.nav_host_fragment).navigate(R.id.nav_import, ImportFragment.newInstance(id = id!!))
         }
 
     }
+
 
     fun setNotification(){
         customMessage.scheduleMsg(this)
