@@ -97,5 +97,10 @@
         android:name="com.missclick.smartschedule.ui.lessons.addLesson.AddLinks"
         android:label="Links"
         tools:layout="@layout/fragment_add_links" />
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="com.missclick.smartschedule.ui.contact.Contact"
+        android:label="Contact us"
+        tools:layout="@layout/contact_fragment" />
 
 </navigation>

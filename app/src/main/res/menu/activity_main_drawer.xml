@@ -29,5 +29,11 @@
             android:iconTint="#fff"
             android:title="@string/menu_settings" />
 
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/next_button1"
+            android:iconTint="#fff"
+            android:title="Contact us" />
+
     </group>
 </menu>
