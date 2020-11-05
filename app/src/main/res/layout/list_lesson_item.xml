@@ -33,7 +33,6 @@
             android:id="@+id/text_type_list_lesson_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lection"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_name_list_lesson_item"
             app:layout_constraintEnd_toEndOf="parent"

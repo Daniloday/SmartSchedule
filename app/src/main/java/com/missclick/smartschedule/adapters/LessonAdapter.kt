@@ -22,9 +22,11 @@ class LessonAdapter(var items: MutableList<LessonModel>, val callback: Callback)
     inner class MainHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val name = itemView.findViewById<TextView>(R.id.text_name_list_lesson_item)
         private val teacherName = itemView.findViewById<TextView>(R.id.text_teacher_name_list_lesson_item)
+        private val type = itemView.findViewById<TextView>(R.id.text_type_list_lesson_item)
         fun bind(item: LessonModel) {
             name.text = item.lessonName
             teacherName.text = item.teacherName
+            type.text = item.type
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
             }
