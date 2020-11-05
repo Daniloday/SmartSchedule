@@ -29,7 +29,7 @@
             android:layout_marginEnd="132dp"
             android:layout_marginBottom="52dp"
             android:text="Button"
-            app:icon="@drawable/gmail_icon"
+            app:srcCompat="@drawable/gmail_icon"
             app:layout_constraintBottom_toTopOf="@+id/text_privacy"
             app:layout_constraintEnd_toEndOf="parent" />
 

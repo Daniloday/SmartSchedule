@@ -29,6 +29,7 @@
                     android:pathPrefix="/import" />
             </intent-filter>
         </activity>
+        <receiver android:name=".notifications.Receiver" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

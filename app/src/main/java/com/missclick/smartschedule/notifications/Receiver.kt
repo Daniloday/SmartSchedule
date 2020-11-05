@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build
+import android.R
 
 import androidx.core.app.NotificationCompat;
 import com.missclick.smartschedule.MainActivity
@@ -21,13 +22,13 @@ class Receiver : BroadcastReceiver() {
         intentToRepeat.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, PendingIntent.FLAG_UPDATE_CURRENT)
         val nm = CustomMessage().getNotificationManager(context)
-        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?).build()
+        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type).build()
         nm?.notify(type, notification)
     }
 
-    fun configNotification(context: Context, pendingIntent: PendingIntent?, nm: NotificationManager?): NotificationCompat.Builder {
+    fun configNotification(context: Context, pendingIntent: PendingIntent?, nm: NotificationManager?, type : Int): NotificationCompat.Builder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("default",
+            val channel = NotificationChannel(type.toString(),
                 "Daily Notification",
                 NotificationManager.IMPORTANCE_HIGH)
             channel.description = "Daily Notification"
@@ -36,6 +37,7 @@ class Receiver : BroadcastReceiver() {
         //Создание пуша
         return NotificationCompat.Builder(context, "default")
             .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.ic_delete)
             .setContentTitle("«Вpемя денeг! Кликaй!")
             .setAutoCancel(true)
     }
