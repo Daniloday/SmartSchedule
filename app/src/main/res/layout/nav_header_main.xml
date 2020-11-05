@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="20dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="16dp"
 
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -18,11 +18,10 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:tint="#fff"
         android:layout_marginLeft="8dp"
         android:layout_gravity="center"
         android:contentDescription="@string/nav_header_desc"
-        android:src="@drawable/missclick_grad" />
+        android:src="@drawable/logo_smart" />
 
 
     <com.google.android.material.textview.MaterialTextView

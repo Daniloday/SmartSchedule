@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_top">
         <item
             android:id="@+id/nav_main_screen"
             android:icon="@android:drawable/ic_menu_my_calendar"
@@ -29,11 +30,18 @@
             android:iconTint="#fff"
             android:title="@string/menu_settings" />
 
-        <item
-            android:id="@+id/nav_contact"
-            android:icon="@drawable/next_button1"
-            android:iconTint="#fff"
-            android:title="Contact us" />
-
     </group>
+
+        <group android:id="@+id/manu_bot">
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@android:drawable/sym_action_chat"
+                android:iconTint="#fff"
+                android:title="Contact us" />
+
+        </group>
+
+
+
+
 </menu>
