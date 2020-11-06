@@ -66,6 +66,10 @@ class LessonRepository(
         local.deleteDayAsync(dayEntity = dayEntity)
     }
 
+    override suspend fun isOnline(): Boolean {
+        return remote.isOnlineAsync().await()
+    }
+
     //imp/exp
     override suspend fun exportSchedule() : String?{
         val lessons =  local.getLessonsAsync().await()
@@ -77,10 +81,8 @@ class LessonRepository(
     override suspend fun importSchedule(id : String){
         remote.importScheduleFromFirebase(id = id , callback = object : Callback{
             override fun insertDaysAndLesson(schedule: ScheduleFB) {
-                if (schedule != null){ // mb replace on something
-                    local.deleteAllDays()
-                    local.deleteAllLessons()
-                }
+                local.deleteAllDays()
+                local.deleteAllLessons()
                 for (day in schedule.days!!)
                     local.insertLessonToScheduleAsync(dayEntity = day)
                 for (lesson in schedule.lessons!!)

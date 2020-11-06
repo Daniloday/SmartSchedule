@@ -1,17 +1,17 @@
 package com.missclick.smartschedule.ui.export
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.repository.ILessonRepository
 import com.missclick.smartschedule.extensions.default
 import com.missclick.smartschedule.viewstates.ExportViewStates
-import com.missclick.smartschedule.viewstates.ScheduleViewStates
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.net.SocketAddress
 import javax.inject.Inject
 
 class ExportViewModel : ViewModel() {
@@ -28,6 +28,13 @@ class ExportViewModel : ViewModel() {
 
     fun export(){
         GlobalScope.launch(Dispatchers.IO) {
+            if (!repository.isOnline()) {
+                withContext(Dispatchers.Main){
+                    stateData.value = ExportViewStates.ErrorState("Беды с башкой(интернетом)")
+
+                }
+                return@launch
+            }
             val id = repository.exportSchedule()
             withContext(Dispatchers.Main){
                 if (id != null) stateData.value = ExportViewStates.LoadedState(id)

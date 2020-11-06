@@ -1,10 +1,14 @@
 package com.missclick.smartschedule.ui.importScreen
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
@@ -37,10 +41,21 @@ class ImportFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).toolbar_edit.visibility = View.GONE
         (activity as MainActivity).toolbar_save.visibility = View.GONE
+        importViewModel.error.observe(viewLifecycleOwner, Observer {
+            text_error.text = it
+        })
         if (id != null) edit_import.setText(id)
         button_import.setOnClickListener {
             importViewModel.import(edit_import.text.toString())
+            (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
+            hideSoftInputFromWindow(view?.windowToken, 0)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
+        hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     companion object {

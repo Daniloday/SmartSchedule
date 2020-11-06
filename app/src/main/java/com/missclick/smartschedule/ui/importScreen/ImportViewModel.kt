@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.missclick.smartschedule.App
 import com.missclick.smartschedule.data.repository.ILessonRepository
+import com.missclick.smartschedule.viewstates.ExportViewStates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,10 +16,7 @@ class ImportViewModel : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is import Fragment"
-    }
-    val text: LiveData<String> = _text
+    val error = MutableLiveData<String>()
 
     init {
         App.appComponent.inject(this)
@@ -26,8 +24,16 @@ class ImportViewModel : ViewModel() {
 
     fun import(id : String){
         GlobalScope.launch(Dispatchers.IO) {
+            if (!repository.isOnline()) {
+                withContext(Dispatchers.Main){
+                    error.value = "Беды с башкой(интернетом)"
+                }
+                return@launch
+            }
+            repository.importSchedule(id = id)
             withContext(Dispatchers.Main){
-                repository.importSchedule(id = id)
+                error.value = ""
+
             }
         }
     }

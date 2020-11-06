@@ -22,6 +22,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.307" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_error"
+        android:layout_width="147dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_import"
+        app:layout_constraintVertical_bias="0.011" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_import"
         android:layout_width="wrap_content"
@@ -29,10 +40,10 @@
         android:text="@string/menu_import"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472"
+        app:layout_constraintVertical_bias="0.499"
         tools:ignore="MissingConstraints" />
 
 

@@ -19,4 +19,7 @@ interface ILessonRepository {
     //exp/imp
     suspend fun exportSchedule(): String?
     suspend fun importSchedule(id : String)
+
+    //internet
+    suspend fun isOnline() : Boolean
 }

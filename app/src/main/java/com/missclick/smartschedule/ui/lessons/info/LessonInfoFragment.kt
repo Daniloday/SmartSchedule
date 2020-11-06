@@ -44,7 +44,7 @@ class LessonInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as MainActivity).toolbar_save.visibility = View.GONE
         (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
         text_lesson_name_info_lesson.text = lesson!!.lessonName
         text_lesson_teacher_info_lesson.text = lesson!!.teacherName

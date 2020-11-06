@@ -12,6 +12,10 @@ import com.missclick.smartschedule.data.repository.LessonRepository
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.net.SocketAddress
 
 class RemoteDataSource {
 
@@ -39,10 +43,30 @@ class RemoteDataSource {
                 TODO("Not yet implemented")
             }
             override fun onDataChange(snapshot: DataSnapshot) {
-                val schedule : ScheduleFB = snapshot.getValue<ScheduleFB>()!!
-                callback.insertDaysAndLesson(schedule = schedule)
+                try {
+                    val schedule : ScheduleFB? = snapshot.getValue<ScheduleFB>()
+                    if(schedule != null && schedule.lessons != null) callback.insertDaysAndLesson(schedule = schedule)
+                } catch (e: IOException) {
+
+                }
+
             }
         })
+    }
+
+    fun isOnlineAsync(): Deferred<Boolean> {
+        return GlobalScope.async {
+            try {
+                val timeoutMs = 1500
+                val sock = Socket()
+                val sockaddr: SocketAddress = InetSocketAddress("8.8.8.8", 53)
+                sock.connect(sockaddr, timeoutMs)
+                sock.close()
+                true
+            } catch (e: IOException) {
+                false
+            }
+        }
     }
 
 

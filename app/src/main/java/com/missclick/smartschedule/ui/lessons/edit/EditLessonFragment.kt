@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.edit_lesson_fragment_reborn.*
 
 class EditLessonFragment : Fragment() {
@@ -37,7 +38,7 @@ class EditLessonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
         edit_lesson_name_edit_lesson.setText(lesson!!.lessonName)
         edit_lesson_teacher_edit_lesson.setText(lesson!!.teacherName)
 //        spinner_lesson_types_edit_lesson.todo spinner
@@ -46,6 +47,23 @@ class EditLessonFragment : Fragment() {
         edit_phone_edit_lesson.setText(lesson!!.links["phone"])
         edit_email_edit_lesson.setText(lesson!!.links["email"])
         //edit_lesson_description_edit_lesson.setText(lesson!!.description)
+
+        (activity as MainActivity).toolbar_save.setOnClickListener {
+            (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
+            hideSoftInputFromWindow(view.windowToken, 0)
+            lesson!!.lessonName = edit_lesson_name_edit_lesson.text.toString()
+            lesson!!.teacherName = edit_lesson_teacher_edit_lesson.text.toString()
+            //todo spinner type
+            lesson!!.links["telegram"] = edit_telegram_edit_lesson.text.toString()
+            lesson!!.links["zoom"] = edit_zoom_edit_lesson.text.toString()
+            lesson!!.links["phone"] = edit_phone_edit_lesson.text.toString()
+            lesson!!.links["email"] = edit_email_edit_lesson.text.toString()
+            //lesson!!.description = edit_lesson_description_edit_lesson.text.toString()
+            (activity as MainActivity).cancelNotification()
+            viewModel.editLesson(lesson = lesson!!)
+            (activity as MainActivity).setNotification()
+            edit_lesson_name_edit_lesson.findNavController().popBackStack()
+        }
 
         button_save_lesson_edit_lesson.setOnClickListener {
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
@@ -63,6 +81,8 @@ class EditLessonFragment : Fragment() {
             (activity as MainActivity).setNotification()
             it.findNavController().popBackStack()
         }
+
+
     }
 
     companion object {

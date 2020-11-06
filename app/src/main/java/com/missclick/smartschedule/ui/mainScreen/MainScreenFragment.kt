@@ -1,6 +1,7 @@
 package com.missclick.smartschedule.ui.mainScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.missclick.smartschedule.R
 import com.missclick.smartschedule.adapters.SectionsPagerAdapter
 import com.missclick.smartschedule.data.repository.LessonRepository
 import kotlinx.android.synthetic.main.main_screen_fragment.*
+import java.util.*
 import javax.inject.Inject
 
 class MainScreenFragment : Fragment() {
@@ -59,6 +61,11 @@ class MainScreenFragment : Fragment() {
 
 //        val viewPager: ViewPager = (activity as MainActivity).findViewById(R.id.view_pager)
         view_pager.adapter = sectionsPagerAdapter
+
+        // for using first or second week by default
+        val c = Calendar.getInstance()
+        view_pager.currentItem = (c.get(Calendar.WEEK_OF_YEAR) / 2) + 1
+
         val tabs: TabLayout = (activity as MainActivity).findViewById(R.id.tab_dots)
         tabs.setupWithViewPager(view_pager)
 
