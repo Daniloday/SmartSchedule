@@ -22,7 +22,7 @@ class Receiver : BroadcastReceiver() {
         val intentToRepeat = Intent(context, MainActivity::class.java)
         intentToRepeat.putExtra("notif", zoom)
         intentToRepeat.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, 0) // FLAG_UPDATE_CURRENT
         val nm = CustomMessage().getNotificationManager(context)
         //todo check zoom nullable
         val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, zoom!!).build()

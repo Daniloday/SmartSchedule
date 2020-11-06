@@ -29,16 +29,35 @@ class CustomMessage {
             val days = repository.getAllDays()
             for(day in days){
                 val lesson = repository.getLessonById(day.lessonId)
-                val calendar = Calendar.getInstance()
-                calendar.setTimeInMillis(System.currentTimeMillis())
-                val time = getTimeByCouple(day.couple)
-                calendar.set(Calendar.MINUTE, 1, 6, time[0], time[1] + 7, 0)
-                lesson.id?.let { lesson.links["zoom"]?.let { it1 ->
+//                val calendar = Calendar.getInstance()
+//                calendar.setTimeInMillis(System.currentTimeMillis())
+//                val time = getTimeByCouple(day.couple)
+//                calendar.set(Calendar.DAY_OF_WEEK, 1, 6, time[0], time[1], 0)
+//                calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY)
+//                lesson.id?.let { day.couple.toString().let { it1 ->
+//                    scheduleMessage(
+//                        calendar, context, it,
+//                        it1
+//                    )
+//                } }
+
+                val calendar: Calendar = Calendar.getInstance().apply {
+                    timeInMillis = System.currentTimeMillis()
+                    val time = getTimeByCouple(day.couple)
+                    val dayOfWeek = getDayOfWeek(day.dayName)
+                    set(Calendar.DAY_OF_WEEK, dayOfWeek)
+                    set(Calendar.HOUR, time[0])
+                    set(Calendar.MINUTE, time[1])
+
+                }
+                lesson.id?.let { day.couple.toString().let { it1 ->
                     scheduleMessage(
                         calendar, context, it,
                         it1
                     )
                 } }
+
+
             }
 
         }
@@ -54,12 +73,12 @@ class CustomMessage {
             context,
             type,
             i,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            0
         )
         val alarmManagerRTC = context.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManagerRTC.setRepeating(
             AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY * 7 * 2, pendingIntent
+            1000 * 3600 * 24 * 7 * 2  , pendingIntent
         )
     }
 
@@ -68,10 +87,36 @@ class CustomMessage {
     }
 
     fun getTimeByCouple(couple: Int) : List<Int>{
-        if (couple == 1) return listOf(8, 20)
-        if (couple == 2) return listOf(10, 15)
-        return if (couple == 3) listOf(12, 10)
-        else listOf(14, 5)
+        if (couple == 1) return listOf(8, 27)
+        if (couple == 2) return listOf(10, 22)
+        return if (couple == 3) listOf(12, 17)
+        else listOf(14, 12)
+    }
+
+    private fun getDayOfWeek(day : String) : Int{
+        return when(day) {
+            "Monday" -> {
+                Calendar.MONDAY
+            }
+            "Tuesday" -> {
+                Calendar.TUESDAY
+            }
+            "Wednesday" -> {
+                Calendar.WEDNESDAY
+            }
+            "Thursday" -> {
+                Calendar.THURSDAY
+            }
+            "Friday" -> {
+                Calendar.FRIDAY
+            }
+            "Saturday" -> {
+                Calendar.SATURDAY
+            }
+            else -> {
+                Calendar.SUNDAY
+            }
+        }
     }
 
     fun cancel(context: Context){
