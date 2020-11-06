@@ -25,7 +25,7 @@ class Receiver : BroadcastReceiver() {
         val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, 0) // FLAG_UPDATE_CURRENT
         val nm = CustomMessage().getNotificationManager(context)
         //todo check zoom nullable
-        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, zoom!!).build()
+        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, "lol").build()
         nm?.notify(type, notification)
     }
 
