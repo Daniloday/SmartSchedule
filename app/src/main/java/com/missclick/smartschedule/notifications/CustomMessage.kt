@@ -54,12 +54,12 @@ class CustomMessage {
                     calendar.add(Calendar.WEEK_OF_YEAR, day.week)
                 }
                 Log.e("Calendar", calendar.timeInMillis.toString() + " " + lesson.lessonName)
-                lesson.id?.let { lesson.links["zoom"].toString().let { it1 ->
+                lesson.id?.let {
                     scheduleMessage(
                         calendar, context, it,
-                        it1
+                        lesson.links["zoom"].toString()
                     )
-                } }
+                }
 
 
             }
