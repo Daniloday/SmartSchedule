@@ -18,14 +18,15 @@ import com.missclick.smartschedule.MainActivity
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val type = intent.getIntExtra(CustomMessage.TYPE_EXTRA, 0)
-        val zoom = intent.getStringExtra("zoom")
+        var zoom = intent.getStringExtra("zoom")
         val intentToRepeat = Intent(context, MainActivity::class.java)
-        intentToRepeat.putExtra("notif", zoom)
         intentToRepeat.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, 0) // FLAG_UPDATE_CURRENT
         val nm = CustomMessage().getNotificationManager(context)
         //todo check zoom nullable
-        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, "lol").build()
+        if(zoom == null) zoom = "zoom not detected, but lesson coming"
+        else intentToRepeat.putExtra("notif", zoom)
+        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, zoom).build()
         nm?.notify(type, notification)
     }
 

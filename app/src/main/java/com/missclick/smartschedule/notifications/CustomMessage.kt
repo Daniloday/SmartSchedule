@@ -46,7 +46,7 @@ class CustomMessage {
                     timeInMillis = System.currentTimeMillis()
                     val time = getTimeByCouple(day.couple)
                     val dayOfWeek = getDayOfWeek(day.dayName)
-                    set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+                    set(Calendar.DAY_OF_WEEK, dayOfWeek)
                     set(Calendar.HOUR, time[0] - 12)
                     set(Calendar.MINUTE, time[1])
                 }
@@ -54,7 +54,7 @@ class CustomMessage {
                     calendar.add(Calendar.WEEK_OF_YEAR, day.week)
                 }
                 Log.e("Calendar", calendar.timeInMillis.toString() + " " + lesson.lessonName)
-                lesson.id?.let { day.couple.toString().let { it1 ->
+                lesson.id?.let { lesson.links["zoom"].toString().let { it1 ->
                     scheduleMessage(
                         calendar, context, it,
                         it1
@@ -91,7 +91,7 @@ class CustomMessage {
     }
 
     fun getTimeByCouple(couple: Int) : List<Int>{
-        if (couple == 1) return listOf(18, 19)
+        if (couple == 1) return listOf(8, 27)
         if (couple == 2) return listOf(10, 22)
         return if (couple == 3) listOf(12, 17)
         else listOf(14, 12)
