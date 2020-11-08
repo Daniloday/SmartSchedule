@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity(){
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val intent = intent;
-        val action = intent.action;
-        val data = intent.dataString;
+        val intent = intent
+        val action = intent.action
+        val data = intent.dataString
         val extras = intent?.extras
         extras?.let {
             if(it.containsKey("notif")){
