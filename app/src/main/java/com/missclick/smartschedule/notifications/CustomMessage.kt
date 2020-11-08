@@ -30,17 +30,6 @@ class CustomMessage {
             val days = repository.getAllDays()
             for(day in days){
                 val lesson = repository.getLessonById(day.lessonId)
-//                val calendar = Calendar.getInstance()
-//                calendar.setTimeInMillis(System.currentTimeMillis())
-//                val time = getTimeByCouple(day.couple)
-//                calendar.set(Calendar.DAY_OF_WEEK, 1, 6, time[0], time[1], 0)
-//                calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY)
-//                lesson.id?.let { day.couple.toString().let { it1 ->
-//                    scheduleMessage(
-//                        calendar, context, it,
-//                        it1
-//                    )
-//                } }
 
                 val calendar: Calendar = Calendar.getInstance().apply {
                     timeInMillis = System.currentTimeMillis()
@@ -57,7 +46,8 @@ class CustomMessage {
                 lesson.id?.let {
                     scheduleMessage(
                         calendar, context, it,
-                        lesson.links["zoom"].toString()
+                        lesson.links["zoom"].toString(),
+                        lesson.lessonName
                     )
                 }
 
@@ -69,10 +59,11 @@ class CustomMessage {
     }
 
 
-    private fun scheduleMessage(calendar: Calendar, context: Context, type: Int, zoom: String) {
+    private fun scheduleMessage(calendar: Calendar, context: Context, type: Int, zoom: String, lessonName : String) {
         val i = Intent(context, Receiver::class.java)
         i.putExtra(TYPE_EXTRA, type)
         i.putExtra("zoom", zoom)
+        i.putExtra("lessonName", lessonName)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             type,

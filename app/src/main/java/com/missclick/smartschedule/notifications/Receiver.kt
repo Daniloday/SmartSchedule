@@ -19,6 +19,7 @@ class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val type = intent.getIntExtra(CustomMessage.TYPE_EXTRA, 0)
         var zoom = intent.getStringExtra("zoom")
+        var lessonName = intent.getStringExtra("lessonName")
         val intentToRepeat = Intent(context, MainActivity::class.java)
         intentToRepeat.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pendingIntent = PendingIntent.getActivity(context, type, intentToRepeat, 0) // FLAG_UPDATE_CURRENT
@@ -26,11 +27,12 @@ class Receiver : BroadcastReceiver() {
         //todo check zoom nullable
         if(zoom == null) zoom = "zoom not detected, but lesson coming"
         else intentToRepeat.putExtra("notif", zoom)
-        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, zoom).build()
+        if(lessonName == null) lessonName = "Not found lesson"
+        val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, zoom, lessonName!!).build()
         nm?.notify(type, notification)
     }
 
-    fun configNotification(context: Context, pendingIntent: PendingIntent?, nm: NotificationManager?, type : Int, zoom : String): NotificationCompat.Builder {
+    fun configNotification(context: Context, pendingIntent: PendingIntent?, nm: NotificationManager?, type : Int, zoom : String, lessonName : String): NotificationCompat.Builder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(type.toString(),
                 "Daily Notification",
@@ -41,8 +43,9 @@ class Receiver : BroadcastReceiver() {
         //Создание пуша
         return NotificationCompat.Builder(context, "default")
             .setContentIntent(pendingIntent)
-            .setSmallIcon(R.drawable.ic_delete)
-            .setContentTitle(zoom)
+            .setSmallIcon(R.drawable.ic_menu_my_calendar)
+            .setContentTitle("$lessonName | Click to open zoom!")
+//            .setContentTitle(zoom)
             .setAutoCancel(true)
     }
 }

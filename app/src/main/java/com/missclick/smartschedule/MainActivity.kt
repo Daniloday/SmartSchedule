@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var id : String? = null
-    val customMessage = CustomMessage()
+    private val customMessage = CustomMessage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(){
         extras?.let {
             if(it.containsKey("notif")){
                 val zoom = it.getString("notif")
+                Log.e("notif","tut")
                 val intentZoom = Intent(Intent.ACTION_VIEW, Uri.parse(zoom))
                 startActivity(intentZoom)
             }
