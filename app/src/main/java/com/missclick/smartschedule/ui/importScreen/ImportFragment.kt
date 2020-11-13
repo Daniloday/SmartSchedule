@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -49,6 +50,7 @@ class ImportFragment : Fragment() {
             importViewModel.import(edit_import.text.toString())
             (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).
             hideSoftInputFromWindow(view?.windowToken, 0)
+            Toast.makeText(context,"Imported", Toast.LENGTH_SHORT).show()
         }
     }
 
