@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.settings_fragment.*
 
 class SettingsFragment : Fragment() {
 
@@ -30,6 +31,10 @@ class SettingsFragment : Fragment() {
         (activity as MainActivity).toolbar_save.visibility = View.GONE
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
+        settings_card_view_day.setOnClickListener {
+            val dialog = DaysDialogFragment().show(childFragmentManager, "TestDialog")
+        }
+
         // TODO: Use the ViewModel
     }
 
