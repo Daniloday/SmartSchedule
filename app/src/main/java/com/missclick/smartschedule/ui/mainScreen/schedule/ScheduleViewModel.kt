@@ -25,6 +25,7 @@ class ScheduleViewModel() : ViewModel() {
     lateinit var repository: ILessonRepository
     private var onPause: Int = 0 // 0 - not onPause or else, 1 - in add lesson
     val stateData = MutableLiveData<ScheduleViewStates>().default(initialValue = ScheduleViewStates.LoadingState())
+    var settings : SettingsModel? = null
     var mainActivity : MainActivity? = null
     init {
         App.appComponent.inject(this)
@@ -52,6 +53,7 @@ class ScheduleViewModel() : ViewModel() {
         GlobalScope.launch(Dispatchers.IO) {
             val days1 : MutableList<MutableList<Item>> = mutableListOf()
             val days2 : MutableList<MutableList<Item>> = mutableListOf()
+            settings = repository.getSettings()
             initAllDays(daysItem = days1, edit = edit, week = 1)
             initAllDays(daysItem = days2, edit = edit, week = 2)
             withContext(Dispatchers.Main){
@@ -63,27 +65,29 @@ class ScheduleViewModel() : ViewModel() {
     }
 
     private suspend fun initAllDays(daysItem: MutableList<MutableList<Item>>, edit : Boolean, week: Int){
-        val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday") //todo days like int in model
+        val days = settings?.days //todo days like int in model
         val scheduleDays= repository.getAllDays()
-        for(day in days) {
-            val weekDay : MutableList<Item> = mutableListOf()
-            for(couple in 1..4){
-                val scheduleDay = getLessonById(days = scheduleDays, day = day, couple = couple, week = week)
-                val lessonId = scheduleDay?.lessonId
-                if (lessonId != null)
-                    weekDay.add(getLessonItem(edit = edit, lessonId = lessonId, day = scheduleDay))
-                else {
-                    if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple,week = week,
-                        callback = object : AddLessonButtonItem.ItemClickCallback{
-                            override fun onItemClicked() {
-                                onPause(1)
+        if (days != null) {
+            for(day in days) {
+                val weekDay : MutableList<Item> = mutableListOf()
+                for(couple in 1..(settings?.couples!!)){
+                    val scheduleDay = getLessonById(days = scheduleDays, day = day, couple = couple, week = week)
+                    val lessonId = scheduleDay?.lessonId
+                    if (lessonId != null)
+                        weekDay.add(getLessonItem(edit = edit, lessonId = lessonId, day = scheduleDay))
+                    else {
+                        if(edit) weekDay.add(AddLessonButtonItem(day = day, couple = couple,week = week,
+                            callback = object : AddLessonButtonItem.ItemClickCallback{
+                                override fun onItemClicked() {
+                                    onPause(1)
+                                }
                             }
-                        }
-                    ))
-                    else weekDay.add(LessonEmptyItem())
+                        ))
+                        else weekDay.add(LessonEmptyItem())
+                    }
                 }
+                daysItem.add(weekDay)
             }
-            daysItem.add(weekDay)
         }
     }
 

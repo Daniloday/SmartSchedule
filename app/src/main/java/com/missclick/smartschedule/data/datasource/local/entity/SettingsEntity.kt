@@ -13,14 +13,12 @@ data class SettingsEntity (
         var id : Int? = null,
 
         @ColumnInfo(name = "days")
-        var days : Int = 5,
+        var days : String = "Monday,Tuesday,Wednesday,Thursday,Friday",
 
         @ColumnInfo(name = "couples")
         var couples : Int = 4,
 
         @ColumnInfo(name = "weeks")
-        var weeks : Int = 2,
+        var weeks : Int = 2
 
-        @ColumnInfo(name = "language")
-        var language : String = "en"
 )

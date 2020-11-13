@@ -44,7 +44,7 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         scheduleViewModel.mainActivity = activity as MainActivity
-        recycleInit()
+//        recycleInit()
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             scheduleViewModel.editSchedule()
         }
@@ -68,6 +68,7 @@ class ScheduleFragment : Fragment() {
                 }
                 is ScheduleViewStates.LoadedState -> {
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
+                    recycleInit()
                     if (week == 1) recyclerUpdate(state.data1)
                     else recyclerUpdate(state.data2)
                 }
@@ -96,8 +97,10 @@ class ScheduleFragment : Fragment() {
         data = mutableListOf()
         expDataGroup = mutableListOf()
         groupAdapter = GroupAdapter()
-        for (i in 0..4){
-            val dayName =  resources.getStringArray(R.array.week_days)[i]
+
+        for (i in 0 until (scheduleViewModel.settings?.days?.size!!)){
+//            val dayName =  resources.getStringArray(R.array.week_days)[i]
+            val dayName = scheduleViewModel.settings!!.days[i]
             val exp = ExpandableGroup(DayItem(dayName)).apply {
                 val section = Section()
                 add(section)
@@ -111,14 +114,14 @@ class ScheduleFragment : Fragment() {
             adapter = groupAdapter
         }
         if (expData.size != 0 ){
-            for (i in 0..4){
+            for (i in 0 until (scheduleViewModel.settings?.days?.size!!)){
                 expDataGroup[i].isExpanded = expData[i]
             }
         }
     }
 
     private fun recyclerUpdate(newData : List<List<Item>>){
-        for (i in 0..4){
+        for (i in 0 until (scheduleViewModel.settings?.days?.size!!)){
             data[i].update(newData[i])
         }
     }

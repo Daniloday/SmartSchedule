@@ -9,7 +9,7 @@ import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
 import com.missclick.smartschedule.data.datasource.local.entity.SettingsEntity
 
-@Database(entities = [LessonEntity::class, DayEntity::class, SettingsEntity::class], version = 11)
+@Database(entities = [LessonEntity::class, DayEntity::class, SettingsEntity::class], version = 12)
 abstract class ScheduleDatabase : RoomDatabase(){
     abstract fun lessonsDao() : LessonDao
     abstract fun dayDao() : DayDao

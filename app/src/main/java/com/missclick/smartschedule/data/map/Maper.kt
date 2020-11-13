@@ -55,20 +55,18 @@ fun mapScheduleDayModelToEntity(scheduleDayModel: ScheduleDayModel) : DayEntity{
 fun mapSettingsEntityToSettingsModel(settingsEntity: SettingsEntity) : SettingsModel{
     return SettingsModel(
         id = settingsEntity.id,
-        days = settingsEntity.days,
+        days = strToListWeeks(settingsEntity.days),
         couples = settingsEntity.couples,
-        weeks = settingsEntity.weeks,
-        language = settingsEntity.language
+        weeks = settingsEntity.weeks
     )
 }
 
 fun mapSettingsModelToEntity(settingsModel: SettingsModel) : SettingsEntity{
     return SettingsEntity(
         id = settingsModel.id,
-        days = settingsModel.days,
+        days = listToStrWeeks(settingsModel.days),
         couples = settingsModel.couples,
-        weeks = settingsModel.weeks,
-        language = settingsModel.language
+        weeks = settingsModel.weeks
     )
 }
 
@@ -92,3 +90,16 @@ fun strToMap(strLinks : String) : MutableMap<String, String>{
     }
     return links
 }
+
+fun listToStrWeeks(list : List<String>) : String{
+    var str = ""
+    for (day in list)
+        str += "$day,"
+    str = str.dropLast(1)
+    return str
+}
+
+fun strToListWeeks(str : String) : List<String>{
+    return str.split(",")
+}
+

@@ -2,8 +2,7 @@ package com.missclick.smartschedule.data.models
 
 data class SettingsModel(
     var id : Int? = null,
-    var days : Int,
+    var days : List<String>,
     var couples : Int,
-    var weeks : Int,
-    var language : String = "en"
+    var weeks : Int
 )

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -36,6 +37,15 @@ class SettingsFragment : Fragment() {
         }
 
         // TODO: Use the ViewModel
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.save(
+            lessons = settings_spinner_count_of_max_lessons.selectedItem.toString().toInt(),
+            week = settings_spinner_second_week.isChecked,
+            days = listOf("Friday")
+        )
     }
 
 }

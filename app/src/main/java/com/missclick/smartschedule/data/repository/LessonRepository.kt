@@ -91,7 +91,7 @@ class LessonRepository(
 
     override suspend fun getSettings(): SettingsModel {
         val settingsEntities =  local.getSettingsAsync().await()
-        return mapSettingsEntityToSettingsModel(settingsEntity = settingsEntities[0])
+        return mapSettingsEntityToSettingsModel(settingsEntity = settingsEntities.last())
     }
 
     override suspend fun setSettings(settingsModel: SettingsModel) {
