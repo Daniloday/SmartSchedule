@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        cancelNotification()
-        setNotification()
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -46,7 +45,9 @@ class MainActivity : AppCompatActivity(){
         val action = intent.action
         val data = intent.dataString
         val extras = intent?.extras
+        Log.e("notif","tut000")
         extras?.let {
+            Log.e("notif","tut0")
             if(it.containsKey("notif")){
                 val zoom = it.getString("notif")
                 Log.e("notif","tut")
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity(){
                 startActivity(intentZoom)
             }
         }
+        cancelNotification()
+        setNotification()
         if (Intent.ACTION_VIEW == action && data != null) {
             id = data.substring(data.lastIndexOf("/") + 1)
             if(id != null) findNavController(R.id.nav_host_fragment).navigate(R.id.nav_import, ImportFragment.newInstance(id = id!!))

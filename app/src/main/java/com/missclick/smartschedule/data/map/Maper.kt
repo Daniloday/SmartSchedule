@@ -2,8 +2,10 @@ package com.missclick.smartschedule.data.map
 
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
+import com.missclick.smartschedule.data.datasource.local.entity.SettingsEntity
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
+import com.missclick.smartschedule.data.models.SettingsModel
 
 fun mapLessonEntityToModel(lessonEntity: LessonEntity) : LessonModel {
     val linksStr = lessonEntity.links
@@ -47,6 +49,26 @@ fun mapScheduleDayModelToEntity(scheduleDayModel: ScheduleDayModel) : DayEntity{
         lessonId = scheduleDayModel.lessonId,
         couple = scheduleDayModel.couple,
         week = scheduleDayModel.week
+    )
+}
+
+fun mapSettingsEntityToSettingsModel(settingsEntity: SettingsEntity) : SettingsModel{
+    return SettingsModel(
+        id = settingsEntity.id,
+        days = settingsEntity.days,
+        couples = settingsEntity.couples,
+        weeks = settingsEntity.weeks,
+        language = settingsEntity.language
+    )
+}
+
+fun mapSettingsModelToEntity(settingsModel: SettingsModel) : SettingsEntity{
+    return SettingsEntity(
+        id = settingsModel.id,
+        days = settingsModel.days,
+        couples = settingsModel.couples,
+        weeks = settingsModel.weeks,
+        language = settingsModel.language
     )
 }
 

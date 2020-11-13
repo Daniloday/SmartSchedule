@@ -2,6 +2,7 @@ package com.missclick.smartschedule.data.repository
 
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
+import com.missclick.smartschedule.data.models.SettingsModel
 
 interface ILessonRepository {
 
@@ -22,4 +23,8 @@ interface ILessonRepository {
 
     //internet
     suspend fun isOnline() : Boolean
+
+    //settings
+    suspend fun setSettings(settingsModel: SettingsModel)
+    suspend fun getSettings() : SettingsModel
 }

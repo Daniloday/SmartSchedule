@@ -35,6 +35,7 @@ class CustomMessage {
                     timeInMillis = System.currentTimeMillis()
                     val time = getTimeByCouple(day.couple)
                     val dayOfWeek = getDayOfWeek(day.dayName)
+//                    val dayOfWeek = getDayOfWeek("kek")
                     set(Calendar.DAY_OF_WEEK, dayOfWeek)
                     set(Calendar.HOUR, time[0] - 12)
                     set(Calendar.MINUTE, time[1])
@@ -83,7 +84,7 @@ class CustomMessage {
 
     fun getTimeByCouple(couple: Int) : List<Int>{
         if (couple == 1) return listOf(8, 27)
-        if (couple == 2) return listOf(10, 22)
+        if (couple == 2) return listOf(14, 22)
         return if (couple == 3) listOf(12, 17)
         else listOf(14, 12)
     }

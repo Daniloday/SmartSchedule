@@ -64,7 +64,7 @@ class MainScreenFragment : Fragment() {
 
         // for using first or second week by default
         val c = Calendar.getInstance()
-        view_pager.currentItem = (c.get(Calendar.WEEK_OF_YEAR) / 2) + 1
+        view_pager.currentItem = (c.get(Calendar.WEEK_OF_YEAR) % 2)
 
         val tabs: TabLayout = (activity as MainActivity).findViewById(R.id.tab_dots)
         tabs.setupWithViewPager(view_pager)

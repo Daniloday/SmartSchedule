@@ -1,5 +1,8 @@
 package com.missclick.smartschedule.ui.lessons.info
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
@@ -8,12 +11,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.ui.lessons.edit.EditLessonFragment
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.export_fragment.*
 
 import kotlinx.android.synthetic.main.lesson_info_fragment_reborn.*
 
@@ -61,6 +66,14 @@ class LessonInfoFragment : Fragment() {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tg))
                 startActivity(intent)
             }
+            button_telegram_info_lesson.setOnLongClickListener{
+                val clipboard: ClipboardManager? = //getSystemService<Any>(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    (context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                val clip = ClipData.newPlainText(android.R.attr.label.toString(),  button_telegram_info_lesson.text)
+                clipboard!!.setPrimaryClip(clip)
+                Toast.makeText(context,"Copied", Toast.LENGTH_SHORT).show()
+                true
+            }
         } else button_telegram_info_lesson.visibility = View.GONE
 
         if(lesson!!.links["phone"] != ""){
@@ -74,6 +87,14 @@ class LessonInfoFragment : Fragment() {
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse(phone))
                 startActivity(intent)
             }
+            button_phone_info_lesson.setOnLongClickListener{
+                val clipboard: ClipboardManager? = //getSystemService<Any>(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    (context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                val clip = ClipData.newPlainText(android.R.attr.label.toString(),   button_phone_info_lesson.text)
+                clipboard!!.setPrimaryClip(clip)
+                Toast.makeText(context,"Copied", Toast.LENGTH_SHORT).show()
+                true
+            }
         } else button_phone_info_lesson.visibility = View.GONE
 
         if(lesson!!.links["zoom"] != ""){
@@ -83,6 +104,14 @@ class LessonInfoFragment : Fragment() {
                 startActivity(intent)
             }
             button_zoom_info_lesson.text = lesson!!.links["zoom"]
+            button_zoom_info_lesson.setOnLongClickListener {
+                val clipboard: ClipboardManager? = //getSystemService<Any>(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    (context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                val clip = ClipData.newPlainText(android.R.attr.label.toString(), button_zoom_info_lesson.text)
+                clipboard!!.setPrimaryClip(clip)
+                Toast.makeText(context,"Copied", Toast.LENGTH_SHORT).show()
+                true
+            }
         } else button_zoom_info_lesson.visibility = View.GONE
 
         if(lesson!!.links["email"] != ""){
@@ -92,6 +121,14 @@ class LessonInfoFragment : Fragment() {
                 startActivity(intent)
             }
             button_email_info_lesson.text = lesson!!.links["email"]
+            button_email_info_lesson.setOnLongClickListener{
+                val clipboard: ClipboardManager? = //getSystemService<Any>(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    (context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                val clip = ClipData.newPlainText(android.R.attr.label.toString(),   button_email_info_lesson.text)
+                clipboard!!.setPrimaryClip(clip)
+                Toast.makeText(context,"Copied", Toast.LENGTH_SHORT).show()
+                true
+            }
         } else button_email_info_lesson.visibility = View.GONE
 
 

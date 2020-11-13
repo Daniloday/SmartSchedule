@@ -2,6 +2,7 @@ package com.missclick.smartschedule.data.datasource.local
 
 import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.local.entity.LessonEntity
+import com.missclick.smartschedule.data.datasource.local.entity.SettingsEntity
 import kotlinx.coroutines.*
 
 class LocalDataSource(var database : ScheduleDatabase){
@@ -59,4 +60,18 @@ class LocalDataSource(var database : ScheduleDatabase){
             database.dayDao().deleteAllDays()
         }
     }
+
+    //settings
+    fun insertSettingsAsync(settings : SettingsEntity){
+        GlobalScope.async {
+            database.settingsDao().insertSettings(settingsEntity = settings)
+        }
+    }
+
+    fun getSettingsAsync() : Deferred<List<SettingsEntity>>{
+        return GlobalScope.async {
+            database.settingsDao().getAllSettings()
+        }
+    }
+
 }

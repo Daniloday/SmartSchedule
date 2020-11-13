@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build
 import android.R
+import android.util.Log
 
 import androidx.core.app.NotificationCompat;
 import com.missclick.smartschedule.MainActivity
@@ -26,7 +27,9 @@ class Receiver : BroadcastReceiver() {
         val nm = CustomMessage().getNotificationManager(context)
         //todo check zoom nullable
         if(zoom == null) zoom = "zoom not detected, but lesson coming"
-        else intentToRepeat.putExtra("notif", zoom)
+        else {
+            Log.e("else",zoom)
+            intentToRepeat.putExtra("notif", zoom)}
         if(lessonName == null) lessonName = "Not found lesson"
         val notification: Notification = configNotification(context, pendingIntent, nm as NotificationManager?, type, zoom, lessonName!!).build()
         nm?.notify(type, notification)

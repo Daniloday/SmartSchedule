@@ -1,16 +1,12 @@
 package com.missclick.smartschedule.data.repository
 
-import android.util.Log
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
-import com.missclick.smartschedule.data.datasource.local.entity.DayEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.datasource.remote.remoteModels.ScheduleFB
-import com.missclick.smartschedule.data.map.mapDayEntityToScheduleDayModel
-import com.missclick.smartschedule.data.map.mapLessonEntityToModel
-import com.missclick.smartschedule.data.map.mapLessonModelToEntity
-import com.missclick.smartschedule.data.map.mapScheduleDayModelToEntity
+import com.missclick.smartschedule.data.map.*
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
+import com.missclick.smartschedule.data.models.SettingsModel
 
 
 class LessonRepository(
@@ -89,6 +85,18 @@ class LessonRepository(
                     local.insertLessonAsync(lessonEntity = lesson)
             }
         })
+    }
+
+    //settings
+
+    override suspend fun getSettings(): SettingsModel {
+        val settingsEntities =  local.getSettingsAsync().await()
+        return mapSettingsEntityToSettingsModel(settingsEntity = settingsEntities[0])
+    }
+
+    override suspend fun setSettings(settingsModel: SettingsModel) {
+        val settingsEntity = mapSettingsModelToEntity(settingsModel = settingsModel)
+        local.insertSettingsAsync(settings = settingsEntity)
     }
 
     interface Callback {
