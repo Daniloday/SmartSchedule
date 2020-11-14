@@ -49,11 +49,14 @@ class ScheduleViewModel() : ViewModel() {
         stateData.value = ScheduleViewStates.LoadingState()
     }
 
+    suspend fun getSettings(){
+        settings = repository.getSettings()
+    }
+
     fun initData(edit : Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             val days1 : MutableList<MutableList<Item>> = mutableListOf()
             val days2 : MutableList<MutableList<Item>> = mutableListOf()
-            settings = repository.getSettings()
             initAllDays(daysItem = days1, edit = edit, week = 1)
             initAllDays(daysItem = days2, edit = edit, week = 2)
             withContext(Dispatchers.Main){

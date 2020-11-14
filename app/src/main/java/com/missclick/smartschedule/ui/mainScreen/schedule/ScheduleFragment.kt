@@ -14,6 +14,10 @@ import com.xwray.groupie.*
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.schedule_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ScheduleFragment : Fragment() {
 
@@ -44,7 +48,13 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         scheduleViewModel.mainActivity = activity as MainActivity
-//        recycleInit()
+        GlobalScope.launch(Dispatchers.IO) {
+            scheduleViewModel.getSettings()
+            withContext(Dispatchers.Main){
+                recycleInit()
+            }
+        }
+
         (activity as MainActivity).toolbar_edit.setOnClickListener {
             scheduleViewModel.editSchedule()
         }
@@ -68,7 +78,6 @@ class ScheduleFragment : Fragment() {
                 }
                 is ScheduleViewStates.LoadedState -> {
                     (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-                    recycleInit()
                     if (week == 1) recyclerUpdate(state.data1)
                     else recyclerUpdate(state.data2)
                 }
