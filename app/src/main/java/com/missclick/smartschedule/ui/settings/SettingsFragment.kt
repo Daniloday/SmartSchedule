@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.core.view.get
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
@@ -56,21 +57,44 @@ class SettingsFragment : Fragment() {
                     dialog.attachCallBack(object : DaysDialogFragment.DialogCallBack{
                         override fun setDays(days: List<Int>) {
                             viewModel.daysString = viewModel.daysIntToString(daysInt = days)
+                            save()
                         }
                     })
                     dialog.show(childFragmentManager, "kek")
+                }
+                settings_spinner_count_of_max_lessons.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        save()
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        save()
+                    }
+
+                }
+                settings_spinner_second_week.setOnCheckedChangeListener { buttonView, isChecked ->
+                    save()
                 }
             }
         }
 
     }
 
-    override fun onPause() {
-        super.onPause()
+    fun save(){
         viewModel.save(
             lessons = settings_spinner_count_of_max_lessons.selectedItem.toString().toInt(),
             week = settings_spinner_second_week.isChecked
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //save()
     }
 
 }
