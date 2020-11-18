@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.missclick.smartschedule.ui.mainScreen.schedule.ScheduleFragment
 
 @Suppress("DEPRECATION")
-class SectionsPagerAdapter(fm: FragmentManager)
+class SectionsPagerAdapter(fm: FragmentManager, val secondWeek : Int)
     : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
@@ -18,7 +18,7 @@ class SectionsPagerAdapter(fm: FragmentManager)
     }
 
     override fun getCount(): Int {
-        return 2
+        return secondWeek
     }
 
 }

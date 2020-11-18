@@ -52,40 +52,41 @@ class ScheduleFragment : Fragment() {
             scheduleViewModel.getSettings()
             withContext(Dispatchers.Main){
                 recycleInit()
+                (activity as MainActivity).toolbar_edit.setOnClickListener {
+                    scheduleViewModel.editSchedule()
+                }
+
+                (activity as MainActivity).toolbar_save.setOnClickListener {
+                    scheduleViewModel.saveSchedule()
+                }
+
+                scheduleViewModel.stateData.observe(viewLifecycleOwner, Observer { state ->
+                    when (state) {
+                        //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
+                        is ScheduleViewStates.LoadingState -> {
+                            (activity as MainActivity).toolbar_edit.visibility = View.GONE
+                            (activity as MainActivity).toolbar_save.visibility = View.GONE
+                            scheduleViewModel.initData(state.edit)
+                        }
+                        is ScheduleViewStates.EditingState -> {
+                            (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
+                            if (week == 1) recyclerUpdate(state.data1)
+                            else recyclerUpdate(state.data2)
+                        }
+                        is ScheduleViewStates.LoadedState -> {
+                            (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
+                            if (week == 1) recyclerUpdate(state.data1)
+                            else recyclerUpdate(state.data2)
+                        }
+                        is ScheduleViewStates.ErrorState -> {
+                            //TODO exception (nado sdelat try catch dlya raboti s bd)
+                        }
+                    }
+                })
             }
         }
 
-        (activity as MainActivity).toolbar_edit.setOnClickListener {
-            scheduleViewModel.editSchedule()
-        }
 
-        (activity as MainActivity).toolbar_save.setOnClickListener {
-            scheduleViewModel.saveSchedule()
-        }
-
-        scheduleViewModel.stateData.observe(viewLifecycleOwner, Observer { state ->
-            when (state) {
-                //TODO (optional) dobavit updateState, менять адаптер через notifySetDataChanged()
-                is ScheduleViewStates.LoadingState -> {
-                    (activity as MainActivity).toolbar_edit.visibility = View.GONE
-                    (activity as MainActivity).toolbar_save.visibility = View.GONE
-                    scheduleViewModel.initData(state.edit)
-                }
-                is ScheduleViewStates.EditingState -> {
-                    (activity as MainActivity).toolbar_save.visibility = View.VISIBLE
-                    if (week == 1) recyclerUpdate(state.data1)
-                    else recyclerUpdate(state.data2)
-                }
-                is ScheduleViewStates.LoadedState -> {
-                    (activity as MainActivity).toolbar_edit.visibility = View.VISIBLE
-                    if (week == 1) recyclerUpdate(state.data1)
-                    else recyclerUpdate(state.data2)
-                }
-                is ScheduleViewStates.ErrorState -> {
-                    //TODO exception (nado sdelat try catch dlya raboti s bd)
-                }
-            }
-        })
     }
 
 

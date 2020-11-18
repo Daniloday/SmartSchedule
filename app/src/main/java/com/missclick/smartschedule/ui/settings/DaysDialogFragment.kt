@@ -9,9 +9,12 @@ import com.missclick.smartschedule.R
 import kotlinx.coroutines.NonCancellable.cancel
 
 
-class DaysDialogFragment : DialogFragment() {
+class DaysDialogFragment(private val defaultDays : MutableList<Int>) : DialogFragment() {
+
+    var callback  : DialogCallBack? = null
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val selectedItems = ArrayList<Int>()
+        val selectedItems = defaultDays
         val builder =
             AlertDialog.Builder(activity)
         builder.setTitle("Choose days with lessons")
@@ -25,7 +28,7 @@ class DaysDialogFragment : DialogFragment() {
             })
             .setPositiveButton("Okes",
                 DialogInterface.OnClickListener { dialog, id ->
-                    // FIRE ZE MISSILES!
+                    callback?.setDays(selectedItems)
                 })
             .setNegativeButton("Otmena",
                 DialogInterface.OnClickListener { dialog, id ->
@@ -34,22 +37,12 @@ class DaysDialogFragment : DialogFragment() {
         return builder.create()
     }
 
+    fun attachCallBack(callback : DialogCallBack){
+        this.callback = callback
+    }
 
+    interface DialogCallBack{
+        fun setDays(days : List<Int>)
+    }
 
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        // Use the Builder class for convenient dialog construction
-//        val builder =
-//            AlertDialog.Builder(activity)
-//        builder.setMessage("hihi")
-//            .setPositiveButton("Okes",
-//                DialogInterface.OnClickListener { dialog, id ->
-//                    // FIRE ZE MISSILES!
-//                })
-//            .setNegativeButton(R.string.cancel,
-//                DialogInterface.OnClickListener { dialog, id ->
-//                    // User cancelled the dialog
-//                })
-//        // Create the AlertDialog object and return it
-//        return builder.create()
-//    }
 }

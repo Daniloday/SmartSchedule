@@ -9,8 +9,13 @@ import android.view.ViewGroup
 import androidx.core.view.get
 import com.missclick.smartschedule.MainActivity
 import com.missclick.smartschedule.R
+import com.missclick.smartschedule.adapters.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.settings_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingsFragment : Fragment() {
 
@@ -28,23 +33,43 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+        super.onActivityCreated(savedInstanceState)
+
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).toolbar_edit.visibility = View.GONE
         (activity as MainActivity).toolbar_save.visibility = View.GONE
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
-        settings_card_view_day.setOnClickListener {
-            val dialog = DaysDialogFragment().show(childFragmentManager, "TestDialog")
+
+        GlobalScope.launch(Dispatchers.IO) {
+            viewModel.getSettings()
+            withContext(Dispatchers.Main){
+                settings_spinner_second_week.isChecked = viewModel.settings?.weeks ?: true == 2
+                settings_spinner_count_of_max_lessons.setSelection((viewModel.settings?.couples ?: 3) - 3)
+                settings_card_view_day.setOnClickListener {
+                    val dialog = DaysDialogFragment(viewModel.daysStringToInt())
+                    dialog.attachCallBack(object : DaysDialogFragment.DialogCallBack{
+                        override fun setDays(days: List<Int>) {
+                            viewModel.daysString = viewModel.daysIntToString(daysInt = days)
+                        }
+                    })
+                    dialog.show(childFragmentManager, "kek")
+                }
+            }
         }
 
-        // TODO: Use the ViewModel
     }
 
     override fun onPause() {
         super.onPause()
         viewModel.save(
             lessons = settings_spinner_count_of_max_lessons.selectedItem.toString().toInt(),
-            week = settings_spinner_second_week.isChecked,
-            days = listOf("Friday")
+            week = settings_spinner_second_week.isChecked
         )
     }
 
