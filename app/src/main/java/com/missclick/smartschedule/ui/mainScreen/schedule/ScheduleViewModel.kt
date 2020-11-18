@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ScheduleViewModel() : ViewModel() {
+class ScheduleViewModel : ViewModel() {
 
     @Inject
     lateinit var repository: ILessonRepository

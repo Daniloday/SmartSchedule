@@ -65,7 +65,7 @@ class SettingsViewModel : ViewModel() {
                 else -> daysInt.add(6)
             }
         }
-        return mutableListOf(2)
+        return daysInt
     }
 
 }

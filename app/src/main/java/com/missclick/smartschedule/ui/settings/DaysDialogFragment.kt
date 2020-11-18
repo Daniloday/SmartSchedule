@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.missclick.smartschedule.R
 import kotlinx.coroutines.NonCancellable.cancel
@@ -15,22 +16,28 @@ class DaysDialogFragment(private val defaultDays : MutableList<Int>) : DialogFra
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val selectedItems = defaultDays
+        val allDays = listOf("Monday","Tuesday","Wednesday","Thursday","Friday", "Saturday", "Sunday")
+        Log.e("Kek", allDays.toString())
+        val checkedItem = mutableListOf<Boolean>()
+        for(i in allDays.indices)
+            checkedItem.add(i, false)
+        for(item in selectedItems)
+            checkedItem[item] = true
         val builder =
             AlertDialog.Builder(activity)
         builder.setTitle("Choose days with lessons")
-            .setMultiChoiceItems(R.array.week_days, null, object : DialogInterface.OnMultiChoiceClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int, isChecked: Boolean) {
-                    if(isChecked)
-                        selectedItems.add(which)
-                    else if(selectedItems.contains(which))
-                        selectedItems.remove(which)
-                }
-            })
-            .setPositiveButton("Okes",
+            .setMultiChoiceItems(R.array.week_days, checkedItem.toBooleanArray()
+            ) { dialog, which, isChecked ->
+                if(isChecked)
+                    selectedItems.add(which)
+                else if(selectedItems.contains(which))
+                    selectedItems.remove(which)
+            }
+            .setPositiveButton("Save",
                 DialogInterface.OnClickListener { dialog, id ->
                     callback?.setDays(selectedItems)
                 })
-            .setNegativeButton("Otmena",
+            .setNegativeButton("Cancel",
                 DialogInterface.OnClickListener { dialog, id ->
                     // User cancelled the dialog
                 })

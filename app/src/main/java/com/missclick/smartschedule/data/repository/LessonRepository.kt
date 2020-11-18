@@ -1,12 +1,14 @@
 package com.missclick.smartschedule.data.repository
 
 import com.missclick.smartschedule.data.datasource.local.LocalDataSource
+import com.missclick.smartschedule.data.datasource.local.entity.SettingsEntity
 import com.missclick.smartschedule.data.datasource.remote.RemoteDataSource
 import com.missclick.smartschedule.data.datasource.remote.remoteModels.ScheduleFB
 import com.missclick.smartschedule.data.map.*
 import com.missclick.smartschedule.data.models.LessonModel
 import com.missclick.smartschedule.data.models.ScheduleDayModel
 import com.missclick.smartschedule.data.models.SettingsModel
+import java.util.NoSuchElementException
 
 
 class LessonRepository(
@@ -91,7 +93,17 @@ class LessonRepository(
 
     override suspend fun getSettings(): SettingsModel {
         val settingsEntities =  local.getSettingsAsync().await()
-        return mapSettingsEntityToSettingsModel(settingsEntity = settingsEntities.last())
+        return try {
+             mapSettingsEntityToSettingsModel(settingsEntity = settingsEntities.last())
+        } catch (e : NoSuchElementException){
+            mapSettingsEntityToSettingsModel(settingsEntity = SettingsEntity(
+                days = "Monday,Tuesday,Wednesday,Thursday,Friday",
+                couples = 4,
+                weeks = 2
+            ))
+        }
+
+
     }
 
     override suspend fun setSettings(settingsModel: SettingsModel) {
