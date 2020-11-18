@@ -116,6 +116,7 @@ class ScheduleViewModel : ViewModel() {
                             mainActivity?.cancelNotification()
                             repository.deleteDay(day)
                             mainActivity?.setNotification()
+                            Thread.sleep(100)
                             withContext(Dispatchers.Main){
                                 initData(edit = true)
                                 ScheduleViewStates.LoadingState(edit = true)

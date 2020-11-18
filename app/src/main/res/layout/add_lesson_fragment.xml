@@ -29,7 +29,8 @@
             android:layout_marginBottom="4dp"
             android:maxLines="1"
             android:inputType="text"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:maxLength="15"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_lesson_teacher_add_lesson"
@@ -40,7 +41,8 @@
             android:layout_marginBottom="4dp"
             android:maxLines="1"
             android:inputType="text"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:maxLength="30"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_lesson_types_add_lesson"

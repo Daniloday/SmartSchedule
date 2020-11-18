@@ -33,13 +33,6 @@ class SettingsFragment : Fragment() {
         return inflater.inflate(R.layout.settings_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-
-        super.onActivityCreated(savedInstanceState)
-
-
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,11 +83,6 @@ class SettingsFragment : Fragment() {
             lessons = settings_spinner_count_of_max_lessons.selectedItem.toString().toInt(),
             week = settings_spinner_second_week.isChecked
         )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //save()
     }
 
 }

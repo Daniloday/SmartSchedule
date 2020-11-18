@@ -21,7 +21,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.13999999"
+        android:maxLength="15"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edit_lesson_teacher_add_lesson"
@@ -37,7 +38,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_lesson_name_add_lesson"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.050000012"
+        android:maxLength="32"/>
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/spinner_lesson_types_add_lesson"
